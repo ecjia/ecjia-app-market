@@ -80,7 +80,7 @@ class admin extends ecjia_admin {
 		RC_Script::enqueue_script('bootstrap-datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
 		RC_Style::enqueue_style('datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
 
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.activity_manage'), RC_Uri::url('market/admin/init')));
+		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.activity_list'), RC_Uri::url('market/admin/init')));
 		$activity_id = isset($_GET['id']) ? $_GET['id'] : 0;
 		$this->tags = array(
 			'edit'				=> array('name' =>  RC_Lang::get('market::market.edit_activity'), 'pjax' => 1, 'href' => RC_Uri::url('market/admin/edit', "id=$activity_id")),
