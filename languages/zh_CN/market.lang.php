@@ -131,6 +131,7 @@ return array(
 	'end_time_required'				=> '请输入活动结束时间',
 	'time_error'					=> '活动开始时间不能大于结束时间',
 	'market_manage'					=> '营销管理',
+	'store_info'					=> '店铺信息',
 );
 
 // end
