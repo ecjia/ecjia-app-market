@@ -12,6 +12,16 @@ class shake_module extends api_front implements api_interface {
 		if ($_SESSION['user_id'] <= 0) {
 			return new ecjia_error(100, 'Invalid session');
 		}
+		
+		$location = $this->requestData('location', array());
+		$city_id	 = $this->requestData('city_id', 0);
+		
+		/*经纬度为空判断*/
+		$options = array();
+		if ((!is_array($location) || empty($location['longitude']) || empty($location['latitude']))) {
+			return new ecjia_error('invalid_parameter', RC_Lang::get('system::system.invalid_parameter'));
+		}
+		
 		/*
 		 * 奖项数组
 		* 是一个二维数组，记录了所有本次抽奖的奖项信息，
@@ -123,7 +133,12 @@ class shake_module extends api_front implements api_interface {
 					)
 			);
 		} elseif ($prize_info['prize_type'] == '4') {
-			$goods_info = RC_DB::table('goods')->where('is_on_sale', 1)->where('is_alone_sale', 1)->where('is_delete', 0)->first();
+			$where = array(
+					'is_on_sale'	=> 1,
+					'is_alone_sale' => 1,
+					'is_delete'		=> 0,
+			);
+			$goods_info = RC_Model::model('goods/goods_model')->where($where)->order('Rand()')->find();
 			RC_Loader::load_app_func('admin_goods', 'goods');
 			if ($goods_info['promote_price'] > 0) {
 				$promote_price = bargain_price($goods_info['promote_price'], $goods_info['promote_start_date'], $goods_info['promote_end_date']);
@@ -146,6 +161,50 @@ class shake_module extends api_front implements api_interface {
 							'small' =>  !empty($goods_info['goods_thumb']) ?  RC_Upload::upload_url($goods_info['goods_thumb']) : RC_Uri::admin_url('statics/images/nopic.png'),
 						)
 					)
+			);
+		} elseif ($prize_info['prize_type'] == '5') {
+			/*经纬度判断*/
+			$options = array();
+			if ((is_array($location) || !empty($location['longitude']) || !empty($location['latitude']))) {
+				$geohash      = RC_Loader::load_app_class('geohash', 'store');
+				$geohash_code = $geohash->encode($location['latitude'] , $location['longitude']);
+				$options['store_id']   = RC_Api::api('store', 'neighbors_store_id', array('geohash' => $geohash_code, 'city_id' => $city_id));
+			}
+			
+			if (!empty($options['store_id'])) {
+				RC_Loader::load_app_func('merchant', 'merchant');
+					
+				$store_info_new = array();
+				$store_info = RC_Model::model('merchant/store_franchisee_model')
+				->in(array('store_id' => $options['store_id']))
+				->where(array('status' => 1, 'identity_status' => 2, 'shop_close' => 0))
+				->order('Rand()')->find();
+				
+				if (!empty($store_info)) {
+					$shop_logo = RC_DB::table('merchants_config')->where('store_id', $store_info['store_id'])->where('code', 'shop_logo')->pluck('shop_logo');
+					$shop_notice = RC_DB::table('merchants_config')->where('store_id', $store_info['store_id'])->where('code', 'shop_notice')->pluck('shop_notice');
+					$shop_logo = empty($shop_logo) ?  '' : RC_Upload::upload_url($shop_logo);
+					$trade_time = get_store_trade_time($store_info['store_id']);
+					
+					$store_info_new = array(
+							'store_id' 			=> $store_info['store_id'],
+							'merchants_name' 	=> $store_info['merchants_name'],
+							'shop_keyword'		=> $store_info['shop_keyword'],
+							'location'			=> array(
+									'longitude' => $store_info['longitude'],
+									'latitude'	=> $store_info['latitude']
+							),
+							'shop_logo'			=> $shop_logo,
+							'label_trade_time'	=> $trade_time,
+							'shop_notice'		=> $shop_notice
+					);
+			
+				}
+			}
+			
+			$result = array(
+					'type' => 'store',
+					'store' => $store_info_new
 			);
 		} else {
 			$result = array(
