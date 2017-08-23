@@ -181,8 +181,8 @@ class shake_module extends api_front implements api_interface {
 				->order('Rand()')->find();
 				
 				if (!empty($store_info)) {
-					$shop_logo = RC_DB::table('merchants_config')->where('store_id', $store_info['store_id'])->where('code', 'shop_logo')->pluck('shop_logo');
-					$shop_notice = RC_DB::table('merchants_config')->where('store_id', $store_info['store_id'])->where('code', 'shop_notice')->pluck('shop_notice');
+					$shop_logo = RC_DB::table('merchants_config')->where('store_id', $store_info['store_id'])->where('code', 'shop_logo')->pluck('value');
+					$shop_notice = RC_DB::table('merchants_config')->where('store_id', $store_info['store_id'])->where('code', 'shop_notice')->pluck('value');
 					$shop_logo = empty($shop_logo) ?  '' : RC_Upload::upload_url($shop_logo);
 					$trade_time = get_store_trade_time($store_info['store_id']);
 					
