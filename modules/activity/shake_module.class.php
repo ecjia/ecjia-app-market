@@ -137,6 +137,7 @@ class shake_module extends api_front implements api_interface {
 					'is_on_sale'	=> 1,
 					'is_alone_sale' => 1,
 					'is_delete'		=> 0,
+					'review_status'	=> 3,
 			);
 			$goods_info = RC_Model::model('goods/goods_model')->where($where)->order('Rand()')->find();
 			RC_Loader::load_app_func('admin_goods', 'goods');
