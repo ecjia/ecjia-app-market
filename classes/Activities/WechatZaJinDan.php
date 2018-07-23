@@ -8,8 +8,9 @@
 
 namespace Ecjia\App\Market\Activities;
 
+use Ecjia\App\Market\AbstractActivity;
 
-class WechatZaJinDan
+class WechatZaJinDan extends AbstractActivity
 {
 
     /**

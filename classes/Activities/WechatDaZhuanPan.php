@@ -8,8 +8,9 @@
 
 namespace Ecjia\App\Market\Activities;
 
+use Ecjia\App\Market\AbstractActivity;
 
-class WechatDaZhuanPan
+class WechatDaZhuanPan extends AbstractActivity
 {
 
     /**

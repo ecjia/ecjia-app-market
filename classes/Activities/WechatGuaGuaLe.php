@@ -8,8 +8,9 @@
 
 namespace Ecjia\App\Market\Activities;
 
+use Ecjia\App\Market\AbstractActivity;
 
-class WechatGuaGuaLe
+class WechatGuaGuaLe extends AbstractActivity
 {
 
     /**
