@@ -36,7 +36,7 @@ class MobileShake extends AbstractActivity
      * 图标
      * @var string
      */
-    protected $icon = '/statics/images/xxxxx.png'; //图片未添加
+    protected $icon = '/statics/images/icon/mobile_shake.png'; //图片未添加
 
 
     public function run() {

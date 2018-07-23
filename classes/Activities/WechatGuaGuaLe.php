@@ -34,7 +34,7 @@ class WechatGuaGuaLe
      * 图标
      * @var string
      */
-    protected $icon = '/statics/images/xxxxx.png'; //图片未添加
+    protected $icon = '/statics/images/icon/wechat_guaguale.png'; //图片未添加
 
 
     public function run() {
