@@ -54,7 +54,7 @@ return array(
 	'app_activity_list'			=> 'APP活动列表',
 	'activity_manage'			=> '活动管理',
 	'activity_delete'			=> '删除管理',
-	'edit_activity'				=> '更新活动',
+	'edit_activity'				=> '编辑营销活动',
 	'activity_list'				=> '营销活动',
 	'add_activity'				=> '添加活动',
 	'back_activity_list'		=> '返回营销活动',
@@ -135,6 +135,7 @@ return array(
 	'activity_detail'				=> '活动详情',
 	'close_success'					=> '成功关闭营销活动',
 	'open_success'					=> '成功开启营销活动',
+	'back_activity_info'			=> '返回活动详情',
 );
 
 // end
