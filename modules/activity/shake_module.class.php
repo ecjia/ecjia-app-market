@@ -60,7 +60,13 @@ class shake_module extends api_front implements api_interface {
 		
 		$location = $this->requestData('location', array());
 		$city_id	 = $this->requestData('city_id', '');
+		$api_version = $this->request->header('api-version');
 		
+		if (version_compare($api_version, '1.18', '>=')) {
+			$code = 'mobile_shake';
+		} else {
+			$code = 1;
+		}
 		/*经纬度为空判断*/
 		$options = array();
 		if ((!is_array($location) || empty($location['longitude']) || empty($location['latitude']))) {
@@ -78,8 +84,9 @@ class shake_module extends api_front implements api_interface {
 		*/
 		$time = RC_Time::gmtime();
 		$market_activity = RC_DB::table('market_activity')
-							->where('activity_group', 1)
+							->where('activity_group', $code)
 							->where('activity_object', 1)
+							->where('store_id', 0)
 							->where('start_time', '<=', $time)
 							->where('end_time', '>=', $time)
 							->where('enabled', 1)

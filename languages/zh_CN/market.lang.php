@@ -55,9 +55,9 @@ return array(
 	'activity_manage'			=> '活动管理',
 	'activity_delete'			=> '删除管理',
 	'edit_activity'				=> '更新活动',
-	'activity_list'				=> '活动列表',
+	'activity_list'				=> '营销活动',
 	'add_activity'				=> '添加活动',
-	'back_activity_list'		=> '返回活动列表',
+	'back_activity_list'		=> '返回营销活动',
 	'activity_exist'			=> '此活动名已存在！',
 	'add_success'				=> '添加活动成功',
 	'edit_success'				=> '编辑活动成功',
@@ -132,6 +132,9 @@ return array(
 	'time_error'					=> '活动开始时间不能大于结束时间',
 	'market_manage'					=> '营销管理',
 	'store_info'					=> '店铺信息',
+	'activity_detail'				=> '活动详情',
+	'close_success'					=> '成功关闭营销活动',
+	'open_success'					=> '成功开启营销活动',
 );
 
 // end

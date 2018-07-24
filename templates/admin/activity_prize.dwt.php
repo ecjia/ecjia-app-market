@@ -19,6 +19,34 @@
 
 <div class="row-fluid">
 	<div class="span12">
+		<div class="func-detail">
+			<p class="m_b15 title-size">功能详情</p>
+			<div class="detail">
+				<div class="func-detail-margin">
+					{if $info}
+						<a class="ajaxremove f_r btn btn-danger activity-open-btn" data-toggle="ajaxremove" data-msg="您确定要关闭营销活动【{$activity_detail.name}】吗？" href='{url path="market/admin/close_activity" args="code={$activity_detail.code}"}' title="关闭">关闭</a>	
+					{else}
+						<a class="ajaxremove f_r btn btn-gebo activity-open-btn" data-toggle="ajaxremove" data-msg="您确定要开通营销活动【{$activity_detail.name}】吗？" href='{url path="market/admin/open_activity" args="code={$activity_detail.code}"}' title="开通">开通</a>
+					{/if}
+					<div class="fonticon-container">
+						<div class="fonticon-img-wrap">
+							<img class="activity-icon" src="{if $activity_detail.icon}{$activity_detail.icon}{else}{$images_url}extend.png{/if}"/>
+						</div>
+						<div class="f_l literal-wrap">
+							<h3 class="title">{$activity_detail.name}</h3>
+							<p class="desc">
+								{if $info}该功能已开通，设置完活动即可正常使用{else}<span>未开通</span>{/if}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="func-intrduction">
+			<p class="m_b15 title-size">功能介绍</p>
+			<p class="intrduction">{$activity_detail.description}</p>
+		</div>
+		<hr>
 		<div class="tabbable">
 			<ul class="nav nav-tabs">
 				<!-- {foreach from=$tags item=tag} -->
