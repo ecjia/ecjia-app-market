@@ -155,6 +155,34 @@ abstract class MarketAbstract
      * 运行，抽象方法
      */
     abstract public function run();
-    
-    
+
+
+
+    /**
+     * 获取公众平台插件支持平台公众号
+     * @return bool
+     */
+    public function hasSupportTypeAdmin()
+    {
+        return ($this->support_type & self::TYPE_ADMIN) == self::TYPE_ADMIN;
+    }
+
+    /**
+     * 获取公众平台插件支持商家公众号
+     * @return bool
+     */
+    public function hasSupportTypeMerchant()
+    {
+        return ($this->support_type & self::TYPE_MERCHANT) == self::TYPE_MERCHANT;
+    }
+
+    /**
+     * 获取支持公众平台的营销插件
+     * @return bool
+     */
+    public function hasSupportTypePlatform()
+    {
+        return ($this->support_type & self::TYPE_PLATFORM) == self::TYPE_PLATFORM;
+    }
+
 }
