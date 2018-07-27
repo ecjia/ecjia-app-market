@@ -44,105 +44,91 @@
 //
 //  ---------------------------------------------------------------------------------
 //
+
 defined('IN_ECJIA') or exit('No permission resources.');
 
 /**
- * 摇一摇活动管理控制器
+ * 营销活动
  */
-class admin extends ecjia_admin {
-	public function __construct() {
-		parent::__construct();
+class platform extends ecjia_platform
+{
+    public function __construct()
+    {
+        parent::__construct();
 
-		Ecjia\App\Market\Helper::assign_adminlog_content();
+        /* 加载全局 js/css */
+        
+        RC_Script::enqueue_script('jquery-validate');
+        RC_Script::enqueue_script('jquery-uniform');
+        RC_Style::enqueue_style('uniform-aristo');
+        RC_Script::enqueue_script('jquery-form');
+        RC_Script::enqueue_script('jquery-validate');
+        RC_Script::enqueue_script('smoke');
+        RC_Script::enqueue_script('bootstrap-placeholder');
 		
-		RC_Script::enqueue_script('jquery-validate');
-		RC_Script::enqueue_script('jquery-uniform');
-		RC_Script::enqueue_script('jquery-chosen');
-		RC_Style::enqueue_style('uniform-aristo');
-		RC_Style::enqueue_style('chosen');
-
-		RC_Script::enqueue_script('jquery-form');
-		RC_Script::enqueue_script('jquery-validate');
-		RC_Script::enqueue_script('smoke');
-		RC_Script::enqueue_script('bootstrap-placeholder');
-		
-		RC_Script::enqueue_script('jquery.toggle.buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/jquery.toggle.buttons.js'));
-		RC_Style::enqueue_style('bootstrap-toggle-buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/bootstrap-toggle-buttons.css'));
-
-		RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
-		RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
-
-		RC_Script::enqueue_script('activity', RC_App::apps_url('statics/js/activity.js', __FILE__), array(), false, false);
-		RC_Style::enqueue_style('activity', RC_App::apps_url('statics/css/activity.css', __FILE__), array(), false, false);
+        RC_Style::enqueue_style('platform_market_activity', RC_App::apps_url('statics/css/platform_market_activity.css', __FILE__));
 		
         //时间控件
-		RC_Script::enqueue_script('bootstrap-datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
-		RC_Style::enqueue_style('datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+        RC_Script::enqueue_script('bootstrap-datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
+        RC_Style::enqueue_style('datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+        
+        RC_Script::enqueue_script('platform_activity', RC_App::apps_url('statics/platform-js/platform_activity.js', __FILE__), array(), false, true);
+        RC_Script::localize_script('platform_activity', 'js_lang', RC_Lang::get('market::market.js_lang'));
+        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.activity_list'), RC_Uri::url('market/platform/init')));
+        ecjia_platform_screen::get_current_screen()->set_subject('营销活动');
+    }
 
-		ecjia_screen::$current_screen->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.activity_list'), RC_Uri::url('market/admin/init')));
-		$activity_id = isset($_GET['id']) ? $_GET['id'] : 0;
-		$activity_code = isset($_GET['code']) ? trim($_GET['code']) : 'mobile_shake';
-		$this->tags = array(
-			'activity_detail'	=> array('name' =>  RC_Lang::get('market::market.edit_activity'), 'pjax' => 1, 'href' => RC_Uri::url('market/admin/activity_detail', "code=$activity_code")),
-			'activity_prize'	=> array('name' =>  RC_Lang::get('market::market.prize_pool'), 'pjax' => 1, 'href' => RC_Uri::url('market/admin/activity_prize', "code=$activity_code")),
-			'activity_record'	=> array('name' =>  RC_Lang::get('market::market.activity_record'), 'pjax' => 1, 'href' => RC_Uri::url('market/admin/activity_record', "code=$activity_code")),
-		);
-		
-		$this->tags[ROUTE_A]['active'] = 1;
-	}
+    /**
+     * 活动列表
+     */
+    public function init()
+    {
+        $this->admin_priv('market_activity_manage');
 
-	/**
-	 *活动列表页面加载
-	*/
-	public function init () {
-		$this->admin_priv('market_activity_manage');
-		
-		ecjia_screen::get_current_screen()->remove_last_nav_here();
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.activity_list')));
-		
-		$this->assign('ur_here', RC_Lang::get('market::market.activity_list'));
-		//$this->assign('action_link', array('text' => RC_Lang::get('market::market.add_activity'), 'href' => RC_Uri::url('market/admin/add')));
-		$this->assign('search_action', RC_Uri::url('market/admin/init'));
+        ecjia_platform_screen::get_current_screen()->remove_last_nav_here();
+        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.activity_list')));
+        $this->assign('ur_here', RC_Lang::get('market::market.activity_list'));
 
-		$activity_list = $this->get_activity_list();
+        $activity_list = $this->get_activity_list();
 		
 		$this->assign('activity_list', $activity_list);
 
-		$this->display('activity_list.dwt');
-	}
-
+        $this->display('market_activity_list.dwt');
+    }
+	
 	/**
 	 *活动详情
 	 */
 	public function activity_detail() {
 		$this->admin_priv('market_activity_update');
-	
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.activity_detail')));
+		ecjia_platform_screen::get_current_screen()->remove_last_nav_here();
+		ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.activity_detail')));
+		
 		$this->assign('ur_here', RC_Lang::get('market::market.activity_detail'));
-		$this->assign('form_action', RC_Uri::url('market/admin/update'));
-		$this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_list'), 'href' => RC_Uri::url('market/admin/init')));
-	
+		$this->assign('form_action', RC_Uri::url('market/platform/update'));
+		$this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_list'), 'href' => RC_Uri::url('market/platform/init')));
+
 		$code = trim($_GET['code']);
 		$activity_detail = [];
 		if (!empty($code)) {
 			$factory = new Ecjia\App\Market\Factory();
 			$activity_info = $factory->driver($code);
-			$activity_detail['code'] = $activity_info->getCode(); 
+			$activity_detail['code'] = $activity_info->getCode();
 			$activity_detail['name'] = $activity_info->getName();
 			$activity_detail['description'] = $activity_info->getDescription();
 			$activity_detail['icon'] = $activity_info->getIcon();
 			$this->assign('activity_detail', $activity_detail);
 			$this->assign('code', $code);
-			$info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', 0)->first();
+			$info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', $_SESSION['store_id'])->first();
 			if (!empty($info)) {
 				$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
 				$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
 				$this->assign('info', $info);
 				$this->assign('activity_info', $info);
-				
-				$this->assign('action_edit', RC_Uri::url('market/admin/edit', array('code' => $code)));
-				$this->assign('action_prize', RC_Uri::url('market/admin/activity_prize', array('code' => $code)));
-				$this->assign('action_record', RC_Uri::url('market/admin/activity_record', array('code' => $code)));
+	
+				$this->assign('action_edit', RC_Uri::url('market/platform/edit', array('code' => $code)));
+				$this->assign('action_prize', RC_Uri::url('market/platform/activity_prize', array('code' => $code)));
+				$this->assign('action_record', RC_Uri::url('market/platform/activity_record', array('code' => $code)));
 			}
 		}
 		$this->assign('images_url', RC_App::apps_url('statics/image/', __FILE__));
@@ -154,19 +140,19 @@ class admin extends ecjia_admin {
 	 */
 	public function edit() {
 		$this->admin_priv('market_activity_update');
-		 
+			
 		$code = trim($_GET['code']);
-		$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', 0)->first();
-	
+		$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', $_SESSION['store_id'])->first();
+		
 		$activity_info['start_time'] = RC_Time::local_date('Y-m-d H:i', $activity_info['start_time']);
 		$activity_info['end_time']   = RC_Time::local_date('Y-m-d H:i', $activity_info['end_time']);
-		 
-		$this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_info'), 'href' => RC_Uri::url('market/admin/activity_detail', array('code' => $code))));
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.edit_activity')));
+		
+		$this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_info'), 'href' => RC_Uri::url('market/platform/activity_detail', array('code' => $code))));
+		ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.edit_activity')));
 	
 		$this->assign('ur_here', RC_Lang::get('market::market.edit_activity'));
-		$this->assign('form_action', RC_Uri::url('market/admin/update'));
-		
+		$this->assign('form_action', RC_Uri::url('market/platform/update'));
+	
 		$this->assign('activity_info', $activity_info);
 		$this->display('activity_edit.dwt');
 	}
@@ -178,12 +164,12 @@ class admin extends ecjia_admin {
 		$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
 		$code =  trim($_GET['code']);
 		if (!empty($code)){
-			$activity_name = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->pluck('activity_name');
+			$activity_name = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->pluck('activity_name');
 	
-			RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->update(array('enabled' => 0));
-			
+			RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->update(array('enabled' => 0));
+				
 			ecjia_admin::admin_log($activity_name, 'stop', 'market_activity');
-			return $this->showmessage(RC_Lang::get('market::market.close_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/admin/activity_detail', array('code' => $code))));
+			return $this->showmessage(RC_Lang::get('market::market.close_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/platform/activity_detail', array('code' => $code))));
 		} else {
 			return $this->showmessage(RC_Lang::get('market::market.wrong_parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
@@ -201,13 +187,13 @@ class admin extends ecjia_admin {
 			$activity_detail['code'] = $info->getCode();
 			$activity_detail['name'] = $info->getName();
 			$activity_detail['description'] = $info->getDescription();
-			
-			$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->first();
+				
+			$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->first();
 			if (!empty($activity_info)) {
-				RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->update(array('enabled' => 1));
+				RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->update(array('enabled' => 1));
 			} else {
 				$activity_info = array(
-						'store_id'			=> 0,
+						'store_id'			=> $_SESSION['store_id'],
 						'activity_name' 	=> $activity_detail['name'],
 						'activity_group' 	=> $activity_detail['code'],
 						'activity_desc'		=> $activity_detail['description'],
@@ -218,19 +204,18 @@ class admin extends ecjia_admin {
 				RC_DB::table('market_activity')->insertGetId($activity_info);
 			}
 			ecjia_admin::admin_log($activity_info['activity_name'], 'use', 'market_activity');
-			return $this->showmessage(RC_Lang::get('market::market.open_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/admin/activity_detail', array('code' => $code))));
+			return $this->showmessage(RC_Lang::get('market::market.open_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/platform/activity_detail', array('code' => $code))));
 		} else {
 			return $this->showmessage(RC_Lang::get('market::market.wrong_parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
-
 	
-   /**
-   * 更新活动
-   */
+	/**
+	 * 更新活动
+	 */
 	public function update() {
 		$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
-		
+	
 		$limit_num 		= empty($_POST['limit_num']) 		? 	0 	: intval($_POST['limit_num']);
 		$limit_time		= empty($_POST['limit_time']) 		? 	0 	: intval($_POST['limit_time']);
 		$start_time		= empty($_POST['start_time']) 		? 	'' 	: RC_Time::local_strtotime($_POST['start_time']);
@@ -238,70 +223,33 @@ class admin extends ecjia_admin {
 		$activity_desc	= empty($_POST['activity_desc']) 	? 	'' 	: trim($_POST['activity_desc']);
 		$id 			= empty($_POST['id']) 				? 	0 	: intval($_POST['id']);
 		$activity_code 	= empty($_POST['activity_code']) 	? 	'' 	: trim($_POST['activity_code']);
-		
+	
 		if (empty($start_time)) {
 			return $this->showmessage(RC_Lang::get('market::market.start_time_required'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
-		 
+			
 		if (empty($end_time)) {
 			return $this->showmessage(RC_Lang::get('market::market.end_time_required'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
-		 
+			
 		if ($start_time >= $end_time) {
 			return $this->showmessage(RC_Lang::get('market::market.time_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		$activity_name =  RC_DB::table('market_activity')->where('activity_id', $id)->pluck('activity_name');
-	   	
-	   	$data = array(
-		   	'limit_num'    		=> $limit_num,
-		   	'limit_time'    	=> $limit_time,
-		   	'start_time'    	=> $start_time,
-		   	'end_time'    	 	=> $end_time,
-		   	'activity_desc'    	=> $activity_desc,
-		   	'add_time'	    	=> RC_Time::gmtime(),
+		 
+		$data = array(
+				'limit_num'    		=> $limit_num,
+				'limit_time'    	=> $limit_time,
+				'start_time'    	=> $start_time,
+				'end_time'    	 	=> $end_time,
+				'activity_desc'    	=> $activity_desc,
+				'add_time'	    	=> RC_Time::gmtime(),
 		);
-	   
-	   	RC_DB::table('market_activity')->where('activity_id', $id)->update($data);
-	   	
-   		ecjia_admin::admin_log($activity_name, 'edit', 'market_activity');
-   		return $this->showmessage(RC_Lang::get('market::market.edit_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/admin/edit', array('code' => $activity_code))));
-	}
 	
-   
-   /**
-   * 活动记录列表
-   */
-   public function activity_record() {
-	   	$this->admin_priv('activity_record_manage');
-	   	
-	   	$this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_list'), 'href' => RC_Uri::url('market/admin/init')));
-	   	ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.view_activity_record')));
-	   
-	   	$this->assign('ur_here', RC_Lang::get('market::market.activity_record'));
-	   
-	   	$activity_code = trim($_GET['code']);
-	   	$this->assign('action_link', array('href' => RC_Uri::url('market/admin/activity_detail', array('code' => $activity_code)), 'text' => RC_Lang::get('market::market.back_activity_info')));
-	   	if (!empty($activity_code)) {
-	   		$factory = new Ecjia\App\Market\Factory();
-	   		$activity_info = $factory->driver($activity_code);
-	   		$activity_detail['code'] = $activity_info->getCode();
-	   		$activity_detail['name'] = $activity_info->getName();
-	   		$activity_detail['description'] = $activity_info->getDescription();
-	   		$activity_detail['icon'] = $activity_info->getIcon();
-	   		$this->assign('activity_detail', $activity_detail);
-	   		$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', 0)->where('enabled', 1)->first();
-	   		if (!empty($info)) {
-	   			$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
-	   			$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
-	   			$this->assign('info', $info);
-	   		}
-	   	}
-	   	$list = $this->get_activity_record_list($info['activity_id']);
-	   	
-	   	$this->assign('activity_record_list', $list);
-	   	$this->assign('tags', $this->tags);
-	   	
-	   	$this->display('activity_record.dwt');
+		RC_DB::table('market_activity')->where('activity_id', $id)->update($data);
+		 
+		ecjia_admin::admin_log($activity_name, 'edit', 'market_activity');
+		return $this->showmessage(RC_Lang::get('market::market.edit_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/platform/edit', array('code' => $activity_code))));
 	}
 	
 	/**
@@ -309,7 +257,7 @@ class admin extends ecjia_admin {
 	 */
 	public function activity_prize() {
 		$this->admin_priv('market_activity_manage');
-
+	
 		$activity_code = trim($_GET['code']);
 		if (!empty($activity_code)) {
 			$factory = new Ecjia\App\Market\Factory();
@@ -319,28 +267,28 @@ class admin extends ecjia_admin {
 			$activity_detail['description'] = $activity_info->getDescription();
 			$activity_detail['icon'] = $activity_info->getIcon();
 			$this->assign('activity_detail', $activity_detail);
-			$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', 0)->where('enabled', 1)->first();
+			$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('enabled', 1)->first();
 			if (!empty($info)) {
 				$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
 				$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
 				$this->assign('info', $info);
 			}
 		}
-		
-		$id = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', 0)->pluck('activity_id');
+	
+		$id = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->pluck('activity_id');
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.prize_pool')));
-		
+	
 		$prize_list = RC_DB::table('market_activity_prize')->where('activity_id', $id)->orderby('prize_level', 'asc')->get();
 		$this->assign('prize_list', $prize_list);
-		
-		$bonus_list = RC_DB::table('bonus_type')->select('type_id', 'type_name')->get();
+	
+		$bonus_list = RC_DB::table('bonus_type')->where('store_id', $_SESSION['store_id'])->select('type_id', 'type_name')->get();
 		$this->assign('bonus_list', $bonus_list);
-		
+	
 		$this->assign('ur_here', RC_Lang::get('market::market.prize_pool'));
 		$this->assign('id', $id);
-		$this->assign('action_link', array('href' => RC_Uri::url('market/admin/activity_detail', array('code' => $activity_code)), 'text' => RC_Lang::get('market::market.back_activity_info')));
-		$this->assign('form_action', RC_Uri::url('market/admin/activity_prize_edit', array('code' => $activity_code)));
-		
+		$this->assign('action_link', array('href' => RC_Uri::url('market/platform/activity_detail', array('code' => $activity_code)), 'text' => RC_Lang::get('market::market.back_activity_info')));
+		$this->assign('form_action', RC_Uri::url('market/platform/activity_prize_edit', array('code' => $activity_code)));
+	
 		$this->display('activity_prize.dwt');
 	}
 	
@@ -349,7 +297,7 @@ class admin extends ecjia_admin {
 	 */
 	public function activity_prize_edit() {
 		$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
-		
+	
 		$prize_level		= $_POST['prize_level'];
 		$prize_name			= $_POST['prize_name'];
 		$prize_type			= $_POST['prize_type'];
@@ -362,30 +310,66 @@ class admin extends ecjia_admin {
 		
 		/* 获取奖品池的奖品id*/
 		$prize_id_group = RC_DB::table('market_activity_prize')->where('activity_id', $activity_id)->lists('prize_id');
-		
+	
 		if (!empty($prize_id_group)) {
 			RC_DB::table('market_activity_prize')->whereIn('prize_id', $prize_id_group)->delete();
 		}
-		
+	
 		$count = count($prize_level);
 		$i = 0;
 		while ($i < $count) {
 			$prize_number[$i]	= empty($prize_number[$i]) 	? 0 : $prize_number[$i];
 			$prize_prob[$i]		= empty($prize_prob[$i]) 	? 0 : $prize_prob[$i];
 			$data = array(
-				'activity_id'	=> $activity_id,
-				'prize_level'	=> $prize_level[$i],
-				'prize_name'	=> $prize_name[$i],
-				'prize_type'	=> $prize_type[$i],
-				'prize_value'	=> $prize_type[$i] == 1 ? $prize_value[$i] : $prize_value_other[$i],
-				'prize_number'	=> $prize_number[$i],
-				'prize_prob'	=> $prize_prob[$i]
+					'activity_id'	=> $activity_id,
+					'prize_level'	=> $prize_level[$i],
+					'prize_name'	=> $prize_name[$i],
+					'prize_type'	=> $prize_type[$i],
+					'prize_value'	=> $prize_type[$i] == 1 ? $prize_value[$i] : $prize_value_other[$i],
+					'prize_number'	=> $prize_number[$i],
+					'prize_prob'	=> $prize_prob[$i]
 			);
 			RC_DB::table('market_activity_prize')->insert($data);
 			$i++;
 		}
-		
+	
 		return $this->showmessage(RC_Lang::get('market::market.edit_prize_pool_succss'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+	}
+	
+	/**
+	 * 活动记录列表
+	 */
+	public function activity_record() {
+		$this->admin_priv('activity_record_manage');
+		 
+		$this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_list'), 'href' => RC_Uri::url('market/platform/init')));
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.view_activity_record')));
+	
+		$this->assign('ur_here', RC_Lang::get('market::market.activity_record'));
+	
+		$activity_code = trim($_GET['code']);
+		$this->assign('action_link', array('href' => RC_Uri::url('market/platform/activity_detail', array('code' => $activity_code)), 'text' => RC_Lang::get('market::market.back_activity_info')));
+		if (!empty($activity_code)) {
+			$factory = new Ecjia\App\Market\Factory();
+			$activity_info = $factory->driver($activity_code);
+			$activity_detail['code'] = $activity_info->getCode();
+			$activity_detail['name'] = $activity_info->getName();
+			$activity_detail['description'] = $activity_info->getDescription();
+			$activity_detail['icon'] = $activity_info->getIcon();
+			$this->assign('activity_detail', $activity_detail);
+			$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('enabled', 1)->first();
+			if (!empty($info)) {
+				$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
+				$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
+				$this->assign('info', $info);
+			}
+		}
+		$list = $this->get_activity_record_list($info['activity_id']);
+		 
+		$this->assign('activity_record_list', $list);
+		$this->assign('tags', $this->tags);
+		 
+		$this->display('activity_record.dwt');
 	}
 	
 	/**
@@ -398,7 +382,7 @@ class admin extends ecjia_admin {
 	
 		$factory = new Ecjia\App\Market\Factory();
 		$activity_data = $factory->getDrivers();
-		
+	
 		foreach ($activity_data as $k => $event) {
 			$activity_list[$k]['code'] 			= $event->getCode();
 			$activity_list[$k]['name'] 			= $event->getName();
@@ -414,15 +398,15 @@ class admin extends ecjia_admin {
 	 */
 	private function get_activity_record_list($activity_id = 0) {
 		$db_activity_log = RC_DB::table('market_activity_log');
-		
+	
 		if (!empty($activity_id)) {
 			$db_activity_log->where('activity_id', $activity_id);
 		}
-		
+	
 		$count = $db_activity_log->count();
-		$page  = new ecjia_page($count, 15, 5);
+		$page = new ecjia_platform_page($count, 10, 5);
 		$res   = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id-1)->get();
-
+	
 		if (!empty($res)) {
 			foreach ($res as $key => $val) {
 				$res[$key]['issue_time']  	= RC_Time::local_date('Y-m-d H:i:s', $res[$key]['issue_time']);
@@ -432,4 +416,5 @@ class admin extends ecjia_admin {
 		return array('item' => $res, 'page' => $page->show(), 'desc' => $page->page_desc(), 'current_page' => $page->current_page);
 	}
 }
-// end
+
+//end

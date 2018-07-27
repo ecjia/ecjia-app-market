@@ -136,6 +136,13 @@ return array(
 	'close_success'					=> '成功关闭营销活动',
 	'open_success'					=> '成功开启营销活动',
 	'back_activity_info'			=> '返回活动详情',
+	
+	//js
+	'js_lang'	=> array(
+			'fill_activity_name'		=> '请输入活动名称',
+			'fill_start_time' 			=> '请输入活动开始时间',
+			'fill_end_time' 			=> '请输入活动结束时间',
+	),
 );
 
 // end
