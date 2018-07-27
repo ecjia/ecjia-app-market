@@ -46,8 +46,49 @@
 //
 namespace Ecjia\App\Market;
 
-abstract class AbstractActivity
+abstract class MarketAbstract
 {
+    /**
+     * 支持PC平台
+     */
+    const PLATFORM_PC       = 0b00000001;
+
+    /**
+     * 支持APP平台
+     */
+    const PLATFORM_APP      = 0b00000010;
+
+    /**
+     * 支持H5平台
+     */
+    const PLATFORM_H5       = 0b00000100;
+
+    /**
+     * 支持微信公众号平台
+     */
+    const PLATFORM_WECHAT   = 0b00001000;
+
+    /**
+     * 支持微信小程序平台
+     */
+    const PLATFORM_WEAPP    = 0b00010000;
+
+    /**
+     * 支持平台后台
+     */
+    const TYPE_ADMIN        = 0b00000001;
+
+    /**
+     * 支持商家后台
+     */
+    const TYPE_MERCHANT     = 0b00000010;
+
+    /**
+     * 支持公众平台后台
+     */
+    const TYPE_PLATFORM     = 0b00000100;
+
+
     /**
      * 代号标识
      * @var string
@@ -71,7 +112,20 @@ abstract class AbstractActivity
      * @var string
      */
     protected $icon;
-    
+
+
+    /**
+     * 活动支持平台：PC、APP、H5、Wechat、Weapp
+     * @var
+     */
+    protected $support_platform;
+
+    /**
+     * 活动支持类型：商家或平台 Admin、Merchant
+     * @var
+     */
+    protected $support_type;
+
     
     public function getCode()
     {

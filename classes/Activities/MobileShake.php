@@ -9,9 +9,9 @@
 namespace Ecjia\App\Market\Activities;
 
 
-use Ecjia\App\Market\AbstractActivity;
+use Ecjia\App\Market\MarketAbstract;
 
-class MobileShake extends AbstractActivity
+class MobileShake extends MarketAbstract
 {
 
     /**
@@ -38,8 +38,21 @@ class MobileShake extends AbstractActivity
      */
     protected $icon = '/statics/images/icon/mobile_shake.png'; //图片未添加
 
+    /**
+     * 支持平台
+     * @var int
+     */
+    protected $support_platform = self::PLATFORM_APP;
 
-    public function run() {
+    /**
+     * 支持帐号类型
+     * @var int
+     */
+    protected $support_type = self::TYPE_ADMIN;
+
+
+    public function run()
+    {
 
 
 

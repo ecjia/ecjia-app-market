@@ -8,9 +8,9 @@
 
 namespace Ecjia\App\Market\Activities;
 
-use Ecjia\App\Market\AbstractActivity;
+use Ecjia\App\Market\MarketAbstract;
 
-class WechatDaZhuanPan extends AbstractActivity
+class WechatDaZhuanPan extends MarketAbstract
 {
 
     /**
@@ -38,7 +38,21 @@ class WechatDaZhuanPan extends AbstractActivity
     protected $icon = '/statics/images/icon/wechat_dazhuangpan.png'; //图片未添加
 
 
-    public function run() {
+    /**
+     * 支持平台
+     * @var int
+     */
+    protected $support_platform = self::PLATFORM_WECHAT;
+
+    /**
+     * 支持帐号类型
+     * @var int
+     */
+    protected $support_type = self::TYPE_ADMIN | self::TYPE_PLATFORM;
+
+
+    public function run()
+    {
 
 
 
