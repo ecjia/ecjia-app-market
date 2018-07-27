@@ -54,7 +54,7 @@ class market_platform_menu_api extends Component_Event_Api
 
     public function call(&$options)
     {
-        $menus = ecjia_platform::make_admin_menu('market', '营销活动', RC_Uri::url('market/platform/init'), 30)->add_icon('icon-home')->add_base('market');
+        $menus = ecjia_platform::make_admin_menu('market', '营销活动', RC_Uri::url('market/platform/init'), 30)->add_icon('icon-star')->add_base('market');
 
         return $menus;
     }
