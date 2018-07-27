@@ -34,7 +34,7 @@
 						<!-- {foreach from=$prize_list item=prize name=foo_prize} -->
 						<tr class="activity_prize">
 							<td>
-								<select class="w150 select2 form-control" name="prize_level[]">
+								<select class="w130 select2 form-control" name="prize_level[]">
 									<option value="" >{lang key='market::market.please_select'}</option>
 									<option value="0" {if $prize.prize_level eq 0}selected{/if}>{lang key='market::market.grand_prize'}</option>
 									<option value="1" {if $prize.prize_level eq 1}selected{/if}>{lang key='market::market.first_prize'}</option>
@@ -44,10 +44,10 @@
 									<option value="5" {if $prize.prize_level eq 5}selected{/if}>{lang key='market::market.fifth_prize'}</option>
                                 </select>
 							</td>
-							<td><input class="w200 input-xlarge form-control" type='text' name='prize_name[]' value="{$prize.prize_name}" /></td>
+							<td><input class="w180 input-xlarge form-control" type='text' name='prize_name[]' value="{$prize.prize_name}" /></td>
 							
 							<td>
-								<select  name="prize_type[]" class="w150 span12 select2 form-control">
+								<select  name="prize_type[]" class="w130 span12 select2 form-control">
 									<option value="" >{lang key='market::market.please_select'}</option>
 									<option value="1" {if $prize.prize_type eq 1}selected{/if}>{lang key='market::market.bonus'}</option>
 									<option value="3" {if $prize.prize_type eq 3}selected{/if}>{lang key='market::market.integral'}</option>
@@ -58,7 +58,7 @@
 							</td>
 							<td class="prize_value">
 								<span {if $prize.prize_type neq '1'}class="ecjiaf-dn"{/if}>
-									<select name="prize_value[]" class="w150 span12 select2 form-control">
+									<select name="prize_value[]" class="w180 span12 select2 form-control">
 										<option value="">{lang key='market::market.please_select'}</option>
 										<!-- {foreach from=$bonus_list item=bonus } -->
 											<option value="{$bonus.type_id}" {if $prize.prize_value eq $bonus.type_id}selected{/if}>{$bonus.type_name}</option>
@@ -66,7 +66,7 @@
 	                                </select>
                                 </span>
                                 <span  {if $prize.prize_type eq '1'}class="ecjiaf-dn"{/if}>
-									<input class="span12 input-xlarge form-control" type='text' name='prize_value_other[]' value="{$prize.prize_value}"/>
+									<input class="w180 span12 input-xlarge form-control" type='text' name='prize_value_other[]' value="{$prize.prize_value}"/>
 								</span>
 							</td>
 							<td><input class="w100 input-xlarge form-control" type='text' name='prize_number[]' value="{$prize.prize_number}"/></td>
@@ -87,7 +87,7 @@
 						<!-- {foreachelse} -->
 						<tr class="activity_prize">
 							<td>
-								<select name="prize_level[]" class="w150 span12 select2 form-control">
+								<select name="prize_level[]" class="w130 span12 select2 form-control">
 									<option value="" selected>{lang key='market::market.please_select'}</option>
 									<option value="0">{lang key='market::market.grand_prize'}</option>
 									<option value="1">{lang key='market::market.first_prize'}</option>
@@ -97,9 +97,9 @@
 									<option value="5">{lang key='market::market.fifth_prize'}</option>
                                 </select>
 							</td>
-							<td><input class="w200 input-xlarge form-control" type='text' name='prize_name[]' /></td>
+							<td><input class="w180 input-xlarge form-control" type='text' name='prize_name[]' /></td>
 							<td>
-								<select name="prize_type[]" class="w150 span12 select2 form-control">
+								<select name="prize_type[]" class="w130 span12 select2 form-control">
 									<option value="" selected>{lang key='market::market.please_select'}</option>
 									<option value="1">{lang key='market::market.bonus'}</option>
 									<option value="3">{lang key='market::market.integral'}</option>
@@ -110,7 +110,7 @@
 							</td>
 							<td class="prize_value">
 								<span class="ecjiaf-dn">
-									<select name="prize_value[]" class="w150 span12 select2 form-control">
+									<select name="prize_value[]" class="w180 span12 select2 form-control">
 										<option value="" selected>{lang key='market::market.please_select'}</option>
 										<!-- {foreach from=$bonus_list item=bonus } -->
 											<option value="{$bonus.type_id}">{$bonus.type_name}</option>
@@ -118,7 +118,7 @@
 	                                </select>
                                 </span>
                                 <span>
-									<input class="w200 input-xlarge form-control" type='text' name='prize_value_other[]'/>
+									<input class="w180 input-xlarge form-control" type='text' name='prize_value_other[]'/>
 								</span>
 							</td>
 							<td><input class="w100 input-xlarge form-control" type='text' name='prize_number[]'/></td>
