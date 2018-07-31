@@ -85,7 +85,7 @@ class platform extends ecjia_platform
     public function init()
     {
         $this->admin_priv('market_activity_manage');
-
+        
         ecjia_platform_screen::get_current_screen()->remove_last_nav_here();
         ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.activity_list')));
         $this->assign('ur_here', RC_Lang::get('market::market.activity_list'));
@@ -120,7 +120,9 @@ class platform extends ecjia_platform
 			$activity_detail['icon'] = $activity_info->getIcon();
 			$this->assign('activity_detail', $activity_detail);
 			$this->assign('code', $code);
-			$info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', $_SESSION['store_id'])->first();
+			$wechat_id = $this->platformAccount->getAccountID();
+			
+			$info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->first();
 			if (!empty($info)) {
 				$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
 				$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
@@ -141,9 +143,10 @@ class platform extends ecjia_platform
 	 */
 	public function edit() {
 		$this->admin_priv('market_activity_update');
-			
+		
+		$wechat_id = $this->platformAccount->getAccountID();
 		$code = trim($_GET['code']);
-		$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', $_SESSION['store_id'])->first();
+		$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->first();
 		
 		$activity_info['start_time'] = RC_Time::local_date('Y-m-d H:i', $activity_info['start_time']);
 		$activity_info['end_time']   = RC_Time::local_date('Y-m-d H:i', $activity_info['end_time']);
@@ -163,11 +166,12 @@ class platform extends ecjia_platform
 	 */
 	public function close_activity() {
 		$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
+		$wechat_id = $this->platformAccount->getAccountID();
 		$code =  trim($_GET['code']);
 		if (!empty($code)){
 			$activity_name = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->pluck('activity_name');
 	
-			RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->update(array('enabled' => 0));
+			RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->update(array('enabled' => 0));
 				
 			//ecjia_admin::admin_log($activity_name, 'stop', 'market_activity');
 			return $this->showmessage(RC_Lang::get('market::market.close_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/platform/activity_detail', array('code' => $code))));
@@ -181,6 +185,7 @@ class platform extends ecjia_platform
 	 */
 	public function open_activity() {
 		$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
+		$wechat_id = $this->platformAccount->getAccountID();
 		$code =  trim($_GET['code']);
 		if (!empty($code)){
 			$factory = new Ecjia\App\Market\Factory();
@@ -189,9 +194,9 @@ class platform extends ecjia_platform
 			$activity_detail['name'] = $info->getName();
 			$activity_detail['description'] = $info->getDescription();
 				
-			$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->first();
+			$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->first();
 			if (!empty($activity_info)) {
-				RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->update(array('enabled' => 1));
+				RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->update(array('enabled' => 1));
 			} else {
 				$activity_info = array(
 						'store_id'			=> $_SESSION['store_id'],
@@ -200,7 +205,8 @@ class platform extends ecjia_platform
 						'activity_desc'		=> $activity_detail['description'],
 						'activity_object'   => 1,
 						'add_time'			=> RC_Time::gmtime(),
-						'enabled'			=> 1
+						'enabled'			=> 1,
+						'wechat_id'			=> $wechat_id
 				);
 				RC_DB::table('market_activity')->insertGetId($activity_info);
 			}
@@ -258,7 +264,8 @@ class platform extends ecjia_platform
 	 */
 	public function activity_prize() {
 		$this->admin_priv('market_activity_manage');
-	
+		
+		$wechat_id = $this->platformAccount->getAccountID();
 		$activity_code = trim($_GET['code']);
 		if (!empty($activity_code)) {
 			$factory = new Ecjia\App\Market\Factory();
@@ -268,7 +275,8 @@ class platform extends ecjia_platform
 			$activity_detail['description'] = $activity_info->getDescription();
 			$activity_detail['icon'] = $activity_info->getIcon();
 			$this->assign('activity_detail', $activity_detail);
-			$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('enabled', 1)->first();
+			$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->where('enabled', 1)->first();
+		
 			if (!empty($info)) {
 				$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
 				$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
@@ -276,12 +284,12 @@ class platform extends ecjia_platform
 			}
 		}
 	
-		$id = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->pluck('activity_id');
+		$id = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->pluck('activity_id');
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.prize_pool')));
 	
 		$prize_list = RC_DB::table('market_activity_prize')->where('activity_id', $id)->orderby('prize_level', 'asc')->get();
 		$this->assign('prize_list', $prize_list);
-	
+
 		$bonus_list = RC_DB::table('bonus_type')->where('store_id', $_SESSION['store_id'])->select('type_id', 'type_name')->get();
 		$this->assign('bonus_list', $bonus_list);
 	
@@ -348,7 +356,8 @@ class platform extends ecjia_platform
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.view_activity_record')));
 	
 		$this->assign('ur_here', RC_Lang::get('market::market.activity_record'));
-	
+		
+		$wechat_id = $this->platformAccount->getAccountID();
 		$activity_code = trim($_GET['code']);
 		$this->assign('action_link', array('href' => RC_Uri::url('market/platform/activity_detail', array('code' => $activity_code)), 'text' => RC_Lang::get('market::market.back_activity_info')));
 		if (!empty($activity_code)) {
@@ -359,7 +368,7 @@ class platform extends ecjia_platform
 			$activity_detail['description'] = $activity_info->getDescription();
 			$activity_detail['icon'] = $activity_info->getIcon();
 			$this->assign('activity_detail', $activity_detail);
-			$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('enabled', 1)->first();
+			$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->where('enabled', 1)->first();
 			if (!empty($info)) {
 				$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
 				$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);

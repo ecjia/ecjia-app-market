@@ -87,6 +87,7 @@ class shake_module extends api_front implements api_interface {
 							->where('activity_group', $code)
 							->where('activity_object', 1)
 							->where('store_id', 0)
+							->where('wechat_id', 0)
 							->where('start_time', '<=', $time)
 							->where('end_time', '>=', $time)
 							->where('enabled', 1)
@@ -95,7 +96,7 @@ class shake_module extends api_front implements api_interface {
 		/* 判断活动有无限定次数*/
 		if ($market_activity['limit_num'] > 0) {
 			$db_activity_log = RC_DB::table('market_activity_log');
-			$db_activity_log->where('activity_id', $market_activity['activity_id'])->where('user_id', $_SESSION['user_id']);
+			$db_activity_log->where('activity_id', $market_activity['activity_id'])->where('openid', $_SESSION['user_id'])->where('wechat_id', 0);
 			
 			if ($market_activity['limit_time'] > 0) {
 				$time_limit = $time - $market_activity['limit_time']*60;

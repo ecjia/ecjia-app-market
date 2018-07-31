@@ -333,7 +333,7 @@ class admin extends ecjia_admin {
 		$prize_list = RC_DB::table('market_activity_prize')->where('activity_id', $id)->orderby('prize_level', 'asc')->get();
 		$this->assign('prize_list', $prize_list);
 		
-		$bonus_list = RC_DB::table('bonus_type')->select('type_id', 'type_name')->get();
+		$bonus_list = RC_DB::table('bonus_type')->where('store_id', 0)->select('type_id', 'type_name')->get();
 		$this->assign('bonus_list', $bonus_list);
 		
 		$this->assign('ur_here', RC_Lang::get('market::market.prize_pool'));
