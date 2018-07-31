@@ -57,13 +57,7 @@
 						<div class="control-group formSep">
 		                    <label class="control-label">{lang key='market::market.join_platform'}</label>
 		                    <div class="controls l_h30">
-			                    {if $activity_info.activity_object eq 1}
-			                    	 <span>APP</span>
-			                    {elseif $activity_info.activity_object eq 2}
-			                    	<span>PC</span>
-			                    {elseif $activity_info.activity_object eq 3}
-			                    	<span>Touch</span>
-			                    {/if}
+			                    <span>{$activity_info.activity_object}</span>
 		                    </div>
 		                </div>
 		                <div class="control-group formSep">

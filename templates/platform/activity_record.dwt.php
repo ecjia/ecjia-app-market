@@ -33,7 +33,7 @@
 					<tbody>
 						<!--{foreach from=$activity_record_list.item item=record} -->
 						<tr>
-							<td>{$record.username}</td>
+							<td>{$record.user_name}</td>
 							<td>{$record.prize_name}</td>
 							<td>
 								{if $record.issue_status eq '0'}{lang key='market::market.unreleased'}{else}{lang key='market::market.issued'}{/if}

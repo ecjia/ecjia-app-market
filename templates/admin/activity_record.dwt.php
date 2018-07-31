@@ -32,7 +32,7 @@
 				<tbody>
 					<!--{foreach from=$activity_record_list.item item=record} -->
 					<tr>
-						<td>{if $record.username}<a href='{RC_Uri::url("user/admin/info", "id={$record.user_id}")}' target="_blank">{$record.username}</a>{else}{$record.username}{/if}</td>
+						<td>{if $record.user_name}<a href='{RC_Uri::url("user/admin/info", "id={$record.user_id}")}' target="_blank">{$record.username}</a>{else}{$record.username}{/if}</td>
 						<td>{$record.prize_name}</td>
 						<td>
 							{if $record.issue_status eq '0'}{lang key='market::market.unreleased'}{else}{lang key='market::market.issued'}{/if}
