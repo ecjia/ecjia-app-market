@@ -48,7 +48,7 @@ class WechatDaZhuanPan extends MarketAbstract
      * 支持帐号类型
      * @var int
      */
-    protected $support_type = self::TYPE_ADMIN | self::TYPE_PLATFORM;
+    protected $display_type = self::DISPLAY_PLATFORM;
 
 
     public function run()

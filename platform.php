@@ -392,8 +392,8 @@ class platform extends ecjia_platform
 		$activity_list = array();
 	
 		$factory = new Ecjia\App\Market\Factory();
-		$activity_data = $factory->getDrivers();
-	
+		$activity_data = $factory->getDrivers(Ecjia\App\Market\MarketAbstract::DISPLAY_PLATFORM);
+
 		foreach ($activity_data as $k => $event) {
 			$activity_list[$k]['code'] 			= $event->getCode();
 			$activity_list[$k]['name'] 			= $event->getName();

@@ -48,7 +48,7 @@ class MobileShake extends MarketAbstract
      * 支持帐号类型
      * @var int
      */
-    protected $support_type = self::TYPE_ADMIN;
+    protected $display_type = self::DISPLAY_ADMIN;
 
 
     public function run()
