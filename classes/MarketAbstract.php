@@ -91,12 +91,12 @@ abstract class MarketAbstract
     /**
      * 支持平台公众号
      */
-    const ACCOUNT_ADMIN        = 0b00010000;
+    const ACCOUNT_ADMIN     = 0b00010000;
 
     /**
      * 支持商家公众号
      */
-    const ACCOUNT_MERCHANT     = 0b00100000;
+    const ACCOUNT_MERCHANT  = 0b00100000;
 
 
     /**
