@@ -21,17 +21,7 @@
             <div class="card-content">
 				<div class="card-body">
 					<div class="nav-vertical">
-						<ul class="nav nav-tabs nav-left flex-column">
-							<li class="nav-item">
-								<a class="nav-link active" id="baseVerticalLeft-tab1" data-toggle="tab" aria-controls="tabVerticalLeft1" href="component-tabs-component.html#tabVerticalLeft1" aria-expanded="true">Tab 1</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="baseVerticalLeft-tab2" data-toggle="tab" aria-controls="tabVerticalLeft2" href="component-tabs-component.html#tabVerticalLeft2" aria-expanded="false">Tab 2</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" id="baseVerticalLeft-tab3" data-toggle="tab" aria-controls="tabVerticalLeft3" href="component-tabs-component.html#tabVerticalLeft3" aria-expanded="false">Tab 3 </a>
-							</li>
-						</ul>
+                        <!-- {ecjia:hook id=display_ecjia_platform_market_prize_menu} -->
 						<div class="tab-content px-1">
 							<div role="tabpanel" class="tab-pane active" id="tabVerticalLeft1" aria-expanded="true" aria-labelledby="baseVerticalLeft-tab1">
 								<p>活动一记录</p>

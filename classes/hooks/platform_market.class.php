@@ -44,44 +44,46 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-namespace Ecjia\App\Market;
+defined('IN_ECJIA') or exit('No permission resources.');
 
-use Ecjia\App\Market\Models\MarketActivityModel;
-use ecjia_platform;
-use RC_Uri;
-use RC_Hook;
+class platform_market_hooks {
 
-class MarketPrizeMenu
-{
 
-    protected $store_id;
+    public static function display_ecjia_platform_market_prize_menu() {
 
-    protected $wechat_id;
+        $store_id = ecjia_platform::$controller->getPlatformAccount()->getStoreId();
+        $wechat_id = ecjia_platform::$controller->getPlatformAccount()->getAccountID();
 
-    public function __construct($store_id, $wechat_id = 0)
-    {
-        $this->store_id = $store_id;
-        $this->wechat_id = $wechat_id;
+        $menus = with(new Ecjia\App\Market\MarketPrizeMenu($store_id, $wechat_id))->getMenus();
+
+        $current_code = ecjia_platform_screen::get_current_screen()->get_option('current_code');
+
+        $content = '';
+
+        if (!empty($menus)) {
+            $content .= '<ul class="nav nav-tabs nav-left flex-column">' . PHP_EOL;
+            foreach ($menus as $key => $menu) {
+                $key = $key+1;
+                $content .= '<li class="nav-item">' . PHP_EOL;
+                $content .= '    <a ';
+
+                if ($current_code == $menu->action) {
+                    $content .= 'class="nav-link active" ';
+                } else {
+                    $content .= 'class="nav-link" ';
+                }
+
+                $content .= 'id="baseVerticalLeft-tab'.$key.'" data-toggle="tab" aria-controls="tabVerticalLeft'.$key.'" href="'.$menu->link.'" aria-expanded="true">'.$menu->name.'</a>' . PHP_EOL;
+                $content .= '</li>' . PHP_EOL;
+            }
+            $content .= '</ul>' . PHP_EOL;
+        }
+
+        echo $content;
     }
-
-    public function getMenus()
-    {
-        $data = $this->getMarketActivities();
-        $menus = $data->map(function ($item) {
-            return ecjia_platform::make_admin_menu($item['activity_group'], $item['activity_name'], RC_Uri::url('wechat/platform_prize/init', ['type' => $item['activity_group']]), 14)->add_purview('wechat_prize_manage');
-        });
-
-        $menus = RC_Hook::apply_filters('ecjia_market_activity_prize_menu', $menus);
-
-        return $menus->all();
-    }
-
-    public function getMarketActivities()
-    {
-        $data = MarketActivityModel::where('wechat_id', $this->wechat_id)->where('store_id', $this->store_id)->get();
-
-        return $data;
-    }
-
-
+    
 }
+
+ RC_Hook::add_action( 'display_ecjia_platform_market_prize_menu', array('platform_market_hooks', 'display_ecjia_platform_market_prize_menu') );
+
+// end

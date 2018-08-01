@@ -85,33 +85,37 @@ class platform_prize extends ecjia_platform
     public function init()
     {
         $this->admin_priv('activity_record_manage');
-        
+
+        $wechat_id = $this->platformAccount->getAccountID();
+        $activity_code = trim($_GET['code']);
+
         ecjia_platform_screen::get_current_screen()->remove_last_nav_here();
         ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('抽奖记录'));
+        ecjia_platform_screen::get_current_screen()->add_option('current_code', $activity_code);
+
         $this->assign('ur_here', '抽奖记录');
 
-       $wechat_id = $this->platformAccount->getAccountID();
-       $activity_code = trim($_GET['code']);
-       if (!empty($activity_code)) {
-       	$factory = new Ecjia\App\Market\Factory();
-       	$activity_info = $factory->driver($activity_code);
-       	$activity_detail['code'] = $activity_info->getCode();
-       	$activity_detail['name'] = $activity_info->getName();
-       	$activity_detail['description'] = $activity_info->getDescription();
-       	$activity_detail['icon'] = $activity_info->getIcon();
-       	$this->assign('activity_detail', $activity_detail);
-       	$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->where('enabled', 1)->first();
-       	if (!empty($info)) {
-       		$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
-       		$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
-       		$this->assign('info', $info);
-       	}
-       }
-       $list = $this->get_activity_record_list($info['activity_id']);
+
+        if (!empty($activity_code)) {
+            $factory = new Ecjia\App\Market\Factory();
+            $activity_info = $factory->driver($activity_code);
+            $activity_detail['code'] = $activity_info->getCode();
+            $activity_detail['name'] = $activity_info->getName();
+            $activity_detail['description'] = $activity_info->getDescription();
+            $activity_detail['icon'] = $activity_info->getIcon();
+            $this->assign('activity_detail', $activity_detail);
+            $info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->where('enabled', 1)->first();
+            if (!empty($info)) {
+                $info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
+                $info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
+                $this->assign('info', $info);
+            }
+        }
+        $list = $this->get_activity_record_list($info['activity_id']);
        	
-       $this->assign('activity_record_list', $list);
+        $this->assign('activity_record_list', $list);
        
-       $this->display('prize_record.dwt');
+        $this->display('prize_record.dwt');
     }
 	
 	
