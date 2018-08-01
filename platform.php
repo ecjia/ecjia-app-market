@@ -169,7 +169,7 @@ class platform extends ecjia_platform
 		$wechat_id = $this->platformAccount->getAccountID();
 		$code =  trim($_GET['code']);
 		if (!empty($code)){
-			$activity_name = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->pluck('activity_name');
+			//$activity_name = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->pluck('activity_name');
 	
 			RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->update(array('enabled' => 0));
 				
@@ -196,7 +196,7 @@ class platform extends ecjia_platform
 				
 			$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->first();
 			if (!empty($activity_info)) {
-				RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->update(array('enabled' => 1));
+				RC_DB::table('market_activity')->where('activity_id', $activity_info['activity_id'])->update(array('enabled' => 1, 'activity_object' => 'wechat'));
 			} else {
 				$activity_info = array(
 						'store_id'			=> $_SESSION['store_id'],
@@ -242,7 +242,7 @@ class platform extends ecjia_platform
 		if ($start_time >= $end_time) {
 			return $this->showmessage(RC_Lang::get('market::market.time_error'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
-		$activity_name =  RC_DB::table('market_activity')->where('activity_id', $id)->pluck('activity_name');
+		//$activity_name =  RC_DB::table('market_activity')->where('activity_id', $id)->pluck('activity_name');
 		 
 		$data = array(
 				'limit_num'    		=> $limit_num,
