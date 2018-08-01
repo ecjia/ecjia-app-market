@@ -60,21 +60,23 @@
 			                    <span>{$activity_info.activity_object}</span>
 		                    </div>
 		                </div>
-		                <div class="control-group formSep">
-							<label class="control-label">{lang key='market::market.label_activity_restrict_num'}</label>
+						<div class="control-group formSep">
+							<label class="control-label">活动限制：</label>
 							<div class="controls l_h30">
-								<span>{$activity_info.limit_num|default:0}</span>
+								{if $activity_info.limit_num eq '0'}
+									在整个活动时间段可参与<span class="span-font">无数次</span>
+								{elseif $activity_info.limit_num gt '0' && $activity_info.limit_time eq '0'}
+									在整个活动时间段可参与<span class="span-font">{$activity_info.limit_num}次</span>
+								{elseif $activity_info.limit_num gt '0' && $activity_info.limit_time gt '0'}
+									在整个活动时间段每隔<span class="span-font">{$activity_info.limit_time}小时</span>可参与<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_num}次</span>
+								{/if}
 							</div>
 						</div>
+						
 						<div class="control-group formSep">
-							<label class="control-label">{lang key='market::market.label_activity_time_restrict'}</label>
+							<label class="control-label">{t}活动时间段：{/t}</label>
 							<div class="controls l_h30">
-								{$activity_info.limit_time|default:0}
-							</div>
-						</div>
-						<div class="control-group formSep">
-							<div class="controls l_h30" style="margin-left:94px;">
-								{lang key='market::market.label_start_date'}{$activity_info.start_time} <span class="time-margin">{lang key='market::market.label_end_date'}{$activity_info.end_time}</span>
+								{$activity_info.start_time} ~ {$activity_info.end_time}
 							</div>
 						</div>
 						
@@ -90,7 +92,7 @@
 								<input type="hidden" name="id" value="{$activity_info.activity_id}" />
 								<a class="btn btn-gebo data-pjax" href="{$action_edit}">{t}编辑活动{/t}</a>
 								<a class="btn btn-gebo data-pjax" href="{$action_prize}" style="margin:0px 10px;">{t}活动奖品池{/t}</a>
-								<a class="btn btn-gebo data-pjax" href="{$action_record}">{t}活动记录{/t}</a>
+								<a class="btn btn-gebo data-pjax" href="{$action_record}">{t}中奖记录{/t}</a>
 							</div>
 						</div>
 					</fieldset>

@@ -105,7 +105,7 @@ class admin extends ecjia_admin {
 		$this->assign('search_action', RC_Uri::url('market/admin/init'));
 
 		$activity_list = $this->get_activity_list();
-		
+	
 		$this->assign('activity_list', $activity_list);
 
 		$this->display('activity_list.dwt');
@@ -133,7 +133,7 @@ class admin extends ecjia_admin {
 			$activity_detail['icon'] = $activity_info->getIcon();
 			$this->assign('activity_detail', $activity_detail);
 			$this->assign('code', $code);
-			$info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', 0)->first();
+			$info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', 0)->where('wechat_id', 0)->first();
 			if (!empty($info)) {
 				$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
 				$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
@@ -156,7 +156,7 @@ class admin extends ecjia_admin {
 		$this->admin_priv('market_activity_update');
 		 
 		$code = trim($_GET['code']);
-		$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', 0)->first();
+		$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', 0)->where('wechat_id', 0)->first();
 	
 		$activity_info['start_time'] = RC_Time::local_date('Y-m-d H:i', $activity_info['start_time']);
 		$activity_info['end_time']   = RC_Time::local_date('Y-m-d H:i', $activity_info['end_time']);
@@ -178,11 +178,11 @@ class admin extends ecjia_admin {
 		$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
 		$code =  trim($_GET['code']);
 		if (!empty($code)){
-			$activity_name = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->pluck('activity_name');
+			$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->where('wechat_id', 0)->first();
 	
-			RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->update(array('enabled' => 0));
+			RC_DB::table('market_activity')->where('activity_id', $activity_info['activity_id'])->update(array('enabled' => 0));
 			
-			ecjia_admin::admin_log($activity_name, 'stop', 'market_activity');
+			ecjia_admin::admin_log($activity_info['activity_name'], 'stop', 'market_activity');
 			return $this->showmessage(RC_Lang::get('market::market.close_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/admin/activity_detail', array('code' => $code))));
 		} else {
 			return $this->showmessage(RC_Lang::get('market::market.wrong_parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -202,9 +202,9 @@ class admin extends ecjia_admin {
 			$activity_detail['name'] = $info->getName();
 			$activity_detail['description'] = $info->getDescription();
 			
-			$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->first();
+			$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->where('wechat_id', 0)->first();
 			if (!empty($activity_info)) {
-				RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', 0)->update(array('enabled' => 1));
+				RC_DB::table('market_activity')->where('activity_id', $activity_info['activity_id'])->update(array('enabled' => 1, 'activity_object' => 'app'));
 			} else {
 				$activity_info = array(
 						'store_id'			=> 0,
@@ -213,7 +213,8 @@ class admin extends ecjia_admin {
 						'activity_desc'		=> $activity_detail['description'],
 						'activity_object'   => 'app',
 						'add_time'			=> RC_Time::gmtime(),
-						'enabled'			=> 1
+						'enabled'			=> 1,
+						'wechat_id'			=> 0
 				);
 				RC_DB::table('market_activity')->insertGetId($activity_info);
 			}

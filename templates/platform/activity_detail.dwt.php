@@ -54,26 +54,26 @@
 							<h4 class="card-title" style="padding-top:13px;">活动信息<hr></h4>
 							<div class="form-group row">
 								<label class="col-lg-2 label-control text-right">{lang key='market::market.join_platform'}</label>
-								<div class="col-lg-8 controls l_h30">
+								<div class="col-lg-8 controls">
 				                    <span>{$activity_info.activity_object}</span>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">{lang key='market::market.label_activity_restrict_num'}</label>
-								<div class="col-lg-8 controls l_h30">
-									{$activity_info.limit_num|default:0}
+								<label class="col-lg-2 label-control text-right">活动限制：</label>
+								<div class="col-lg-8 controls">
+									{if $activity_info.limit_num eq '0'}
+										在整个活动时间段可参与<span class="span-font">无数次</span>
+									{elseif $activity_info.limit_num gt '0' && $activity_info.limit_time eq '0'}
+										在整个活动时间段可参与<span class="span-font">{$activity_info.limit_num}次</span>
+									{elseif $activity_info.limit_num gt '0' && $activity_info.limit_time gt '0'}
+										在整个活动时间段每隔<span class="span-font">{$activity_info.limit_time}小时</span>可参与<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_num}次</span>
+									{/if}
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">{lang key='market::market.label_activity_time_restrict'}</label>
-								<div class="col-lg-8 controls l_h30">
-									{$activity_info.limit_time|default:0}
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">{lang key='market::market.label_activity_time_restrict'}</label>
-								<div class="col-lg-8 controls l_h30">
-									{lang key='market::market.label_start_date'}{$activity_info.start_time}  <span style="margin-left:50px;">{lang key='market::market.label_end_date'}{$activity_info.end_time}</span>
+								<label class="col-lg-2 label-control text-right">{t}活动时间段：{/t}</label>
+								<div class="col-lg-8 controls">
+									{$activity_info.start_time}<pre style="display:inline;"> ~ </pre>{$activity_info.end_time}
 								</div>
 							</div>
 							
@@ -83,7 +83,7 @@
 						<input type="hidden" name="id" value="{$activity_info.activity_id}" />
 	                    <a class="btn btn-outline-primary data-pjax" href="{$action_edit}">{t}编辑活动{/t}</a>
 						<a class="btn btn-outline-primary data-pjax" href="{$action_prize}" style="margin:0px 10px;">{t}活动奖品池{/t}</a>
-						<a class="btn btn-outline-primary data-pjax" href="{$action_record}">{t}活动记录{/t}</a>
+						<a class="btn btn-outline-primary data-pjax" href="{$action_record}">{t}中奖记录{/t}</a>
 					</div>
 				<!-- {/if} -->
 				</form>	

@@ -88,7 +88,7 @@ return array(
 	'join_platform'				=> '活动参与平台：',
 	'restrict_num_tips'			=> '每人可参与活动的次数，0表示不限制',
 	'activity_time_restrict'	=> '活动时间限制',
-	'time_restrict_tips'		=> '单位为分钟，如45；参与次数在此时间内将被限制，0代表整个活动时间内',
+	'time_restrict_tips'		=> '单位为小时，参与次数在此时间内将被限制，0代表整个活动时间内',
 	'rule_desc'					=> '规则描述：',
 	'prize_level'				=> '奖品等级',
 	'prize_name'				=> '奖品名称',
