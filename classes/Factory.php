@@ -45,12 +45,15 @@ class Factory
     }
     
     
-    public function getDrivers()
+    public function getDrivers($supportType = MarketAbstract::TYPE_ADMIN)
     {
         $events = [];
     
         foreach (self::$factories as $key => $value) {
-            $events[$key] = new $value;
+            $inst = new $value;
+            if ($inst->hasSupport($supportType)) {
+                $events[$key] = $inst;
+            }
         }
     
         return $events;

@@ -185,4 +185,22 @@ abstract class MarketAbstract
         return ($this->support_type & self::TYPE_PLATFORM) == self::TYPE_PLATFORM;
     }
 
+    /**
+     * 获取插件是否支持该公众号
+     * @return bool
+     */
+    public function hasSupport($support_type)
+    {
+        if ($support_type == self::TYPE_ADMIN) {
+            $supported = $this->hasSupportTypeAdmin();
+        }
+        else if ($support_type == self::TYPE_MERCHANT) {
+            $supported = $this->hasSupportTypeMerchant();
+        }
+        else if ($support_type == self::TYPE_PLATFORM) {
+            $supported = $this->hasSupportTypePlatform();
+        }
+
+        return $supported;
+    }
 }
