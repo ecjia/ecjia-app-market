@@ -64,11 +64,11 @@
 							<label class="control-label">活动限制：</label>
 							<div class="controls l_h30">
 								{if $activity_info.limit_num eq '0'}
-									在整个活动时间段可参与<span class="span-font">无数次</span>
+									在整个活动时间段可参与<span style="font-weight: bold;margin-left:5px;margin-right:5px;">无数次</span>
 								{elseif $activity_info.limit_num gt '0' && $activity_info.limit_time eq '0'}
-									在整个活动时间段可参与<span class="span-font">{$activity_info.limit_num}次</span>
+									在整个活动时间段可参与<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_num}次</span>
 								{elseif $activity_info.limit_num gt '0' && $activity_info.limit_time gt '0'}
-									在整个活动时间段每隔<span class="span-font">{$activity_info.limit_time}小时</span>可参与<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_num}次</span>
+									在整个活动时间段每隔<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_time}小时</span>可参与<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_num}次</span>
 								{/if}
 							</div>
 						</div>
