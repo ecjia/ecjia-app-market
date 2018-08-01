@@ -74,19 +74,29 @@ abstract class MarketAbstract
     const PLATFORM_WEAPP    = 0b00010000;
 
     /**
-     * 支持平台后台
+     * 显示在平台后台
+     */
+    const DISPLAY_ADMIN     = 0b00000001;
+
+    /**
+     * 显示在商家后台
+     */
+    const DISPLAY_MERCHANT  = 0b00000010;
+
+    /**
+     * 显示在公众平台后台
+     */
+    const DISPLAY_PLATFORM  = 0b00000100;
+
+    /**
+     * 支持平台公众号
      */
     const TYPE_ADMIN        = 0b00000001;
 
     /**
-     * 支持商家后台
+     * 支持商家公众号
      */
     const TYPE_MERCHANT     = 0b00000010;
-
-    /**
-     * 支持公众平台后台
-     */
-    const TYPE_PLATFORM     = 0b00000100;
 
 
     /**
@@ -126,6 +136,13 @@ abstract class MarketAbstract
      */
     protected $support_type;
 
+    /**
+     * 活动显示范围：商家后台或平台后台、公众平台后台
+     * Admin、Merchant、Platform
+     * @var
+     */
+    protected $display_type;
+
     
     public function getCode()
     {
@@ -162,6 +179,33 @@ abstract class MarketAbstract
      * 获取公众平台插件支持平台公众号
      * @return bool
      */
+    public function hasDisplayTypeAdmin()
+    {
+        return ($this->display_type & self::DISPLAY_ADMIN) == self::DISPLAY_ADMIN;
+    }
+
+    /**
+     * 获取公众平台插件支持商家公众号
+     * @return bool
+     */
+    public function hasDisplayTypeMerchant()
+    {
+        return ($this->display_type & self::DISPLAY_MERCHANT) == self::DISPLAY_MERCHANT;
+    }
+
+    /**
+     * 获取支持公众平台的营销插件
+     * @return bool
+     */
+    public function hasDisplayTypePlatform()
+    {
+        return ($this->display_type & self::DISPLAY_PLATFORM) == self::DISPLAY_PLATFORM;
+    }
+
+    /**
+     * 获取公众平台插件支持平台公众号
+     * @return bool
+     */
     public function hasSupportTypeAdmin()
     {
         return ($this->support_type & self::TYPE_ADMIN) == self::TYPE_ADMIN;
@@ -177,28 +221,19 @@ abstract class MarketAbstract
     }
 
     /**
-     * 获取支持公众平台的营销插件
-     * @return bool
-     */
-    public function hasSupportTypePlatform()
-    {
-        return ($this->support_type & self::TYPE_PLATFORM) == self::TYPE_PLATFORM;
-    }
-
-    /**
      * 获取插件是否支持该公众号
      * @return bool
      */
     public function hasSupport($support_type)
     {
-        if ($support_type == self::TYPE_ADMIN) {
-            $supported = $this->hasSupportTypeAdmin();
+        if ($support_type == self::DISPLAY_ADMIN) {
+            $supported = $this->hasDisplayTypeAdmin();
         }
-        else if ($support_type == self::TYPE_MERCHANT) {
-            $supported = $this->hasSupportTypeMerchant();
+        else if ($support_type == self::DISPLAY_MERCHANT) {
+            $supported = $this->hasDisplayTypeMerchant();
         }
-        else if ($support_type == self::TYPE_PLATFORM) {
-            $supported = $this->hasSupportTypePlatform();
+        else if ($support_type == self::DISPLAY_PLATFORM) {
+            $supported = $this->hasDisplayTypePlatform();
         }
 
         return $supported;
