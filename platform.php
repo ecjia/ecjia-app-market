@@ -388,11 +388,18 @@ class platform extends ecjia_platform
 	 * @return array
 	 */
 	private function get_activity_list() {
-	
+
+        $wechat_id = $this->platformAccount->getAccountID();
+        $store_id = $this->platformAccount->getStoreId();
+
 		$activity_list = array();
 	
 		$factory = new Ecjia\App\Market\Factory();
-		$activity_data = $factory->getDrivers(Ecjia\App\Market\MarketAbstract::DISPLAY_PLATFORM);
+		if ($store_id > 0) {
+            $activity_data = $factory->getDrivers(Ecjia\App\Market\MarketAbstract::DISPLAY_PLATFORM | Ecjia\App\Market\MarketAbstract::ACCOUNT_MERCHANT);
+        } else {
+            $activity_data = $factory->getDrivers(Ecjia\App\Market\MarketAbstract::DISPLAY_PLATFORM | Ecjia\App\Market\MarketAbstract::ACCOUNT_ADMIN);
+        }
 
 		foreach ($activity_data as $k => $event) {
 			$activity_list[$k]['code'] 			= $event->getCode();
