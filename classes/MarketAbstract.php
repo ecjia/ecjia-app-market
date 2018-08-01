@@ -91,12 +91,12 @@ abstract class MarketAbstract
     /**
      * 支持平台公众号
      */
-    const TYPE_ADMIN        = 0b00000001;
+    const ACCOUNT_ADMIN        = 0b00010000;
 
     /**
      * 支持商家公众号
      */
-    const TYPE_MERCHANT     = 0b00000010;
+    const ACCOUNT_MERCHANT     = 0b00100000;
 
 
     /**
@@ -134,7 +134,7 @@ abstract class MarketAbstract
      * 活动支持类型：商家或平台 Admin、Merchant
      * @var
      */
-    protected $support_type;
+    protected $account_type;
 
     /**
      * 活动显示范围：商家后台或平台后台、公众平台后台
@@ -206,18 +206,18 @@ abstract class MarketAbstract
      * 获取公众平台插件支持平台公众号
      * @return bool
      */
-    public function hasSupportTypeAdmin()
+    public function hasAccountTypeAdmin()
     {
-        return ($this->support_type & self::TYPE_ADMIN) == self::TYPE_ADMIN;
+        return ($this->account_type & self::ACCOUNT_ADMIN) == self::ACCOUNT_ADMIN;
     }
 
     /**
      * 获取公众平台插件支持商家公众号
      * @return bool
      */
-    public function hasSupportTypeMerchant()
+    public function hasAccountTypeMerchant()
     {
-        return ($this->support_type & self::TYPE_MERCHANT) == self::TYPE_MERCHANT;
+        return ($this->account_type & self::ACCOUNT_MERCHANT) == self::ACCOUNT_MERCHANT;
     }
 
     /**
@@ -226,16 +226,29 @@ abstract class MarketAbstract
      */
     public function hasSupport($support_type)
     {
-        if ($support_type == self::DISPLAY_ADMIN) {
-            $supported = $this->hasDisplayTypeAdmin();
+        $display_type = $support_type & 0b00001111;
+        $account_type = $support_type & 0b11110000;
+
+        if ($display_type == self::DISPLAY_ADMIN) {
+            $displaySupported = $this->hasDisplayTypeAdmin();
         }
-        else if ($support_type == self::DISPLAY_MERCHANT) {
-            $supported = $this->hasDisplayTypeMerchant();
+        else if ($display_type == self::DISPLAY_MERCHANT) {
+            $displaySupported = $this->hasDisplayTypeMerchant();
         }
-        else if ($support_type == self::DISPLAY_PLATFORM) {
-            $supported = $this->hasDisplayTypePlatform();
+        else if ($display_type == self::DISPLAY_PLATFORM) {
+            $displaySupported = $this->hasDisplayTypePlatform();
+        } else {
+            $displaySupported = false;
         }
 
-        return $supported;
+        if ($account_type == self::ACCOUNT_ADMIN) {
+            $supproted = $this->hasAccountTypeAdmin();
+        } else if ($account_type == self::ACCOUNT_MERCHANT) {
+            $supproted = $this->hasAccountTypeMerchant();
+        } else {
+            $supproted = false;
+        }
+
+        return ($displaySupported && $supproted);
     }
 }
