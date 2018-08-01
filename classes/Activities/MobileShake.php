@@ -51,6 +51,9 @@ class MobileShake extends MarketAbstract
     protected $display_type = self::DISPLAY_ADMIN;
 
 
+    protected $account_type = self::ACCOUNT_ADMIN | self::ACCOUNT_MERCHANT;
+
+
     public function run()
     {
 

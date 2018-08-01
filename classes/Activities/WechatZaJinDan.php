@@ -51,6 +51,9 @@ class WechatZaJinDan extends MarketAbstract
     protected $display_type = self::DISPLAY_PLATFORM;
 
 
+    protected $account_type = self::ACCOUNT_ADMIN | self::ACCOUNT_MERCHANT;
+
+
     public function run()
     {
 
