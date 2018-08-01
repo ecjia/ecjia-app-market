@@ -423,7 +423,7 @@ class platform extends ecjia_platform
 		}
 	
 		$count = $db_activity_log->count();
-		$page = new ecjia_platform_page($count, 10, 5);
+		$page = new ecjia_platform_page($count, 15, 5);
 		$res   = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id-1)->get();
 	
 		if (!empty($res)) {
