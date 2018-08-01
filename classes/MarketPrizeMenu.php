@@ -68,7 +68,7 @@ class MarketPrizeMenu
     {
         $data = $this->getMarketActivities();
         $menus = $data->map(function ($item) {
-            return ecjia_platform::make_admin_menu($item['activity_group'], $item['activity_name'], RC_Uri::url('wechat/platform_prize/init', ['type' => $item['activity_group']]), 14)->add_purview('wechat_prize_manage');
+            return ecjia_platform::make_admin_menu($item['activity_group'], $item['activity_name'], RC_Uri::url('market/platform_prize/init', ['code' => $item['activity_group']]), 14)->add_purview('wechat_prize_manage');
         });
 
         $menus = RC_Hook::apply_filters('ecjia_market_activity_prize_menu', $menus);

@@ -3,7 +3,7 @@
 
 <!-- {block name="footer"} -->
 <script type="text/javascript">
-	ecjia.platform.prize_list.init();
+	//ecjia.platform.prize_list.init();
 </script>
 <!-- {/block} -->
 
@@ -23,14 +23,38 @@
 					<div class="nav-vertical">
                         <!-- {ecjia:hook id=display_ecjia_platform_market_prize_menu} -->
 						<div class="tab-content px-1">
-							<div role="tabpanel" class="tab-pane active" id="tabVerticalLeft1" aria-expanded="true" aria-labelledby="baseVerticalLeft-tab1">
-								<p>活动一记录</p>
-							</div>
-							<div class="tab-pane" id="tabVerticalLeft2" aria-labelledby="baseVerticalLeft-tab2">
-								<p>活动二记录</p>
-							</div>
-							<div class="tab-pane" id="tabVerticalLeft3" aria-labelledby="baseVerticalLeft-tab3">
-								<p>活动二记录</p>
+							<div class="tab-pane {if $smarty.get.code eq {$code}}active{/if}">
+								 <div class="col-md-12">
+									<table class="table table-hide-edit">
+										<thead>
+											<tr>
+												<th>{lang key='market::market.member_name'}</th>
+												<th>{lang key='market::market.prize_name'}</th>
+												<th>{lang key='market::market.assign_status'}</th>
+												<th>{lang key='market::market.source'}</th>
+												<th>{lang key='market::market.assign_time'}</th>
+												<th>{lang key='market::market.draw_time'}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!--{foreach from=$activity_record_list.item item=record} -->
+											<tr>
+												<td>{$record.user_name}</td>
+												<td>{$record.prize_name}</td>
+												<td>
+													{if $record.issue_status eq '0'}{lang key='market::market.unreleased'}{else}{lang key='market::market.issued'}{/if}
+												</td>
+												<td>{$record.source}</td>
+												<td>{$record.issue_time}</td>
+												<td>{$record.add_time}</td>
+											</tr>
+											<!--  {foreachelse} -->
+											<tr><td class="no-records" colspan="6">{lang key='system::system.no_records'}</td></tr>
+											<!-- {/foreach} -->
+										</tbody>
+									</table>
+									<!-- {$activity_record_list.page} -->			
+					            </div>
 							</div>
 						</div>
 					</div>

@@ -114,6 +114,7 @@ class platform_prize extends ecjia_platform
         $list = $this->get_activity_record_list($info['activity_id']);
        	
         $this->assign('activity_record_list', $list);
+        $this->assign('code', $activity_code);
        
         $this->display('prize_record.dwt');
     }

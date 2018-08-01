@@ -57,9 +57,9 @@ class platform_market_hooks {
         $menus = with(new Ecjia\App\Market\MarketPrizeMenu($store_id, $wechat_id))->getMenus();
 
         $current_code = ecjia_platform_screen::get_current_screen()->get_option('current_code');
-
+		
         $content = '';
-
+		
         if (!empty($menus)) {
             $content .= '<ul class="nav nav-tabs nav-left flex-column">' . PHP_EOL;
             foreach ($menus as $key => $menu) {
@@ -73,7 +73,7 @@ class platform_market_hooks {
                     $content .= 'class="nav-link" ';
                 }
 
-                $content .= 'id="baseVerticalLeft-tab'.$key.'" data-toggle="tab" aria-controls="tabVerticalLeft'.$key.'" href="'.$menu->link.'" aria-expanded="true">'.$menu->name.'</a>' . PHP_EOL;
+                $content .= 'id="baseVerticalLeft-tab'.$key.'"aria-controls="tabVerticalLeft'.$key.'" href="'.$menu->link.'" aria-expanded="true">'.$menu->name.'</a>' . PHP_EOL;
                 $content .= '</li>' . PHP_EOL;
             }
             $content .= '</ul>' . PHP_EOL;
