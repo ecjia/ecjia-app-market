@@ -97,7 +97,7 @@ class shake_module extends api_front implements api_interface {
 			//$db_activity_log->where('activity_id', $market_activity['activity_id'])->where('user_id', $_SESSION['user_id'])->where('wechat_id', 0);
 			$db_market_activity_lottery = RC_DB::table('market_activity_lottery');
 			if ($market_activity['limit_time'] > 0) {
-				$time_limit = $time - $market_activity['limit_time']*60;
+				$time_limit = $time - $market_activity['limit_time']*60*60;
 				$db_market_activity_lottery->where('update_time', '<=', $time)->where('add_time', '>=', $time_limit);
 			}
 			$market_activity_lottery_info = RC_DB::table('market_activity_lottery')->where('activity_id', $market_activity['activity_id'])->where('user_id', $_SESSION['user_id'])->first();
@@ -105,7 +105,7 @@ class shake_module extends api_front implements api_interface {
 			$limit_count = $market_activity_lottery_info['lottery_num'];
 			
 			//当前时间 -上次抽奖更新时间大于限制时间时；重置抽奖时间和抽奖次数；
-			if ($time - $market_activity_lottery_info['update_time'] >= $market_activity['limit_time']*60) {
+			if ($time - $market_activity_lottery_info['add_time'] >= $market_activity['limit_time']*60*60) {
 				RC_DB::table('market_activity_lottery')
 				->where('activity_id', $market_activity['activity_id'])
 				->where('user_id', $_SESSION['user_id'])
@@ -298,8 +298,10 @@ class shake_module extends api_front implements api_interface {
 		if (!empty($prize_info)) {
 			if ($prize_info['prize_type'] == 2) {
 				$issue_status = 0;
+				$issue_time = 0;
 			} else {
 				$issue_status = 1;
+				$issue_time = $time;
 			}
 			if (in_array($prize_info['prize_type'], array(1,2,3))) {
 				$log = array(
@@ -309,7 +311,7 @@ class shake_module extends api_front implements api_interface {
 						'prize_id'		=> $prize_info['prize_id'],
 						'prize_name'	=> $prize_info['prize_name'],
 						'issue_status'	=> $issue_status,
-						'issue_time'	=> $time,
+						'issue_time'	=> $issue_time,
 						'add_time'		=> $time,
 						'source'		=> 'app'
 				);
