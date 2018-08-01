@@ -60,11 +60,8 @@ class platform extends ecjia_platform
         
         /* 加载全局 js/css */
         RC_Script::enqueue_script('jquery-validate');
-        RC_Script::enqueue_script('jquery-uniform');
-        RC_Style::enqueue_style('uniform-aristo');
         RC_Script::enqueue_script('jquery-form');
         RC_Script::enqueue_script('jquery-validate');
-        RC_Script::enqueue_script('smoke');
         RC_Script::enqueue_script('bootstrap-placeholder');
 		
         RC_Style::enqueue_style('platform_market_activity', RC_App::apps_url('statics/css/platform_market_activity.css', __FILE__));
@@ -131,7 +128,8 @@ class platform extends ecjia_platform
 	
 				$this->assign('action_edit', RC_Uri::url('market/platform/edit', array('code' => $code)));
 				$this->assign('action_prize', RC_Uri::url('market/platform/activity_prize', array('code' => $code)));
-				$this->assign('action_record', RC_Uri::url('market/platform/activity_record', array('code' => $code)));
+				//$this->assign('action_record', RC_Uri::url('market/platform/activity_record', array('code' => $code)));
+				$this->assign('action_record', RC_Uri::url('market/platform_prize/init', array('code' => $code)));
 			}
 		}
 		$this->assign('images_url', RC_App::apps_url('statics/image/', __FILE__));
