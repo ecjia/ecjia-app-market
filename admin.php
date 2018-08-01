@@ -71,9 +71,10 @@ class admin extends ecjia_admin {
 
 		RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
 		RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
-
+		
 		RC_Script::enqueue_script('activity', RC_App::apps_url('statics/js/activity.js', __FILE__), array(), false, false);
 		RC_Style::enqueue_style('activity', RC_App::apps_url('statics/css/activity.css', __FILE__), array(), false, false);
+		RC_Script::localize_script('activity', 'js_lang', RC_Lang::get('market::market.js_lang'));
 		
         //时间控件
 		RC_Script::enqueue_script('bootstrap-datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
@@ -390,6 +391,25 @@ class admin extends ecjia_admin {
 	}
 	
 	/**
+	 * 发放奖品（实物奖品）
+	 */
+	public function issue_prize() {
+		$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
+		$id =  trim($_GET['id']);
+		
+		if (!empty($id)){
+			$info = RC_DB::table('market_activity_log')->where('id', $id)->first();
+			$code = RC_DB::table('market_activity')->where('activity_id', $info['activity_id'])->pluck('activity_group');
+			RC_DB::table('market_activity_log')->where('id', $id)->update(array('issue_status' => 1, 'issue_time' => RC_Time::gmtime()));
+				
+			ecjia_admin::admin_log('发放奖品'.$info['prize_name'].'给'.$info['user_name'], 'issue', 'prize');
+			return $this->showmessage('发放奖品成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/admin/activity_record', array('code' => $code))));
+		} else {
+			return $this->showmessage(RC_Lang::get('market::market.wrong_parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+		}
+	}
+	
+	/**
 	 * 获取活动列表
 	 * @return array
 	 */
@@ -428,6 +448,8 @@ class admin extends ecjia_admin {
 			foreach ($res as $key => $val) {
 				$res[$key]['issue_time']  	= RC_Time::local_date('Y-m-d H:i:s', $res[$key]['issue_time']);
 				$res[$key]['add_time']    	= RC_Time::local_date('Y-m-d H:i:s', $res[$key]['add_time']);
+				$prize_type = RC_DB::table('market_activity_prize')->where('prize_id', $val['prize_id'])->pluck('prize_type');
+				$res[$key]['prize_type']    = $prize_type;
 			}
 		}
 		return array('item' => $res, 'page' => $page->show(), 'desc' => $page->page_desc(), 'current_page' => $page->current_page);

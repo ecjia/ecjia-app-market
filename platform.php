@@ -423,13 +423,14 @@ class platform extends ecjia_platform
 		}
 	
 		$count = $db_activity_log->count();
-		$page = new ecjia_platform_page($count, 10, 5);
+		$page = new ecjia_platform_page($count, 15, 5);
 		$res   = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id-1)->get();
 	
 		if (!empty($res)) {
 			foreach ($res as $key => $val) {
 				$res[$key]['issue_time']  	= RC_Time::local_date('Y-m-d H:i:s', $res[$key]['issue_time']);
 				$res[$key]['add_time']    	= RC_Time::local_date('Y-m-d H:i:s', $res[$key]['add_time']);
+				$res[$key]['prize_type']	= RC_DB::table('market_activity_prize')->where('prize_id', $val['prize_type'])->pluck('prize_type');
 			}
 		}
 		return array('item' => $res, 'page' => $page->show(), 'desc' => $page->page_desc(), 'current_page' => $page->current_page);

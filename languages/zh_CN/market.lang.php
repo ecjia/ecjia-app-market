@@ -142,6 +142,8 @@ return array(
 			'fill_activity_name'		=> '请输入活动名称',
 			'fill_start_time' 			=> '请输入活动开始时间',
 			'fill_end_time' 			=> '请输入活动结束时间',
+			'ok'						=> '确定',
+			'cancel'					=> '取消',
 	),
 );
 
