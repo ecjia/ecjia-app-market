@@ -229,6 +229,7 @@ class platform extends ecjia_platform
 		$end_time		= empty($_POST['end_time']) 		? 	'' 	: RC_Time::local_strtotime($_POST['end_time']);
 		$activity_desc	= empty($_POST['activity_desc']) 	? 	'' 	: trim($_POST['activity_desc']);
 		$id 			= empty($_POST['id']) 				? 	0 	: intval($_POST['id']);
+
 		$activity_code 	= empty($_POST['activity_code']) 	? 	'' 	: trim($_POST['activity_code']);
 	
 		if (empty($start_time)) {

@@ -53,13 +53,7 @@
 							<div class="form-group row">
 								<label class="col-lg-2 label-control text-right">{lang key='market::market.join_platform'}</label>
 								<div class="col-lg-8 controls">
-									{if $activity_info.activity_object eq 1}
-				                    	 <span>APP</span>
-				                    {elseif $activity_info.activity_object eq 2}
-				                    	<span>PC</span>
-				                    {elseif $activity_info.activity_object eq 3}
-				                    	<span>Touch</span>
-				                    {/if}
+				                    <span>{$activity_info.activity_object}</span>
 								</div>
 							</div>
 							
@@ -70,11 +64,19 @@
 									<span class="help-block">{lang key='market::market.restrict_num_tips'}</span>
 								</div>
 							</div>
-							
+	
 							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">{lang key='market::market.label_activity_time_restrict'}</label>
+								<label class="col-lg-2 label-control text-right">活动限制时间：</label>
 								<div class="col-lg-8 controls">
-									<input class="input-xlarge form-control" name="limit_time" type="text" value="{$activity_info.limit_time|default:0}" placeholder="" maxlength="4"/>
+									<select name="limit_time" class=" select2 form-control" >
+										<option value="">请选择...</option>
+										<option value="0" {if $activity_info.limit_time eq '0'}selected{/if}>0</option>
+										<option value="1" {if $activity_info.limit_time eq 1}selected{/if}>1小时</option>
+										<option value="6" {if $activity_info.limit_time eq 6}selected{/if}>6小时</option>
+										<option value="12" {if $activity_info.limit_time eq 12}selected{/if}>12小时</option>
+										<option value="24" {if $activity_info.limit_time eq 24}selected{/if}>24小时</option>
+										<option value="48" {if $activity_info.limit_time eq 48}selected{/if}>48小时</option>
+									</select>
 									<span class="help-block">{lang key='market::market.time_restrict_tips'}</span>
 								</div>
 							</div>

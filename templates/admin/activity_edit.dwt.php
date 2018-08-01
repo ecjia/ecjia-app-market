@@ -36,13 +36,7 @@
 				<div class="control-group formSep">
                     <label class="control-label">{lang key='market::market.join_platform'}</label>
                     <div class="controls l_h30">
-	                    {if $activity_info.activity_object eq 1}
-	                    	 <span>APP</span>
-	                    {elseif $activity_info.activity_object eq 2}
-	                    	<span>PC</span>
-	                    {elseif $activity_info.activity_object eq 3}
-	                    	<span>Touch</span>
-	                    {/if}
+	                    <span>{$activity_info.activity_object}</span>
                     </div>
                 </div>
                 <div class="control-group formSep">
@@ -52,13 +46,23 @@
 						<span class="help-block">{lang key='market::market.restrict_num_tips'}</span>
 					</div>
 				</div>
+								
 				<div class="control-group formSep">
 					<label class="control-label">{lang key='market::market.label_activity_time_restrict'}</label>
 					<div class="controls">
-						<input class="" name="limit_time" type="text" value="{$activity_info.limit_time|default:0}" placeholder="" maxlength="4"/>
-						<span class="help-block">{lang key='market::market.time_restrict_tips'}</span>
+						<select name='limit_time'>
+							<option value="">请选择...</option>
+							<option value="0" {if $activity_info.limit_time eq '0'}selected{/if}>0</option>
+							<option value="1" {if $activity_info.limit_time eq 1}selected{/if}>1小时</option>
+							<option value="6" {if $activity_info.limit_time eq 6}selected{/if}>6小时</option>
+							<option value="12" {if $activity_info.limit_time eq 12}selected{/if}>12小时</option>
+							<option value="24" {if $activity_info.limit_time eq 24}selected{/if}>24小时</option>
+							<option value="48" {if $activity_info.limit_time eq 48}selected{/if}>48小时</option>
+						</select>	
+						<span class="help-block">{lang key='market::market.time_restrict_tips'}</span>					
 					</div>
 				</div>
+				
 				<div class="control-group formSep">
 					<label class="control-label">{lang key='market::market.label_start_date'}</label>
 					<div class="controls">

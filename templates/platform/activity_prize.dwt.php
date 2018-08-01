@@ -44,7 +44,7 @@
 									<option value="5" {if $prize.prize_level eq 5}selected{/if}>{lang key='market::market.fifth_prize'}</option>
                                 </select>
 							</td>
-							<td><input class="w180 input-xlarge form-control" type='text' name='prize_name[]' value="{$prize.prize_name}" /></td>
+							<td><input class="w150 input-xlarge form-control" type='text' name='prize_name[]' value="{$prize.prize_name}" /></td>
 							
 							<td>
 								<select  name="prize_type[]" class="w130 span12 select2 form-control">
@@ -97,7 +97,7 @@
 									<option value="5">{lang key='market::market.fifth_prize'}</option>
                                 </select>
 							</td>
-							<td><input class="w180 input-xlarge form-control" type='text' name='prize_name[]' /></td>
+							<td><input class="w150 input-xlarge form-control" type='text' name='prize_name[]' /></td>
 							<td>
 								<select name="prize_type[]" class="w130 span12 select2 form-control">
 									<option value="" selected>{lang key='market::market.please_select'}</option>
