@@ -38,6 +38,12 @@
 							<p class="desc" id="js_status">
 								{if $info}该功能已开通，设置完活动即可正常使用{else}<span>未开通</span>{/if}
 							</p>
+							<div class=" justify-content-center" style="padding-left:75px;padding-top:10px;padding-bottom:10px;">
+								<input type="hidden" name="id" value="{$activity_info.activity_id}" />
+			                   	<a class="btn btn-outline-primary data-pjax" href="{$action_edit}">{t}编辑活动{/t}</a>
+								<a class="btn btn-outline-primary data-pjax" href="{$action_prize}" style="margin:0px 10px;">{t}活动奖品池{/t}</a>
+								<a class="btn btn-outline-primary" target="_blank" href="{$action_record}">{t}中奖记录{/t}</a>
+							</div>
 						</div>
 						<div class="carkticket_index">
 							<div class="intro">
@@ -78,12 +84,6 @@
 							</div>
 							
 						</div>
-					</div>
-					<div class="modal-footer justify-content-center">
-						<input type="hidden" name="id" value="{$activity_info.activity_id}" />
-	                    <a class="btn btn-outline-primary data-pjax" href="{$action_edit}">{t}编辑活动{/t}</a>
-						<a class="btn btn-outline-primary data-pjax" href="{$action_prize}" style="margin:0px 10px;">{t}活动奖品池{/t}</a>
-						<a class="btn btn-outline-primary" target="_blank" href="{$action_record}">{t}中奖记录{/t}</a>
 					</div>
 				<!-- {/if} -->
 				</form>	

@@ -36,24 +36,27 @@
 				<form class="form" method="post" name="theForm" action="{$form_action}">
 					<div class="card-body">
 						<div class="form-body">
-							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">{lang key='market::market.label_activity_name'}</label>
-								<div class="col-lg-8 controls">
-									{$activity_info.activity_name}
-								</div>
-							</div>
 							
-							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">{lang key='market::market.label_activity_way'}</label>
-								<div class="col-lg-8 controls">
-									{$activity_info.activity_group}
+							<div style="background-color: #EEEEEE;padding-top:10px;margin-bottom:5px;">
+								<div class="form-group row">
+									<label class="col-lg-2 label-control text-right">{lang key='market::market.label_activity_name'}</label>
+									<div class="col-lg-8 controls">
+										{$activity_info.activity_name}
+									</div>
 								</div>
-							</div>
-							
-							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">{lang key='market::market.join_platform'}</label>
-								<div class="col-lg-8 controls">
-				                    <span>{$activity_info.activity_object}</span>
+								
+								<div class="form-group row">
+									<label class="col-lg-2 label-control text-right">{lang key='market::market.label_activity_way'}</label>
+									<div class="col-lg-8 controls">
+										{$activity_info.activity_group}
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<label class="col-lg-2 label-control text-right">{lang key='market::market.join_platform'}</label>
+									<div class="col-lg-8 controls">
+					                    <span>{$activity_info.activity_object}</span>
+									</div>
 								</div>
 							</div>
 							
@@ -70,7 +73,7 @@
 								<div class="col-lg-8 controls">
 									<select name="limit_time" class=" select2 form-control" >
 										<option value="">请选择...</option>
-										<option value="0" {if $activity_info.limit_time eq '0'}selected{/if}>0</option>
+										<option value="0" {if $activity_info.limit_time eq '0'}selected{/if}>无限制</option>
 										<option value="1" {if $activity_info.limit_time eq 1}selected{/if}>1小时</option>
 										<option value="6" {if $activity_info.limit_time eq 6}selected{/if}>6小时</option>
 										<option value="12" {if $activity_info.limit_time eq 12}selected{/if}>12小时</option>
