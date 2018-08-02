@@ -12,4 +12,16 @@ namespace Ecjia\App\Market\Prize;
 class IssuePrizeStore
 {
 
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * 颁发奖品
+     */
+    public function issue()
+    {
+
+    }
 }

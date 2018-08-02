@@ -9,7 +9,7 @@
 namespace Ecjia\App\Market\Prize;
 
 
-class IssuePrizeGoods
+class IssuePrizeIntegral
 {
 
     public function __construct()
