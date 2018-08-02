@@ -29,9 +29,9 @@ class PrizeType
     const TYPE_REAL     = 2;
 
     /**
-     * 现金红包
+     * 积分奖励
      */
-    const TYPE_BALANCE  = 3;
+    const TYPE_INTEGRAL  = 3;
 
     /**
      * 商品展示
@@ -43,14 +43,20 @@ class PrizeType
      */
     const TYPE_STORE    = 5;
 
+    /**
+     * 现金红包
+     */
+    const TYPE_BALANCE  = 6;
+
 
     protected static $typeNames = [
         TYPE_NONE       => '未中奖',
         TYPE_BONUS      => '礼券红包',
         TYPE_REAL       => '实物奖品',
-        TYPE_BALANCE    => '现金红包',
+        TYPE_INTEGRAL   => '积分奖励',
         TYPE_GOODS      => '商品展示',
         TYPE_STORE      => '店铺展示',
+        TYPE_BALANCE    => '现金红包',
     ];
 
 
@@ -59,17 +65,5 @@ class PrizeType
         return self::$typeNames;
     }
 
-    public function __construct()
-    {
-
-    }
-
-    /**
-     * 颁发奖品
-     */
-    public function issue()
-    {
-
-    }
 
 }
