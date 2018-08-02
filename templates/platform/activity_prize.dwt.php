@@ -49,8 +49,12 @@
 							<td>
 								<select  name="prize_type[]" class="w130 span12 select2 form-control">
 									<option value="" >{lang key='market::market.please_select'}</option>
-									<option value="1" {if $prize.prize_type eq 1}selected{/if}>{lang key='market::market.bonus'}</option>
+									<option value="1" {if $prize.prize_type eq 1}selected{/if}>礼券红包</option>
 									<option value="2" {if $prize.prize_type eq 2}selected{/if}>{t}实物奖品{/t}</option>
+									<!-- {if $store_id eq 0}  -->
+										<option value="3" {if $prize.prize_type eq 3}selected{/if}>{t}积分{/t}</option>
+									<!-- {/if}  -->
+									<option value="6" {if $prize.prize_type eq 6}selected{/if}>现金红包</option>
 									<option value="4" {if $prize.prize_type eq 4}selected{/if}>{lang key='market::market.goods_info'}</option>
 									<option value="5" {if $prize.prize_type eq 5}selected{/if}>{lang key='market::market.store_info'}</option>
 									<option value="0" {if $prize.prize_type eq 0}selected{/if}>{lang key='market::market.no_prize'}</option>

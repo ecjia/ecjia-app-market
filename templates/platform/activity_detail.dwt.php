@@ -42,7 +42,7 @@
 								<input type="hidden" name="id" value="{$activity_info.activity_id}" />
 			                   	<a class="btn btn-outline-primary data-pjax" href="{$action_edit}">{t}编辑活动{/t}</a>
 								<a class="btn btn-outline-primary data-pjax" href="{$action_prize}" style="margin:0px 10px;">{t}活动奖品池{/t}</a>
-								<a class="btn btn-outline-primary" target="_blank" href="{$action_record}">{t}中奖记录{/t}</a>
+								<a class="btn btn-outline-primary" href="{$action_record}">{t}中奖记录{/t}</a>
 							</div>
 						</div>
 						<div class="carkticket_index">

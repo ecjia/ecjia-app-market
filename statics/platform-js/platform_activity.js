@@ -54,34 +54,7 @@
 		},
 		
 		prize_init: function () {
-			$('select[name^="prize_type"]').on('change', function () {
-                if ($(this).val() == '1') {
-                    $(this).parent().siblings('.prize_value').children().eq(1).hide();
-                    $(this).parent().siblings('.prize_value').children().eq(0).show();
-                } else {
-                    $(this).parent().siblings('.prize_value').children().eq(0).hide();
-                    $(this).parent().siblings('.prize_value').children().eq(1).show();
-                }
-            });
-			
-			$('[data-toggle="clone-obj-prize"]').off('click').on('click', function(e) {
-				e.preventDefault();
-
-				$('.activity_prize').find('select').select2('destroy');
-				var $this		= $(this),
-					$parentobj	= $this.parents($this.attr('data-parent')),
-					before		= $this.attr('data-before') || 'after',
-					options		= {parentobj : $parentobj, before : before};
-				
-				var tmpObj = options.parentobj.clone();
-				tmpObj.find('[data-toggle="clone-obj-prize"]')
-					.attr('data-toggle','remove-obj-prize').on('click', function(){tmpObj.remove();})
-					.find('i').attr('class', 'fa fa-times ecjiafc-red');
-
-				options.parentobj.after(tmpObj);
-				$('select').select2();
-			});
-			
+			$('select').select2();
             $("input[type='submit']").on('click', function () {
                 var $this = $("form[name='editForm']");
                 var option = {
