@@ -421,7 +421,7 @@ class platform extends ecjia_platform
 		$this->assign('code', $activity_code);
 		$this->assign('p_id', $p_id);
 		$this->assign('action_link', array('href' => RC_Uri::url('market/platform/activity_prize', array('code' => $activity_code)), 'text' => RC_Lang::get('market::market.prize_pool')));
-		$this->assign('form_action', RC_Uri::url('market/platform/activity_prize_insert', array('code' => $activity_code)));
+		$this->assign('form_action', RC_Uri::url('market/platform/activity_prize_update', array('code' => $activity_code)));
 	
 		$this->display('activity_prize_add.dwt');
 	}
@@ -429,52 +429,52 @@ class platform extends ecjia_platform
 	/**
 	 * 活动奖品池编辑处理
 	 */
-		public function activity_prize_update() {
-			$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
-	
-			$prize_level		= $_POST['prize_level'];
-			$prize_name			= $_POST['prize_name'];
-			$prize_type			= $_POST['prize_type'];
-			$prize_value		= $_POST['prize_value'];
-			$prize_value_other 	= $_POST['prize_value_other'];
-			$prize_number		= $_POST['prize_number'];
-			$prize_prob			= $_POST['prize_prob'];
-			
-			$p_id				= $_POST['p_id'];
-			
-			$code = $_POST['code'];
-			$wechat_id = $this->platformAccount->getAccountID();
-			$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('wechat_id', $wechat_id)->where('store_id', $_SESSION['store_id'])->first();
-			
-			
-			if (empty($prize_name)) {
-				return $this->showmessage('请填写奖品名称！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-			}
-			if ($prize_type == 1) {
-				if (empty($prize_value)) {
-					return $this->showmessage('请选择礼券奖品的红包！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-				}
-				$prize_value_final = $prize_value;
-			} else {
-				if (empty($prize_value_other)) {
-					return $this->showmessage('请填写奖品内容！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-				}
-				$prize_value_final = $prize_value_other;
-			}
-			$data = array(
-					'activity_id' 	=> $activity_info['activity_id'],
-					'prize_level'	=> $prize_level,
-					'prize_name'	=> $prize_name,
-					'prize_type'	=> $prize_type,
-					'prize_value'	=> $prize_value_final,
-					'prize_number'	=> $prize_number,
-					'prize_prob'	=> $prize_prob
-			);
-			
-			RC_DB::table('market_activity_prize')->where('prize_id', $p_id)->update($data);
-			
-			return $this->showmessage(RC_Lang::get('market::market.edit_prize_pool_succss'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+	public function activity_prize_update() {
+		$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
+
+		$prize_level		= $_POST['prize_level'];
+		$prize_name			= $_POST['prize_name'];
+		$prize_type			= $_POST['prize_type'];
+		$prize_value		= $_POST['prize_value'];
+		$prize_value_other 	= $_POST['prize_value_other'];
+		$prize_number		= $_POST['prize_number'];
+		$prize_prob			= $_POST['prize_prob'];
+		
+		$p_id				= $_POST['p_id'];
+		
+		$code = $_POST['code'];
+		$wechat_id = $this->platformAccount->getAccountID();
+		$activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('wechat_id', $wechat_id)->where('store_id', $_SESSION['store_id'])->first();
+		
+		
+		if (empty($prize_name)) {
+			return $this->showmessage('请填写奖品名称！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
+		if ($prize_type == 1) {
+			if (empty($prize_value)) {
+				return $this->showmessage('请选择礼券奖品的红包！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			}
+			$prize_value_final = $prize_value;
+		} else {
+			if (empty($prize_value_other)) {
+				return $this->showmessage('请填写奖品内容！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			}
+			$prize_value_final = $prize_value_other;
+		}
+		$data = array(
+				'activity_id' 	=> $activity_info['activity_id'],
+				'prize_level'	=> $prize_level,
+				'prize_name'	=> $prize_name,
+				'prize_type'	=> $prize_type,
+				'prize_value'	=> $prize_value_final,
+				'prize_number'	=> $prize_number,
+				'prize_prob'	=> $prize_prob
+		);
+		
+		RC_DB::table('market_activity_prize')->where('prize_id', $p_id)->update($data);
+		
+		return $this->showmessage(RC_Lang::get('market::market.edit_prize_pool_succss'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+	}
 	
 	/**
 	 * 活动记录列表

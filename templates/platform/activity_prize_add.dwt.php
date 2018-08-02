@@ -40,7 +40,7 @@
 							</div>
 							
 							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">奖品名称</label>
+								<label class="col-lg-2 label-control text-right">奖品名称:</label>
 								<div class="col-lg-8 controls">
 									<input class="input-xlarge form-control" name="prize_name" type="text" value="{$activity_prize.prize_name}" maxlength="4"/>
 								</div>

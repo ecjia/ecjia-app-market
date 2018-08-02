@@ -13,7 +13,7 @@
 	height:115px;
 }*/
 .wookmark.warehouse .more{
-	height:150px;
+	height:155px;
 }
 /*.wookmark .b{
 	line-height:none;
@@ -59,8 +59,8 @@
 						  	<ul>
 							<!-- {foreach from=$prize_list item=prize} -->
 								<li class="thumbnail">
-									<div style="height:150px;">
-										<div class="model-title ware_name" style="background-color:#87CEFA;">
+									<div style="height:155px;">
+										<div class="model-title ware_name" style="background-color:#87CEFA;padding-bottom:5px;padding-top:5px;">
 											<span style="font-size:16px;color:#fff;">
 												{if $prize.prize_level eq '0'}
 													[特等奖]
@@ -79,7 +79,7 @@
 											</span><br>
 											<span style="color:#fff;">奖品内容：{$prize.prize_value_label}</span>
 										</div>
-										<p style="padding-top:12px;background-color:#4682B4;">
+										<p style="padding-top:5px;padding-bottom:5px;background-color:#4682B4;">
 											<span style="color:#fff;">奖品数量：{$prize.prize_number}&nbsp;/&nbsp;获奖概率：{$prize.prize_prob}%</span><br>
 											<span style="color:#fff;">奖品类型：
 												{if $prize.prize_type eq '0'}

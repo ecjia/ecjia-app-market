@@ -29,8 +29,8 @@
 /*活动详情*/
 .detail{
 	background-color: #EEEEEE;
-	height:100px;
-	margin: 0 30px 40px;
+    height: 135px;
+    margin: 0 30px 30px;
 }
 .func-detail-margin{
 	padding: 9px 30px;
@@ -82,5 +82,10 @@
 	margin-right:5px;
 }
 
-
+.cannotedit-info{
+	background-color: #EEEEEE;
+	padding-top:10px;
+	margin-bottom:5px;
+	border-radius: 10px;
+}
 

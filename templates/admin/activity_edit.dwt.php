@@ -21,23 +21,27 @@
 	    <div class="tabbable">
 	  		<form class="form-horizontal" id="form-privilege" name="theForm" action="{$form_action}" method="post" enctype="multipart/form-data" >
 			<fieldset>
-				<div class="control-group formSep">
-					<label class="control-label">{lang key='market::market.label_activity_name'}</label>
-					<div class="controls l_h30">
-						{$activity_info.activity_name}
+				
+                <div class="cannotedit-info">
+	                <div class="control-group ">
+						<label class="control-label">{lang key='market::market.label_activity_name'}</label>
+						<div class="controls l_h30">
+							{$activity_info.activity_name}
+						</div>
 					</div>
-				</div>
-				<div class="control-group formSep" >
-					<label class="control-label">{lang key='market::market.label_activity_way'}</label>
-				     <div class="controls l_h30">
-                           {$activity_info.activity_group}
-                     </div>
-				</div>
-				<div class="control-group formSep">
-                    <label class="control-label">{lang key='market::market.join_platform'}</label>
-                    <div class="controls l_h30">
-	                    <span>{$activity_info.activity_object}</span>
-                    </div>
+					<div class="control-group " >
+						<label class="control-label">{lang key='market::market.label_activity_way'}</label>
+					     <div class="controls l_h30">
+	                           {$activity_info.activity_group}
+	                     </div>
+					</div>
+					<div class="control-group ">
+	                    <label class="control-label">{lang key='market::market.join_platform'}</label>
+	                    <div class="controls l_h30">
+		                    <span>{$activity_info.activity_object}</span>
+	                    </div>
+	                </div>
+                
                 </div>
                 <div class="control-group formSep">
 					<label class="control-label">{lang key='market::market.label_activity_restrict_num'}</label>
