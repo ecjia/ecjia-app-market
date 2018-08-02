@@ -37,7 +37,7 @@
 					<div class="card-body">
 						<div class="form-body">
 							
-							<div style="background-color: #EEEEEE;padding-top:10px;margin-bottom:5px;">
+							<div class="cannotedit-info">
 								<div class="form-group row">
 									<label class="col-lg-2 label-control text-right">{lang key='market::market.label_activity_name'}</label>
 									<div class="col-lg-8 controls">

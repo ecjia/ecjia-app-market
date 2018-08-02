@@ -87,15 +87,32 @@ class platform_prize extends ecjia_platform
         $this->admin_priv('activity_record_manage');
 
         $wechat_id = $this->platformAccount->getAccountID();
-        $activity_code = trim($_GET['code']);
+        $store_id = RC_DB::table('platform_account')->where('id', $wechat_id)->pluck('shop_id');
+        
+        $this->assign('ur_here', '抽奖记录');
 
+        $list = [];
+        $code_list = [];
+        $activity_code = '';
+        
+        if (!empty($_GET['code'])) {
+        	$activity_code = trim($_GET['code']);
+        } else {
+        	$menus = with(new Ecjia\App\Market\MarketPrizeMenu($store_id, $wechat_id))->getMenus();
+        	if (!empty($menus)) {
+        		foreach ($menus as $k => $menu) {
+        			$code_list[$k]['code'] = $menu->action;
+        		}
+        		$default_code = $code_list['0']['code'];
+        		$activity_code = $default_code;
+        	}
+        }
+        
         ecjia_platform_screen::get_current_screen()->remove_last_nav_here();
         ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('抽奖记录'));
         ecjia_platform_screen::get_current_screen()->add_option('current_code', $activity_code);
-
-        $this->assign('ur_here', '抽奖记录');
-
-
+        $this->assign('action_link', array('href' => RC_Uri::url('market/platform/activity_detail', array('code' => $activity_code)), 'text' => RC_Lang::get('market::market.back_activity_info')));
+        
         if (!empty($activity_code)) {
             $factory = new Ecjia\App\Market\Factory();
             $activity_info = $factory->driver($activity_code);
@@ -112,80 +129,15 @@ class platform_prize extends ecjia_platform
             }
         }
         $list = $this->get_activity_record_list($info['activity_id']);
-       	
+
         $this->assign('activity_record_list', $list);
         $this->assign('code', $activity_code);
        
         $this->display('prize_record.dwt');
     }
 	
-	
 	/**
-	 * 活动记录列表
-	 */
-// 	public function activity_record() {
-// 		$this->admin_priv('activity_record_manage');
-		 
-// 		$this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_list'), 'href' => RC_Uri::url('market/platform/init')));
-// 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.view_activity_record')));
-	
-// 		$this->assign('ur_here', RC_Lang::get('market::market.activity_record'));
-		
-// 		$wechat_id = $this->platformAccount->getAccountID();
-// 		$activity_code = trim($_GET['code']);
-// 		$this->assign('action_link', array('href' => RC_Uri::url('market/platform/activity_detail', array('code' => $activity_code)), 'text' => RC_Lang::get('market::market.back_activity_info')));
-// 		if (!empty($activity_code)) {
-// 			$factory = new Ecjia\App\Market\Factory();
-// 			$activity_info = $factory->driver($activity_code);
-// 			$activity_detail['code'] = $activity_info->getCode();
-// 			$activity_detail['name'] = $activity_info->getName();
-// 			$activity_detail['description'] = $activity_info->getDescription();
-// 			$activity_detail['icon'] = $activity_info->getIcon();
-// 			$this->assign('activity_detail', $activity_detail);
-// 			$info = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->where('enabled', 1)->first();
-// 			if (!empty($info)) {
-// 				$info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
-// 				$info['end_time']   = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
-// 				$this->assign('info', $info);
-// 			}
-// 		}
-// 		$list = $this->get_activity_record_list($info['activity_id']);
-		 
-// 		$this->assign('activity_record_list', $list);
-// 		$this->assign('tags', $this->tags);
-		 
-// 		$this->display('activity_record.dwt');
-// 	}
-	
-	/**
-	 * 获取活动列表
-	 * @return array
-	 */
-	private function get_activity_list() {
-
-        $wechat_id = $this->platformAccount->getAccountID();
-        $store_id = $this->platformAccount->getStoreId();
-
-		$activity_list = array();
-	
-		$factory = new Ecjia\App\Market\Factory();
-		if ($store_id > 0) {
-            $activity_data = $factory->getDrivers(Ecjia\App\Market\MarketAbstract::DISPLAY_PLATFORM | Ecjia\App\Market\MarketAbstract::ACCOUNT_MERCHANT);
-        } else {
-            $activity_data = $factory->getDrivers(Ecjia\App\Market\MarketAbstract::DISPLAY_PLATFORM | Ecjia\App\Market\MarketAbstract::ACCOUNT_ADMIN);
-        }
-
-		foreach ($activity_data as $k => $event) {
-			$activity_list[$k]['code'] 			= $event->getCode();
-			$activity_list[$k]['name'] 			= $event->getName();
-			$activity_list[$k]['description'] 	= $event->getDescription();
-			$activity_list[$k]['icon'] 			= $event->getIcon();
-		}
-		return $activity_list;
-	}
-	
-	/**
-	 * 获取活动记录列表数据
+	 * 获取活动抽奖记录
 	 * @return array
 	 */
 	private function get_activity_record_list($activity_id = 0) {

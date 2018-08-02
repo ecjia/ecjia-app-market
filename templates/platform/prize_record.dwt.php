@@ -23,7 +23,7 @@
 					<div class="nav-vertical">
                         <!-- {ecjia:hook id=display_ecjia_platform_market_prize_menu} -->
 						<div class="tab-content px-1">
-							<div class="tab-pane {if $smarty.get.code eq {$code}}active{/if}">
+							<div class="tab-pane {if {$code}}active{/if}">
 								 <div class="col-md-12">
 									<table class="table table-hide-edit">
 										<thead>
