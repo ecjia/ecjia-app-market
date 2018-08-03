@@ -32,12 +32,11 @@
 													[五等奖] {/if} {$prize.prize_name}
 												</span>
 												<br>
-												<span>奖品内容：{$prize.prize_value_label}</span>
+												<span>{$prize.prize_value_label}</span>
 											</div>
 											<p class="model-inner">
-												<span>奖品数量：{$prize.prize_number}&nbsp;/&nbsp;获奖概率：{$prize.prize_prob}%</span>
-												<br>
-												<span>奖品类型： {if $prize.prize_type eq '0'} 未中奖 {elseif $prize.prize_type eq '1'} 礼券红包 {elseif $prize.prize_type eq '2'}
+												<span class="float-left">{$prize.prize_number}&nbsp;/&nbsp;{$prize.prize_prob}%</span>
+												<span class="float-right"> {if $prize.prize_type eq '0'} 未中奖 {elseif $prize.prize_type eq '1'} 礼券红包 {elseif $prize.prize_type eq '2'}
 													实物奖品 {elseif $prize.prize_type eq '3'} 送积分 {elseif $prize.prize_type eq '4'} 推荐商品 {elseif $prize.prize_type
 													eq '5'} 推荐店铺 {elseif $prize.prize_type eq '6'} 现金红包 {/if}
 												</span>
@@ -45,13 +44,19 @@
 										</div>
 									</div>
 									<div class="input">
-										<a class="data-pjax" title="{t}编辑{/t}" href='{RC_Uri::url("market/platform/activity_prize_edit", "code={$code}&p_id={$prize.prize_id}")}'>
+										<a class="data-pjax float-left p_l20" title="{t}编辑{/t}" href='{RC_Uri::url("market/platform/activity_prize_edit", "code={$code}&p_id={$prize.prize_id}")}'>
 											<i class="ft-edit"></i>
 										</a>
+										{if $prize.is_used gt 0}
+										<a class="float-left p_l10 ajaxremove no-underline" data-toggle="ajaxremove" data-msg="您确定要删除该活动奖品池吗？" title="{t}删除{/t}" href='{RC_Uri::url("market/platform/activity_prize_remove", "code={$code}&p_id={$prize.prize_id}")}'>
+											<i class="ft-trash-2"></i>
+										</a>
+										<span class="prize-used">使用中</span>
+										{/if}
 									</div>
 								</li>
 								<!-- {/foreach} -->
-								{if $smarty.get.page eq $data.total_pages}
+								{if $smarty.get.page eq $data.total_pages || !$smarty.get.page}
 								<li class="thumbnail add-ware-house">
 									<a class="more data-pjax" href='{RC_Uri::url("market/platform/activity_prize_add", "code={$code}")}'>
 										<i class="ft-plus"></i>
