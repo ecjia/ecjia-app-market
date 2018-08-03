@@ -65,10 +65,9 @@ class mobile_prize extends EcjiaMarketActivityController
         $uuid 			= trim($_GET['uuid']);
         $activity_id 	= intval($_GET['activity_id']);
         
-        $market_activity_log_db = RC_DB::table('market_activity_log');
         $dbview = RC_DB::table('market_activity_log as mal')->leftJoin('market_activity_prize as map', RC_DB::raw('mal.prize_id'), '=', RC_DB::raw('map.prize_id'));
         if (!empty($activity_id)) {
-        	$market_activity_log_db->where(RC_DB::raw('mal.activity_id'), $activity_id);
+        	$dbview->where(RC_DB::raw('mal.activity_id'), $activity_id);
         }
         //中奖类型的奖品id
         $prize_log_list = $dbview->where(RC_DB::raw('mal.user_id'), $openid)
@@ -118,7 +117,7 @@ class mobile_prize extends EcjiaMarketActivityController
         		}
         	}
         }
-   
+   	
         $this->assign('prize_log_list', $prize_log_list);
         
         $this->display(
