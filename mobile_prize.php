@@ -82,7 +82,7 @@ class mobile_prize extends EcjiaMarketActivityController
         	foreach ($prize_log_list as $key => $val) {
         		if ($val['prize_type'] == '2') {
         			$prize_log_list[$key]['icon'] = RC_App::apps_url('statics/front/images/shiwu.png', __FILE__);
-        			$prize_log_list[$key]['prize_value_label'] = '实物';
+        			$prize_log_list[$key]['prize_value_label'] = $val['prize_name'];
         		} elseif ($val['prize_type'] == '3') {
         			$prize_log_list[$key]['icon'] = RC_App::apps_url('statics/front/images/jifen.png', __FILE__);
         			$prize_log_list[$key]['prize_value_label'] = '+'.$val['prize_value'];
@@ -139,7 +139,7 @@ class mobile_prize extends EcjiaMarketActivityController
     	$prize_info['address'] 		= $issue_extend['address'];
     	
     	if ($prize_info['prize_type'] == '2') {
-    		$prize_info['prize_value_label'] = '实物';
+    		$prize_info['prize_value_label'] = $prize_info['prize_name'];
     		$prize_info['icon'] = RC_App::apps_url('statics/front/images/shiwu.png', __FILE__);
     	} elseif ($prize_info['prize_type'] == '3') {
     		$prize_info['prize_value_label'] = '+'.$prize_info['prize_value'];
