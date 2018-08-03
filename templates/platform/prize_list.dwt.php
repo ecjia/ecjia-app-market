@@ -47,10 +47,11 @@
 										<a class="data-pjax float-left p_l20" title="{t}编辑{/t}" href='{RC_Uri::url("market/platform/activity_prize_edit", "code={$code}&p_id={$prize.prize_id}")}'>
 											<i class="ft-edit"></i>
 										</a>
-										{if $prize.is_used gt 0}
+										{if $prize.is_used eq 0}
 										<a class="float-left p_l10 ajaxremove no-underline" data-toggle="ajaxremove" data-msg="您确定要删除该活动奖品池吗？" title="{t}删除{/t}" href='{RC_Uri::url("market/platform/activity_prize_remove", "code={$code}&p_id={$prize.prize_id}")}'>
 											<i class="ft-trash-2"></i>
 										</a>
+										{else}
 										<span class="prize-used">使用中</span>
 										{/if}
 									</div>
