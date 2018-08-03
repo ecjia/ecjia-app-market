@@ -57,17 +57,14 @@
 		</div>
 		<script src="{$system_statics_url}/js/jquery.min.js" type="text/javascript"></script>
         <script src="{$system_statics_url}/lib/ecjia-js/ecjia.js" type="text/javascript"></script>
-        
-        <script src="{$front_url}/js/bind.js" type="text/javascript"></script>
+       
         
         <script src="{$system_statics_url}/lib/chosen/chosen.jquery.min.js" type="text/javascript"></script>
         <script src="{$system_statics_url}/js/jquery-migrate.min.js" type="text/javascript"></script>
         <script src="{$system_statics_url}/lib/uniform/jquery.uniform.min.js" type="text/javascript"></script>
         <script src="{$system_statics_url}/lib/smoke/smoke.min.js" type="text/javascript"></script>
         <script src="{$system_statics_url}/js/jquery-cookie.min.js" type="text/javascript"></script>
-        <script type="text/javascript">
-       		 ecjia.bind.init();
-        </script>
+      
 	</body>
 </html>
 {/nocache}
