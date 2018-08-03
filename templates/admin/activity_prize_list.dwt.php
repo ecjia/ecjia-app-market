@@ -37,8 +37,7 @@
 								</div>
 								<p class="model-inner">
 									<span class="f_l">{$prize.prize_number}&nbsp;/&nbsp;{$prize.prize_prob}%</span>
-									<br>
-									<span class="f_l">
+									<span class="f_r">
 										{if $prize.prize_type eq '0'} 未中奖 {elseif $prize.prize_type eq '1'} 礼券红包 {elseif $prize.prize_type eq '2'} 实物奖品 {elseif $prize.prize_type
 										eq '3'} 送积分 {elseif $prize.prize_type eq '4'} 推荐商品 {elseif $prize.prize_type eq '5'} 推荐店铺 {elseif $prize.prize_type
 										eq '6'} 现金红包 {/if}
