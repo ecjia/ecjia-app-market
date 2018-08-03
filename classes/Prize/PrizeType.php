@@ -59,9 +59,17 @@ class PrizeType
         self::TYPE_BALANCE    => '现金红包',
     ];
 
-
-    public static function getPrizeTypes()
+    /**
+     * 商家活动，不能发放积分奖励，过滤掉
+     * @param int $store_id
+     * @return array
+     */
+    public static function getPrizeTypes($store_id = 0)
     {
+        if ($store_id > 0) {
+            unset(self::$typeNames[self::TYPE_INTEGRAL]);
+        }
+
         return self::$typeNames;
     }
 
