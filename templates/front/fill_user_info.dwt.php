@@ -71,7 +71,7 @@
 	    	<div class="ecjia-form ecjia-login">
 		   		<p class="text-st">&nbsp;&nbsp;&nbsp;&nbsp;收货人：<span style="margin-left:10px;">{$prize_info.user_name}</span></p>
 	        	<p class="text-st">&nbsp;&nbsp;&nbsp;&nbsp;手机号：<span style="margin-left:10px;">{$prize_info.mobile}</span></p>
-	        	<p class="text-st">收货地址：<span style="margin-left:10px;">{$prize_info.address}</span></p>
+	        	<p class="text-st"><span style="disply:inline-block;padding-right:1px;"></span>收货地址：<span style="margin-left:10px;">{$prize_info.address}</span></p>
 			</div> 
 		{/if}
 		<script src="{$system_statics_url}/js/jquery.min.js" type="text/javascript"></script>

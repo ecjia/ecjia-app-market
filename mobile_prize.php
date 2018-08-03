@@ -98,7 +98,12 @@ class mobile_prize extends EcjiaMarketActivityController
         		$prize_log_list[$key]['activity_name'] = RC_DB::table('market_activity')->where('activity_id', $val['activity_id'])->pluck('activity_name');
         		$prize_log_list[$key]['formated_add_time'] = RC_Time::local_date('Y-m-d H:i:s', $val['add_time']);
         		if (!empty($val['issue_extend'])) {
-        			$prize_log_list[$key]['has_filled'] = 1;
+        			$issue_extend = unserialize($val['issue_extend']);
+        			if (!empty($issue_extend['user_name']) && !empty($issue_extend['mobile']) && !empty($issue_extend['address'])) {
+        				$prize_log_list[$key]['has_filled'] = 1;
+        			} else {
+        				$prize_log_list[$key]['has_filled'] = 0;
+        			}
         		} else {
         			$prize_log_list[$key]['has_filled'] = 0;
         		}
