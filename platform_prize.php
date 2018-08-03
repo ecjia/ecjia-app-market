@@ -67,14 +67,12 @@ class platform_prize extends ecjia_platform
         RC_Script::enqueue_script('smoke');
         RC_Script::enqueue_script('bootstrap-placeholder');
 		
-        RC_Style::enqueue_style('platform_market_activity', RC_App::apps_url('statics/css/platform_market_activity.css', __FILE__));
-		
-        //时间控件
-//         RC_Script::enqueue_script('bootstrap-datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.js'));
-//         RC_Style::enqueue_style('datetimepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datetimepicker.min.css'));
+  		RC_Style::enqueue_style('platform_market_activity', RC_App::apps_url('statics/platform-css/platform_market_activity.css', __FILE__));
+        RC_Style::enqueue_style('prize', RC_App::apps_url('statics/platform-css/prize.css', __FILE__));
         
         RC_Script::enqueue_script('platform_activity', RC_App::apps_url('statics/platform-js/platform_activity.js', __FILE__), array(), false, true);
         RC_Script::localize_script('platform_activity', 'js_lang', RC_Lang::get('market::market.js_lang'));
+        
         ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('抽奖记录', RC_Uri::url('market/platform_prize/init')));
         ecjia_platform_screen::get_current_screen()->set_subject('抽奖记录');
     }
