@@ -95,7 +95,16 @@ class mobile_prize extends EcjiaMarketActivityController
         				$prize_log_list[$key]['prize_value_label'] = price_format($val['prize_value']);
         			}
         		}
-        		$prize_log_list[$key]['activity_name'] = RC_DB::table('market_activity')->where('activity_id', $val['activity_id'])->pluck('activity_name');
+        		$activity_group = RC_DB::table('market_activity')->where('activity_id', $val['activity_id'])->pluck('activity_group');
+        		if ($activity_group == 'wechat_dazhuangpan') {
+        			$prize_log_list[$key]['activity_name'] = '微信大转盘';
+        		} elseif ($activity_group == 'wechat_guaguale') {
+        			$prize_log_list[$key]['activity_name'] = '微信刮刮乐';
+        		} elseif ($activity_group == 'wechat_zajindan') {
+        			$prize_log_list[$key]['activity_name'] = '微信砸金蛋';
+        		} elseif ($activity_group == 'mobile_shake') {
+        			$prize_log_list[$key]['activity_name'] = '手机摇一摇';
+        		}
         		$prize_log_list[$key]['formated_add_time'] = RC_Time::local_date('Y-m-d H:i:s', $val['add_time']);
         		if (!empty($val['issue_extend'])) {
         			$issue_extend = unserialize($val['issue_extend']);
@@ -153,7 +162,18 @@ class mobile_prize extends EcjiaMarketActivityController
     			$prize_info['prize_value_label'] = price_format($prize_info['prize_value']);
     		}
     	}
-    	$prize_info['activity_name'] = RC_DB::table('market_activity')->where('activity_id', $prize_info['activity_id'])->pluck('activity_name');
+    	
+    	$activity_group = RC_DB::table('market_activity')->where('activity_id', $prize_info['activity_id'])->pluck('activity_group');
+    	if ($activity_group == 'wechat_dazhuangpan') {
+    		$prize_info['activity_name'] = '微信大转盘';
+    	} elseif ($activity_group == 'wechat_guaguale') {
+    		$prize_info['activity_name'] = '微信刮刮乐';
+    	} elseif ($activity_group == 'wechat_zajindan') {
+    		$prize_info['activity_name'] = '微信砸金蛋';
+    	} elseif ($activity_group == 'mobile_shake') {
+    		$prize_info['activity_name'] = '手机摇一摇';
+    	}
+    	
     	$this->assign('prize_info', $prize_info);
     	
         $this->display(
