@@ -50,13 +50,13 @@ class PrizeType
 
 
     protected static $typeNames = [
-        TYPE_NONE       => '未中奖',
-        TYPE_BONUS      => '礼券红包',
-        TYPE_REAL       => '实物奖品',
-        TYPE_INTEGRAL   => '积分奖励',
-        TYPE_GOODS      => '商品展示',
-        TYPE_STORE      => '店铺展示',
-        TYPE_BALANCE    => '现金红包',
+        self::TYPE_NONE       => '未中奖',
+        self::TYPE_BONUS      => '礼券红包',
+        self::TYPE_REAL       => '实物奖品',
+        self::TYPE_INTEGRAL   => '积分奖励',
+        self::TYPE_GOODS      => '商品展示',
+        self::TYPE_STORE      => '店铺展示',
+        self::TYPE_BALANCE    => '现金红包',
     ];
 
 
