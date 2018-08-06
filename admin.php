@@ -263,7 +263,7 @@ class admin extends ecjia_admin
 
         $data = array(
             'limit_num' => $limit_num,
-            'limit_time' => $limit_time,
+            'limit_time' => $limit_time*60,
             'start_time' => $start_time,
             'end_time' => $end_time,
             'activity_desc' => $activity_desc,
