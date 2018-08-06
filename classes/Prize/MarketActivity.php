@@ -119,7 +119,9 @@ class MarketActivity
 
             $time_limit = $time - $this->model->limit_time * 60;
 
-            $market_activity_lottery = $this->model->MarketActivityLottery()->where('user_id', $openid)
+            $market_activity_lottery = $this->model->MarketActivityLottery()
+                ->where('user_id', $openid)
+                ->where('user_type', 'wechat')
                 ->where('update_time', '<=', $time)
                 ->where('add_time', '>=', $time_limit)
                 ->first();
@@ -210,12 +212,14 @@ class MarketActivity
     public function incrementLotteryCount($openid)
     {
         $model = MarketActivityLotteryModel::where('activity_id', $this->getActivityId())
-            ->where('user_id', $openid)->first();
+            ->where('user_id', $openid)
+            ->where('user_type', 'wechat')
+            ->first();
 
         //规定时间未超出设定的次数；更新抽奖次数，更新抽奖时间
         if (! empty($model)) {
             $time = RC_Time::gmtime();
-            $limit_count_new = $model->limit_count + 1;
+            $limit_count_new = $model->lottery_num + 1;
             $model->update(['update_time' => $time, 'lottery_num' => $limit_count_new]);
         } else {
             $this->resetLotteryOverCount($openid);
@@ -237,11 +241,12 @@ class MarketActivity
             $model->update(['add_time' => $time, 'update_time' => $time, 'lottery_num' => 0]);
         } else {
             MarketActivityLotteryModel::insert([
-                'activity_id' => $this->getActivityId(),
-                'user_id'   => $openid,
-                'lottery_num' => 0,
-                'add_time' => $time,
-                'update_time' => $time,
+                'activity_id'   => $this->getActivityId(),
+                'user_id'       => $openid,
+                'user_type'     => 'wechat',
+                'lottery_num'   => 0,
+                'add_time'      => $time,
+                'update_time'   => $time,
             ]);
         }
     }
