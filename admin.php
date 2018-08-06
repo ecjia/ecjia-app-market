@@ -331,10 +331,10 @@ class admin extends ecjia_admin
         $prize_list = RC_DB::table('market_activity_prize')->where('activity_id', $id)->take(15)->skip($page->start_id - 1)->orderby('prize_level', 'asc')->get();
         if (!empty($prize_list)) {
             foreach ($prize_list as $k => $v) {
-                if ($v['prize_type'] == '1') {
+                if ($v['prize_type'] == Ecjia\App\Market\Prize\PrizeType::TYPE_BONUS) {
                     $prize_value = RC_DB::table('bonus_type')->where('type_id', $v['prize_value'])->pluck('type_money');
                     $prize_list[$k]['prize_value_label'] = price_format($prize_value, false);
-                } elseif ($v['prize_type'] == '6') {
+                } elseif ($v['prize_type'] == Ecjia\App\Market\Prize\PrizeType::TYPE_BALANCE) {
                     $prize_list[$k]['prize_value_label'] = price_format($v['prize_value'], false);
                 } else {
                     $prize_list[$k]['prize_value_label'] = $v['prize_value'];
@@ -412,12 +412,17 @@ class admin extends ecjia_admin
         }
 
         $prize_value_final = '';
-        if ($prize_type == 1) {
+        $prize_type_arr = array(
+        		Ecjia\App\Market\Prize\PrizeType::TYPE_REAL,
+        		Ecjia\App\Market\Prize\PrizeType::TYPE_INTEGRAL,
+        		Ecjia\App\Market\Prize\PrizeType::TYPE_BALANCE
+        );
+        if ($prize_type == Ecjia\App\Market\Prize\PrizeType::TYPE_BONUS) {
             if (empty($prize_value)) {
                 return $this->showmessage('请选择礼券奖品的红包！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value;
-        } else if (in_array($prize_type, [2, 3, 6])) {
+        } else if (in_array($prize_type, $prize_type_arr)) {
             if (empty($prize_value_other)) {
                 return $this->showmessage('请填写奖品内容！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
@@ -511,13 +516,17 @@ class admin extends ecjia_admin
         }
 
         $prize_value_final = '';
-
-        if ($prize_type == 1) {
+        $prize_type_arr = array(
+        		Ecjia\App\Market\Prize\PrizeType::TYPE_REAL,
+        		Ecjia\App\Market\Prize\PrizeType::TYPE_INTEGRAL,
+        		Ecjia\App\Market\Prize\PrizeType::TYPE_BALANCE
+        );
+        if ($prize_type == Ecjia\App\Market\Prize\PrizeType::TYPE_REAL) {
             if (empty($prize_value)) {
                 return $this->showmessage('请选择礼券奖品的红包！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value;
-        } else if (in_array($prize_type, [2, 3, 6])) {
+        } else if (in_array($prize_type, $prize_type_arr)) {
             if (empty($prize_value_other)) {
                 return $this->showmessage('请填写奖品内容！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
