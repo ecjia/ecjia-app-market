@@ -118,5 +118,19 @@ class PrizeType
         return self::$typeNames;
     }
 
+    /**
+     * 获取能中奖的奖品类型
+     * @return array
+     */
+    public static function getCanPrizeType()
+    {
+        return [
+            self::TYPE_BONUS,
+            self::TYPE_REAL,
+            self::TYPE_INTEGRAL,
+            self::TYPE_GOODS,
+        ];
+    }
+
 
 }
