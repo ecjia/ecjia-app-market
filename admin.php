@@ -435,6 +435,19 @@ class admin extends ecjia_admin
         if (empty($prize_prob)) {
             return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
+        //某个活动的所有奖品中奖概率不能大于100
+        $current_all_prize_prob_final = 0;
+        if (!empty($prize_prob)) {
+        	$current_all_prize_prob = RC_DB::table('market_activity_prize')->where('activity_id', $activity_info['activity_id'])->lists('prize_prob');
+        	if ($current_all_prize_prob) {
+        		foreach ($current_all_prize_prob as $row) {
+        			$current_all_prize_prob_final += $row;
+        		}
+        	}
+        	if ($current_all_prize_prob_final > 100 || ($current_all_prize_prob_final + $prize_prob) > 100) {
+        		return $this->showmessage('活动所有奖品获奖概率总和不可大于100', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	}
+        }
 
         $data = array(
             'activity_id' => $activity_info['activity_id'],
@@ -540,7 +553,19 @@ class admin extends ecjia_admin
         if (empty($prize_prob)) {
             return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-
+        //某个活动的所有奖品中奖概率不能大于100
+        $current_all_prize_prob_final = 0;
+        if (!empty($prize_prob)) {
+        	$current_all_prize_prob = RC_DB::table('market_activity_prize')->where('activity_id', $activity_info['activity_id'])->lists('prize_prob');
+        	if ($current_all_prize_prob) {
+        		foreach ($current_all_prize_prob as $row) {
+        			$current_all_prize_prob_final += $row;
+        		}
+        	}
+        	if ($current_all_prize_prob_final > 100 || ($current_all_prize_prob_final + $prize_prob) > 100) {
+        		return $this->showmessage('活动所有奖品获奖概率总和不可大于100', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	}
+        }
         $data = array(
             'activity_id' => $activity_info['activity_id'],
             'prize_level' => $prize_level,
