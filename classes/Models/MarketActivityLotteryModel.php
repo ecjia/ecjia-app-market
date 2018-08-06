@@ -68,6 +68,5 @@ class MarketActivityLotteryModel extends Model
 
     protected $guarded = [];
 
-    
 
 }

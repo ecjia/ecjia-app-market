@@ -46,6 +46,7 @@
 //
 namespace Ecjia\App\Market\Models;
 
+use Ecjia\App\Market\Prize\PrizeType;
 use Royalcms\Component\Database\Eloquent\Model;
 
 /**
@@ -73,6 +74,33 @@ class MarketActivityLogModel extends Model
 
     protected $guarded = [];
 
-    
+
+    /**
+     * 获取活动
+     */
+    public function MarketActivity()
+    {
+        return $this->belongsTo('Ecjia\App\Market\Models\MarketActivityModel', 'activity_id', 'activity_id');
+    }
+
+
+    /**
+     * 获取奖品
+     */
+    public function MarketActivityPrize()
+    {
+        return $this->belongsTo('Ecjia\App\Market\Models\MarketActivityPrizeModel', 'prize_id', 'prize_id');
+    }
+
+
+    public function BonusType()
+    {
+        if ($this->prize_id == PrizeType::TYPE_BONUS) {
+            return $this->belongsTo('Ecjia\App\Market\Models\BonusTypeModel', 'prize_id', 'type_id');
+        } else {
+            return null;
+        }
+    }
+
 
 }

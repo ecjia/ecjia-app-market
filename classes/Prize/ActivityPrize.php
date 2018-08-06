@@ -55,13 +55,14 @@ namespace Ecjia\App\Market\Prize;
 
 use Ecjia\App\Market\MarketAbstract;
 use Ecjia\App\Market\Models\MarketActivityPrizeModel;
+use Ecjia\App\Market\Models\MarketActivityModel;
 
 class ActivityPrize
 {
 
     protected $activity;
 
-    public function __construct(MarketAbstract $activity)
+    public function __construct(MarketActivityModel $activity)
     {
         $this->activity = $activity;
     }
@@ -69,7 +70,9 @@ class ActivityPrize
 
     public function getPrizes()
     {
-        MarketActivityPrizeModel::where('activity_id', $this->activity->getActivityId());
+        $data = MarketActivityPrizeModel::where('activity_id', $this->activity->activity_id)->orderBy('prize_level', 'asc')->get();
+
+        return $data;
     }
 
 

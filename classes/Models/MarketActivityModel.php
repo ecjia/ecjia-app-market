@@ -74,6 +74,26 @@ class MarketActivityModel extends Model
 
     protected $guarded = [];
 
-    
+
+    /**
+     * 获取活动的所有抽奖记录
+     */
+    public function MarketActivityLottery()
+    {
+        return $this->hasMany('Ecjia\App\Market\Models\MarketActivityLotteryModel', 'activity_id', 'activity_id');
+    }
+
+
+    /**
+     * 获取活动的所有抽奖记录
+     */
+    public function MarketActivityLog()
+    {
+        return $this->hasMany('Ecjia\App\Market\Models\MarketActivityLogModel', 'activity_id', 'activity_id');
+    }
+
+
+
+
 
 }
