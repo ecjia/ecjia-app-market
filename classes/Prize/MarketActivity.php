@@ -9,7 +9,7 @@
 namespace Ecjia\App\Market\Prize;
 
 use Ecjia\App\Market\Models\MarketActivityModel;
-use Ecjia\App\Market\Models\MarketActivityLotteryModel;
+use RC_Time;
 
 class MarketActivity
 {

@@ -213,6 +213,6 @@ class mobile_prize extends EcjiaMarketActivityController
     	$data = serialize($data);
     	$winner['issue_extend'] = $data;
     	RC_DB::table('market_activity_log')->where('id', $log_id)->update($winner);
-    	return ecjia_front::$controller->showmessage('提交信息成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('market/mobile_prize/prize_init', array('openid' => $prize_log_info['user_id']))));
+    	return ecjia_front::$controller->showmessage('资料提交成功，请等待发放奖品！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('market/mobile_prize/prize_init', array('openid' => $prize_log_info['user_id']))));
     }
 }
