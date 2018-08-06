@@ -152,7 +152,9 @@ class platform extends ecjia_platform
 
         $activity_info['start_time'] = RC_Time::local_date('Y-m-d H:i', $activity_info['start_time']);
         $activity_info['end_time'] = RC_Time::local_date('Y-m-d H:i', $activity_info['end_time']);
-
+        
+        $activity_info['limit_time'] = $activity_info['limit_time']/60;
+        
         $this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_info'), 'href' => RC_Uri::url('market/platform/activity_detail', array('code' => $code))));
         ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.edit_activity')));
 

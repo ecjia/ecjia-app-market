@@ -166,7 +166,9 @@ class admin extends ecjia_admin
 
         $activity_info['start_time'] = RC_Time::local_date('Y-m-d H:i', $activity_info['start_time']);
         $activity_info['end_time'] = RC_Time::local_date('Y-m-d H:i', $activity_info['end_time']);
-
+        
+        $activity_info['limit_time'] = $activity_info['limit_time']/60;
+        
         $this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_info'), 'href' => RC_Uri::url('market/admin/activity_detail', array('code' => $code))));
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.edit_activity')));
 
@@ -475,6 +477,7 @@ class admin extends ecjia_admin
         $p_id = intval($_GET['p_id']);
         $id = RC_DB::table('market_activity')->where('activity_group', $activity_code)->where('store_id', 0)->where('wechat_id', $wechat_id)->pluck('activity_id');
         $activity_prize = RC_DB::table('market_activity_prize')->where('prize_id', $p_id)->first();
+       
 
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.prize_pool')));
 
