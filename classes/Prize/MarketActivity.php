@@ -24,7 +24,6 @@ class MarketActivity
 
     protected $activity_code;
 
-
     protected $model;
 
     protected $prize;
