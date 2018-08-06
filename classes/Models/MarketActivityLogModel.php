@@ -56,6 +56,8 @@ class MarketActivityLogModel extends Model
 {
     protected $table = 'market_activity_log';
 
+    protected $primaryKey = 'id';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -91,16 +93,5 @@ class MarketActivityLogModel extends Model
     {
         return $this->belongsTo('Ecjia\App\Market\Models\MarketActivityPrizeModel', 'prize_id', 'prize_id');
     }
-
-
-    public function BonusType()
-    {
-        if ($this->prize_id == PrizeType::TYPE_BONUS) {
-            return $this->belongsTo('Ecjia\App\Market\Models\BonusTypeModel', 'prize_id', 'type_id');
-        } else {
-            return null;
-        }
-    }
-
 
 }

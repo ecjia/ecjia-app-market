@@ -55,6 +55,8 @@ class MarketActivityModel extends Model
 {
     protected $table = 'market_activity';
 
+    protected $primaryKey = 'activity_id';
+
     public $timestamps = false;
 
     protected $fillable = [

@@ -14,6 +14,8 @@ class BonusTypeModel extends Model
 {
     protected $table = 'bonus_type';
 
+    protected $primaryKey = 'type_id';
+
     public $timestamps = false;
 
     protected $fillable = [
