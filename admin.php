@@ -556,7 +556,7 @@ class admin extends ecjia_admin
         //某个活动的所有奖品中奖概率不能大于100
         $current_all_prize_prob_final = 0;
         if (!empty($prize_prob)) {
-        	$current_all_prize_prob = RC_DB::table('market_activity_prize')->where('activity_id', $activity_info['activity_id'])->lists('prize_prob');
+        	$current_all_prize_prob = RC_DB::table('market_activity_prize')->where('activity_id', $activity_info['activity_id'])->where('prize_id', '!=', $p_id)->lists('prize_prob');
         	if ($current_all_prize_prob) {
         		foreach ($current_all_prize_prob as $row) {
         			$current_all_prize_prob_final += $row;
