@@ -9,6 +9,7 @@
 namespace Ecjia\App\Market\Prize;
 
 use Ecjia\App\Market\Models\MarketActivityModel;
+use Ecjia\App\Market\Models\MarketActivityLotteryModel;
 use RC_Time;
 
 class MarketActivity
@@ -120,8 +121,17 @@ class MarketActivity
                 ->where('add_time', '>=', $time_limit)
                 ->first();
 
-            //限定时间已抽取的次数
-            $has_used_count = $market_activity_lottery->lottery_num;
+            //找到数据，说明在有效时间内
+            if (!empty($market_activity_lottery)) {
+                //限定时间已抽取的次数
+                $has_used_count = $market_activity_lottery->lottery_num;
+            }
+            //找不到数据，说明已经过有效时间，可以重置抽奖时间和抽奖次数
+            else {
+                $this->resetLotteryOverCount($openid);
+
+                $has_used_count = 0;
+            }
 
             //剩余可抽取的次数
             $prize_num = $this->model->limit_num - $has_used_count;
@@ -130,7 +140,7 @@ class MarketActivity
             $prize_num = -1; //无限次
         }
 
-        return $prize_num;
+        return intval($prize_num);
     }
 
     /**
@@ -188,6 +198,76 @@ class MarketActivity
 
         return $newdata;
 
+    }
+
+    /**
+     * 自增用户的抽奖使用次数
+     * @param $openid
+     */
+    public function incrementLotteryCount($openid)
+    {
+        $model = MarketActivityLotteryModel::where('activity_id', $this->getActivityId())
+            ->where('user_id', $openid)->first();
+
+        //规定时间未超出设定的次数；更新抽奖次数，更新抽奖时间
+        if (! empty($model)) {
+            $time = RC_Time::gmtime();
+            $limit_count_new = $model->limit_count + 1;
+            $model->update(['update_time' => $time, 'lottery_num' => $limit_count_new]);
+        } else {
+            $this->resetLotteryOverCount($openid);
+            $this->incrementLotteryCount($openid);
+        }
+    }
+
+    /**
+     * 重置用户的剩余抽奖次数
+     * @param $openid
+     */
+    protected function resetLotteryOverCount($openid)
+    {
+        $time = RC_Time::gmtime();
+
+        $model = MarketActivityLotteryModel::where('activity_id', $this->getActivityId())
+            ->where('user_id', $openid)->first();
+        if (! empty($model)) {
+            $model->update(['add_time' => $time, 'update_time' => $time, 'lottery_num' => 0]);
+        } else {
+            MarketActivityLotteryModel::insert([
+                'activity_id' => $this->getActivityId(),
+                'user_id'   => $openid,
+                'lottery_num' => 0,
+                'add_time' => $time,
+                'update_time' => $time,
+            ]);
+        }
+    }
+
+    /**
+     * 抽奖动作，获取一个奖品
+     *
+     * 每次前端页面的请求，PHP循环奖项设置数组，
+     * 通过概率计算函数get_rand获取抽中的奖项id。
+     */
+    public function randLotteryPrizeAction()
+    {
+        $prizes = $this->getPrizes();
+
+        $sum_prob = $prizes->sum('prize_prob');
+
+        $rand_prize =  $prizes->map(function ($item) use ( & $sum_prob) {
+            $rand = mt_rand(1, $sum_prob);
+            if ($rand <= $item->prize_prob) {
+                return $item;
+            } else {
+                $sum_prob = $sum_prob - $item->prize_prob;
+                return null;
+            }
+        })->filter(function ($item) {
+            return is_null($item) ? false : true;
+        })->first();
+
+        return $rand_prize;
     }
 
 
