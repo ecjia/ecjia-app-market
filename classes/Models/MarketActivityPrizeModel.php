@@ -75,7 +75,6 @@ class MarketActivityPrizeModel extends Model
 
     public function BonusType()
     {
-//        dd($this->prize_type);
         if ($this->prize_type == PrizeType::TYPE_BONUS) {
             return $this->belongsTo('Ecjia\App\Market\Models\BonusTypeModel', 'prize_value', 'type_id');
         } else {

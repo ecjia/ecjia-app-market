@@ -70,7 +70,7 @@ class ActivityPrize
 
     public function getPrizes()
     {
-        $data = MarketActivityPrizeModel::where('activity_id', $this->activity->activity_id)->orderBy('prize_level', 'asc')->get();
+        $data = MarketActivityPrizeModel::where('activity_id', $this->activity->activity_id)->where('prize_number', '>', 0)->orderBy('prize_level', 'asc')->get();
 
         $newdata = $data->map(function ($item) {
             //奖品为红包的时候，查询红包信息

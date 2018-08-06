@@ -128,9 +128,24 @@ class PrizeType
             self::TYPE_BONUS,
             self::TYPE_REAL,
             self::TYPE_INTEGRAL,
-            self::TYPE_GOODS,
+            self::TYPE_BALANCE,
         ];
     }
 
+    /**
+     * 获取奖品的中奖状态
+     * @param $type
+     * @return bool
+     */
+    public static function getPrizeStatus($type) {
+        $prize_type = self::getCanPrizeType();
+        if (in_array($type, $prize_type)) {
+            $status = 1;
+        } else {
+            $status = 0;
+        }
+
+        return $status;
+    }
 
 }
