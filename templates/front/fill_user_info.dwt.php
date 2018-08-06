@@ -8,6 +8,7 @@
 		<title>填写地址</title>
 		<link rel="stylesheet" type="text/css" href="{$front_url}/css/touch.css" />
 		<link rel="stylesheet" type="text/css" href="{$front_url}/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="{$front_url}/css/modals.css" />
 	</head>
 	
 	<body>
@@ -84,6 +85,7 @@
         <script src="{$system_statics_url}/lib/uniform/jquery.uniform.min.js" type="text/javascript"></script>
         <script src="{$system_statics_url}/lib/smoke/smoke.min.js" type="text/javascript"></script>
         <script src="{$system_statics_url}/js/jquery-cookie.min.js" type="text/javascript"></script>
+        <script src="{$front_url}/js/framework7.min.js" type="text/javascript"></script>
         <script type="text/javascript">
        		 ecjia.user_info.init();
         </script>

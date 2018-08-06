@@ -17,15 +17,23 @@
 				var info = {'user_name': user_name,'mobile':mobile,'address':address};
 				$.post(url, info, function(data) {
 					if (data.state == 'error') {
-						alert(data.message);
+						ecjia.user_info.alert(data.message);
 					} else if (data.state == 'success'){
-						alert(data.message);
+						ecjia.user_info.alert(data.message);
 						location.href = data.url;
 					}
 				});
 	
 			});
 		},
+		
+		alert: function(text, callback) {
+			var app = new Framework7({
+                modalButtonOk: "确定",
+                modalTitle: ''
+            });
+            app.alert(text, '', callback);
+		}
 	};
 })(ecjia, jQuery);
 
