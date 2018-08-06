@@ -125,7 +125,8 @@ class platform extends ecjia_platform
             $info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->first();
             if (!empty($info)) {
                 $info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
-                $info['end_time'] = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
+                $info['end_time'] 	= RC_Time::local_date('Y-m-d H:i', $info['end_time']);
+                $info['limit_time']	= $info['limit_time']/60;
                 $this->assign('info', $info);
                 $this->assign('activity_info', $info);
 

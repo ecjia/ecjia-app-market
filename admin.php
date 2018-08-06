@@ -141,7 +141,8 @@ class admin extends ecjia_admin
             $info = RC_DB::table('market_activity')->where('activity_group', $code)->where('enabled', 1)->where('store_id', 0)->where('wechat_id', 0)->first();
             if (!empty($info)) {
                 $info['start_time'] = RC_Time::local_date('Y-m-d H:i', $info['start_time']);
-                $info['end_time'] = RC_Time::local_date('Y-m-d H:i', $info['end_time']);
+                $info['end_time'] 	= RC_Time::local_date('Y-m-d H:i', $info['end_time']);
+                $info['limit_time']	= $info['limit_time']/60;
                 $this->assign('info', $info);
                 $this->assign('activity_info', $info);
 
