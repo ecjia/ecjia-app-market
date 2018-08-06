@@ -148,14 +148,17 @@ class MarketActivity
     }
 
     /**
-     * 获取活动的奖品
+     * 获取活动的所有奖品
      */
     public function getPrizes()
     {
         return $this->prize->getPrizes();
     }
 
-
+    /**
+     * 获取活动的能中奖的奖品
+     * @return mixed
+     */
     public function getCanWinningPrizes()
     {
         return $this->prize->getCanWinningPrizes();
