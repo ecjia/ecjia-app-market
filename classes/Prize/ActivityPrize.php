@@ -76,6 +76,40 @@ class ActivityPrize
     }
 
 
+    public function getCanWinningPrizes()
+    {
+        $types = PrizeType::getCanPrizeType();
+
+        $data = $this->getPrizes();
+
+        $newdata = $data->map(function ($item) use ($types) {
+            if (in_array($item->prize_type, $types)) {
+                return $item->prize_id;
+            } else {
+                return null;
+            }
+        })->filter(function ($item) {
+            return !is_null($item);
+        })->values()->toArray();
+
+        return $newdata;
+    }
+
+
+    public function getPrizeId($type)
+    {
+        $data = $this->getPrizes();
+
+        $newdata = $data->filter(function ($item) use ($type) {
+            if ($item->prize_type == $type) {
+                return true;
+            } else {
+                return false;
+            }
+        })->first();
+
+        return $newdata->prize_id;
+    }
 
 
 }

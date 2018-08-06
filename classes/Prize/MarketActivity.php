@@ -33,6 +33,8 @@ class MarketActivity
         $this->wechat_id = $wechat_id;
 
         $this->model = $this->getMarketActivity();
+
+        $this->prize = new ActivityPrize($this->model);
     }
 
     public function getMarketActivity()
@@ -77,10 +79,13 @@ class MarketActivity
      */
     public function getPrizes()
     {
-
-        $this->prize = new ActivityPrize($this->model);
-
         return $this->prize->getPrizes();
+    }
+
+
+    public function getCanWinningPrizes()
+    {
+        return $this->prize->getCanWinningPrizes();
     }
 
     /**
@@ -88,35 +93,41 @@ class MarketActivity
      */
     public function getActivityWinningLog()
     {
-        $types = PrizeType::getCanPrizeType();
-//        dd($this->model);
-        $data = $this->model->MarketActivityLog()->whereIn('prize_type', $types)
-            ->where('add_time', '>=', $this->model->start_time)
-            ->where('add_time', '<=', $this->model->end_time)
-            ->take(10)
-            ->get();
+        $types = $this->getCanWinningPrizes();
 
-//        $data = $this->model->whereHas('MarketActivityLog', function ($query) use ($types) {
-//            $query->whereIn('prize_type', $types)
-//                ->where('add_time', '>=', $this->model->start_time)
-//                ->where('add_time', '<=', $this->model->end_time)
-//                ->take(10)
-//                ->get();
-//        })->get();
+        $model = $this->model;
 
-        dd($data);
+        $data = MarketActivityModel::with(['MarketActivityLog' => function ($query) use ($types, $model) {
+            $query->whereIn('market_activity_log.prize_id', $types)
+                ->where('market_activity_log.add_time', '>=', $model->start_time)
+                ->where('market_activity_log.add_time', '<=', $model->end_time)
+                ->orderBy('market_activity_log.add_time', 'DESC')
+                ->take(10);
+        }])->where('market_activity.store_id', $this->store_id)
+            ->where('market_activity.wechat_id', $this->wechat_id)
+            ->where('market_activity.activity_group', $this->activity_code)
+            ->first();
 
-        $bound_ids = [];
-        $data->map(function ($item) use (& $bound_ids) {
+
+        $prize = $this->prize;
+
+        $newdata = $data->MarketActivityLog->map(function ($item) use (& $bound_ids, $prize) {
+            //奖品为红包的时候，查询红包信息
             if ($item->MarketActivityPrize->prize_type == PrizeType::TYPE_BONUS) {
-                $bound_ids[] = $item->MarketActivityPrize->prize_id;
-                $bonus = $item->MarketActivityPrize->BonusType();
 
-                dd($bonus);
+                $bonus = $item->MarketActivityPrize->BonusType;
+                $prize_value = $bonus->type_money;
+                $prize_value = ecjia_price_format($prize_value, false);
+                $item->prize_value = $prize_value;
+
+            } else {
+                $item->prize_value = $item->MarketActivityPrize->prize_value;
             }
+
+            return $item;
         });
 
-
+        return $newdata;
 
     }
 
