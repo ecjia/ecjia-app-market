@@ -152,7 +152,9 @@ class platform extends ecjia_platform
 
         $activity_info['start_time'] = RC_Time::local_date('Y-m-d H:i', $activity_info['start_time']);
         $activity_info['end_time'] = RC_Time::local_date('Y-m-d H:i', $activity_info['end_time']);
-
+        
+        $activity_info['limit_time'] = $activity_info['limit_time']/60;
+        
         $this->assign('action_link', array('text' => RC_Lang::get('market::market.back_activity_info'), 'href' => RC_Uri::url('market/platform/activity_detail', array('code' => $code))));
         ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(RC_Lang::get('market::market.edit_activity')));
 
@@ -511,7 +513,7 @@ class platform extends ecjia_platform
         //某个活动的所有奖品中奖概率不能大于100
         $current_all_prize_prob_final = 0;
         if (!empty($prize_prob)) {
-        	$current_all_prize_prob = RC_DB::table('market_activity_prize')->where('activity_id', $activity_info['activity_id'])->lists('prize_prob');
+        	$current_all_prize_prob = RC_DB::table('market_activity_prize')->where('activity_id', $activity_info['activity_id'])->where('prize_id', '!=', $p_id)->lists('prize_prob');
         	if ($current_all_prize_prob) {
         		foreach ($current_all_prize_prob as $row) {
         			$current_all_prize_prob_final += $row;
