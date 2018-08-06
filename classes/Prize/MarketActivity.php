@@ -8,9 +8,12 @@
 
 namespace Ecjia\App\Market\Prize;
 
+use Ecjia\App\Market\Models\MarketActivityLogModel;
 use Ecjia\App\Market\Models\MarketActivityModel;
 use Ecjia\App\Market\Models\MarketActivityLotteryModel;
+use Ecjia\App\Market\Models\MarketActivityPrizeModel;
 use RC_Time;
+use RC_DB;
 
 class MarketActivity
 {
@@ -268,6 +271,87 @@ class MarketActivity
         })->first();
 
         return $rand_prize;
+    }
+
+    /**
+     * 发放中奖的奖品
+     * @param $openid
+     */
+    public function issuePrize($wechat_id, $openid, MarketActivityPrizeModel $prize_info, $logid)
+    {
+
+        //发实物奖品，后台发放，系统不自动发放
+
+        //事务执行，出错回滚
+        return RC_DB::transaction(function () use ($wechat_id, $openid, $prize_info, $logid) {
+            switch ($prize_info->prize_type) {
+                //发红包优惠券
+                case PrizeType::TYPE_BONUS:
+                    $prize = new \Ecjia\App\Market\Prize\IssuePrizeBonus($wechat_id, $prize_info);
+                    $result = $prize->issue($openid);
+                    break;
+
+                //发积分
+                case PrizeType::TYPE_INTEGRAL:
+                    $prize = new \Ecjia\App\Market\Prize\IssuePrizeIntegral($wechat_id, $prize_info);
+                    $result = $prize->issue($openid);
+                    break;
+
+                //发现金红包
+                case PrizeType::TYPE_BALANCE:
+                    $prize = new \Ecjia\App\Market\Prize\IssuePrizeBalance($wechat_id, $prize_info);
+                    $result = $prize->issue($openid);
+                    break;
+
+                default:
+                    $result = false;
+                    break;
+
+            }
+
+            //发放奖品成功后，更新发放记录
+            if ($result) {
+
+                $this->subtractLotteryPrizeNum($prize_info);
+
+                return MarketActivityLogModel::where('id', $logid)->update(
+                    [
+                        'issue_status'  => 1,
+                        'issue_time'    => RC_Time::gmtime(),
+                    ]
+                );
+            }
+        });
+    }
+
+    /**
+     * 减奖品数量
+     * @param MarketActivityPrizeModel $prize_info
+     */
+    protected function subtractLotteryPrizeNum(MarketActivityPrizeModel $prize_info)
+    {
+        $prize_info->decrement('prize_number');
+    }
+
+    /**
+     * 添加用户的中奖记录
+     */
+    public function addLotteryPrizeLog($openid, MarketActivityPrizeModel $prize_info)
+    {
+        $name = RC_DB::table('wechat_user')->where('openid', $openid)->pluck('nickname');
+        $data = array(
+            'activity_id'   => $prize_info->activity_id,
+            'user_id'       => $openid,
+            'user_type'     => 'wechat',
+            'user_name'     => empty($name) ? '' : $name,
+            'prize_id'      => $prize_info['prize_id'],
+            'prize_name'    => $prize_info['prize_name'],
+            'add_time'      => RC_Time::gmtime(),
+            'source'        => 'wechat',
+            'issue_status'  => 0,
+            'issue_time'    => 0,
+        );
+        return MarketActivityLogModel::insertGetId($data);
     }
 
 

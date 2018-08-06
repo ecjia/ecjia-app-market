@@ -128,7 +128,7 @@ class PrizeType
             self::TYPE_BONUS,
             self::TYPE_REAL,
             self::TYPE_INTEGRAL,
-            self::TYPE_GOODS,
+            self::TYPE_BALANCE,
         ];
     }
 
