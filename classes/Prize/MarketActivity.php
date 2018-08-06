@@ -37,17 +37,76 @@ class MarketActivity
         $this->prize = new ActivityPrize($this->model);
     }
 
-    public function getMarketActivity()
+    private function getMarketActivity()
     {
         return MarketActivityModel::where('store_id', $this->store_id)->where('wechat_id', $this->wechat_id)->where('activity_group', $this->activity_code)->first();
     }
 
+    public function getMarketActivityModel()
+    {
+        return $this->model;
+    }
+
     /**
-     * 获取用户的抽奖次数
+     * 获取活动ID
+     * @return mixed
+     */
+    public function getActivityId()
+    {
+        return $this->model->activity_id;
+    }
+
+    /**
+     * 获取活动名称
+     * @return mixed
+     */
+    public function getActivityName()
+    {
+        return $this->model->activity_name;
+    }
+
+    /**
+     * 获取活动代号
+     * @return mixed
+     */
+    public function getActivityCode()
+    {
+        return $this->model->activity_group;
+    }
+
+    /**
+     * 获取活动描述
+     */
+    public function getActivityDescription()
+    {
+        return $this->model->activity_desc;
+    }
+
+
+    /**
+     * 获取活动开始时间
+     * @return mixed
+     */
+    public function getActivityStartTime()
+    {
+        return $this->model->start_time;
+    }
+
+    /**
+     * 获取活动结束时间
+     * @return mixed
+     */
+    public function getActivityEndTime()
+    {
+        return $this->model->end_time;
+    }
+
+    /**
+     * 获取用户的剩余抽奖次数
      * @param $openid
      * @return int
      */
-    public function getLotteryCount($openid)
+    public function getLotteryOverCount($openid)
     {
         if ($this->model->limit_num > 0) {
             $starttime = $this->model->start_time;

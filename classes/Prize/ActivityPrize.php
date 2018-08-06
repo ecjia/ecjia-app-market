@@ -72,7 +72,18 @@ class ActivityPrize
     {
         $data = MarketActivityPrizeModel::where('activity_id', $this->activity->activity_id)->orderBy('prize_level', 'asc')->get();
 
-        return $data;
+        $newdata = $data->map(function ($item) {
+            //奖品为红包的时候，查询红包信息
+            if ($item->prize_type == PrizeType::TYPE_BONUS) {
+                $bonus = $item->BonusType;
+                $prize_value = $bonus->type_money;
+                $prize_value = ecjia_price_format($prize_value, false);
+                $item->prize_value = $prize_value;
+            }
+            return $item;
+        });
+
+        return $newdata;
     }
 
 
