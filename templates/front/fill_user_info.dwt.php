@@ -8,7 +8,7 @@
 		<title>填写地址</title>
 		<link rel="stylesheet" type="text/css" href="{$front_url}/css/touch.css" />
 		<link rel="stylesheet" type="text/css" href="{$front_url}/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="{$front_url}/css/modals.css" />
+		<link rel="stylesheet" type="text/css" href="{$front_url}/css/models.css" />
 	</head>
 	
 	<body>
