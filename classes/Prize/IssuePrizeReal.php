@@ -77,7 +77,6 @@ class IssuePrizeReal
         $user_id = $wechat_user->getEcjiaUserId();
 
         if (! empty($user_id)) {
-
             return true;
         } else {
             return false;

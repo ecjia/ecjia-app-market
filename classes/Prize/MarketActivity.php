@@ -315,6 +315,21 @@ class MarketActivity
                     $result = $prize->issue($openid);
                     break;
 
+                case PrizeType::TYPE_NONE:
+                    $prize = new \Ecjia\App\Market\Prize\IssuePrizeNone($wechat_id, $prize_info);
+                    $result = $prize->issue($openid);
+                    break;
+
+                case PrizeType::TYPE_GOODS:
+                    $prize = new \Ecjia\App\Market\Prize\IssuePrizeGoods($wechat_id, $prize_info);
+                    $result = $prize->issue($openid);
+                    break;
+
+                case PrizeType::TYPE_STORE:
+                    $prize = new \Ecjia\App\Market\Prize\IssuePrizeStore($wechat_id, $prize_info);
+                    $result = $prize->issue($openid);
+                    break;
+
                 default:
                     $result = false;
                     break;
