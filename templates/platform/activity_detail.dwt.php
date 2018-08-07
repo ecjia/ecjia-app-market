@@ -82,7 +82,7 @@
 								<label class="col-lg-2 label-control text-right">{t}活动时间段：{/t}</label>
 								<div class="col-lg-8 controls">
 									{if $activity_info.formated_start_time neq '' && $activity_info.formated_end_time neq ''}
-										{$activity_info.start_time}<pre style="display:inline;"> ~ </pre>{$activity_info.end_time}
+										{$activity_info.formated_start_time}<pre style="display:inline;"> ~ </pre>{$activity_info.formated_end_time}
 									{else}
 										暂未设置
 									{/if}
