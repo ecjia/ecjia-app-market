@@ -441,7 +441,7 @@ class admin extends ecjia_admin
         if (empty($prize_number)) {
             return $this->showmessage('请填写奖品数量！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-        if (empty($prize_prob)) {
+        if ($prize_prob <= 0) {
             return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         //某个活动的所有奖品中奖概率不能大于100
@@ -562,11 +562,11 @@ class admin extends ecjia_admin
             $prize_value_final = $prize_value_other;
         }
 
-        if (empty($prize_number)) {
+        if (!isset($prize_number)) {
             return $this->showmessage('请填写奖品数量！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
-        if (empty($prize_prob)) {
+        if ($prize_prob <= 0) {
             return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         //某个活动的所有奖品中奖概率不能大于100

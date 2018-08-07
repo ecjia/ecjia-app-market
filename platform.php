@@ -358,7 +358,7 @@ class platform extends ecjia_platform
         $prize_value_other = $_POST['prize_value_other'];
         $prize_number = $_POST['prize_number'];
         $prize_prob = $_POST['prize_prob'];
-
+		
         $code = $_POST['code'];
         $wechat_id = $this->platformAccount->getAccountID();
         $activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('wechat_id', $wechat_id)->where('store_id', $_SESSION['store_id'])->first();
@@ -396,7 +396,7 @@ class platform extends ecjia_platform
         if (empty($prize_number)) {
             return $this->showmessage('请填写奖品数量！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-        if (empty($prize_prob)) {
+        if ($prize_prob <= 0) {
             return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         //某个活动的所有奖品中奖概率不能大于100
@@ -514,11 +514,11 @@ class platform extends ecjia_platform
             $prize_value_final = $prize_value_other;
         }
 
-        if (empty($prize_number)) {
+        if (!isset($prize_number)) {
             return $this->showmessage('请填写奖品数量！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
-        if (empty($prize_prob)) {
+        if ($prize_prob <= 0) {
             return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         //某个活动的所有奖品中奖概率不能大于100
