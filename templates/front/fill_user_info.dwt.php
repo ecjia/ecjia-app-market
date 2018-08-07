@@ -66,7 +66,7 @@
 	    	</div>
 		</div> 
 		<div class="around">
-    	  <a class="submit_user_info btn ecjia-login-margin-top" href='{url path="market/mobile_prize/submit_user_info" args="log_id={$prize_info.id}"}'>提交</a>
+    	  <a class="submit_user_info btn ecjia-login-margin-top external" href='{url path="market/mobile_prize/submit_user_info" args="log_id={$prize_info.id}"}'>提交</a>
     	 </div>
     	{else}
 	    	<div class="ecjia-form ecjia-login">
