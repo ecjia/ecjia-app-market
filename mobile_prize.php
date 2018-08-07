@@ -119,6 +119,8 @@ class mobile_prize extends EcjiaMarketActivityController
         }
    	
         $this->assign('prize_log_list', $prize_log_list);
+        $this->assign('uuid',  $uuid );
+        $this->assign('openid',  $openid);
         
         $this->display(
             RC_Package::package('app::market')->loadTemplate('front/prize_list.dwt', true)
@@ -214,5 +216,44 @@ class mobile_prize extends EcjiaMarketActivityController
     	$winner['issue_extend'] = $data;
     	RC_DB::table('market_activity_log')->where('id', $log_id)->update($winner);
     	return ecjia_front::$controller->showmessage('资料提交成功，请等待发放奖品！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('market/mobile_prize/prize_init', array('openid' => $prize_log_info['user_id']))));
+    }
+    
+    //领取奖品
+    public function issue_prize()
+    {
+    	$openid					= trim($_GET['openid']);
+    	$log_id 				= intval($_GET['log_id']);
+    	$activity_id 			= intval($_GET['activity_id']);
+    	$activity_info  		= RC_DB::table('market_activity')->where('activity_id', $activity_id)->first();
+    	$market_activity_log	= RC_DB::table('market_activity_log')->where('id', $log_id)->first();
+    	$time					= RC_Time::gmtime();
+    	
+    	$prize_info = Ecjia\App\Market\Models\MarketActivityPrizeModel::where('activity_id', $activity_id)->find($market_activity_log['prize_id']);
+    	
+    	if (empty($activity_info)) {
+    		return ecjia_front::$controller->showmessage('活动信息不存在！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	if (empty($market_activity_log)) {
+    		return ecjia_front::$controller->showmessage('抽奖信息不存在！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	if (empty($prize_info)) {
+    		return ecjia_front::$controller->showmessage('奖品信息不存在！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	
+    	$MarketActivity = new Ecjia\App\Market\Prize\MarketActivity($activity_info['activity_group'], $activity_info['store_id'], $activity_info['wechat_id']);
+    	//红包发放日期过期处理
+    	if ($prize_info['prize_type'] == 1) {
+    		$bonus_info = RC_DB::table('bonus_type')->where('type_id', $prize_info['prize_value'])->where('send_start_date', '<=', $time)->where('send_end_date', '>=', $time)->first();
+    		if (empty($bonus_info)) {
+    			return ecjia_front::$controller->showmessage('红包发放日期已过，请联系管理员发放！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    		}
+    	}
+    	//发奖环节
+    	$res = $MarketActivity->issuePrize($activity_info['wechat_id'], $openid, $prize_info, $log_id);
+    	if ($res) {
+    		return ecjia_front::$controller->showmessage('兑换成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('market/mobile_prize/prize_init', array('openid' => $openid))));
+    	} else {
+    		return ecjia_front::$controller->showmessage('兑换失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
     }
 }
