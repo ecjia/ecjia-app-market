@@ -358,7 +358,7 @@ class MarketActivity
      * 减奖品数量
      * @param MarketActivityPrizeModel $prize_info
      */
-    protected function subtractLotteryPrizeNum(MarketActivityPrizeModel $prize_info)
+    public function subtractLotteryPrizeNum(MarketActivityPrizeModel $prize_info)
     {
         $prize_info->decrement('prize_number');
     }
