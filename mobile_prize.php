@@ -225,17 +225,18 @@ class mobile_prize extends EcjiaMarketActivityController
     	$log_id 				= intval($_GET['log_id']);
     	$activity_id 			= intval($_GET['activity_id']);
     	$activity_info  		= RC_DB::table('market_activity')->where('activity_id', $activity_id)->first();
-    	$market_activity_log	= RC_DB::table('market_activity_log')->where('id', $log_id)->first();
     	$time					= RC_Time::gmtime();
-    	
-    	$prize_info = Ecjia\App\Market\Models\MarketActivityPrizeModel::where('activity_id', $activity_id)->find($market_activity_log['prize_id']);
     	
     	if (empty($activity_info)) {
     		return ecjia_front::$controller->showmessage('活动信息不存在！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
+    	
+    	$market_activity_log	= RC_DB::table('market_activity_log')->where('id', $log_id)->first();
     	if (empty($market_activity_log)) {
     		return ecjia_front::$controller->showmessage('抽奖信息不存在！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
+    	
+    	$prize_info = Ecjia\App\Market\Models\MarketActivityPrizeModel::where('activity_id', $activity_id)->find($market_activity_log['prize_id']);
     	if (empty($prize_info)) {
     		return ecjia_front::$controller->showmessage('奖品信息不存在！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
