@@ -310,6 +310,11 @@ class MarketActivity
                     $result = $prize->issue($openid);
                     break;
 
+                case PrizeType::TYPE_REAL:
+                    $prize = new \Ecjia\App\Market\Prize\IssuePrizeReal($wechat_id, $prize_info);
+                    $result = $prize->issue($openid);
+                    break;
+
                 default:
                     $result = false;
                     break;

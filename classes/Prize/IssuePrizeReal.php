@@ -57,16 +57,31 @@ namespace Ecjia\App\Market\Prize;
 class IssuePrizeReal
 {
 
-    public function __construct()
-    {
+    protected $prize;
 
+    protected $wechat_id;
+
+    public function __construct($wechat_id, MarketActivityPrizeModel $prize)
+    {
+        $this->wechat_id = $wechat_id;
+        $this->prize = $prize;
     }
 
     /**
      * 颁发奖品
      */
-    public function issue()
+    public function issue($openid)
     {
+        $wechat_user = new WechatUser($this->wechat_id, $openid);
 
+        $user_id = $wechat_user->getEcjiaUserId();
+
+        if (! empty($user_id)) {
+
+            return true;
+        } else {
+            return false;
+        }
     }
+
 }
