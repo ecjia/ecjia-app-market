@@ -156,6 +156,14 @@ class MarketActivity
     }
 
     /**
+     * 获取活动的可用奖品
+     */
+    public function getAvailablePrizes()
+    {
+        return $this->prize->getAvailablePrizes();
+    }
+
+    /**
      * 获取活动的能中奖的奖品
      * @return mixed
      */
@@ -261,7 +269,7 @@ class MarketActivity
      */
     public function randLotteryPrizeAction()
     {
-        $prizes = $this->getPrizes();
+        $prizes = $this->getAvailablePrizes();
 
         $sum_prob = $prizes->sum('prize_prob');
 
