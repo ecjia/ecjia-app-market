@@ -42,7 +42,12 @@
 										{/if}
 										
 									{else}
-										<span class="issue_status">已兑换</span>
+										{if $prize.issue_status eq '1'}
+											<span class="issue_status">已兑换</span>
+										{else}
+											<span class="issue_status">未兑换</span>
+										{/if}
+										
 									{/if}
 								</div>
 								<div class="store-title">
