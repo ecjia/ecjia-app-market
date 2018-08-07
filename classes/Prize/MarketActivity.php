@@ -8,6 +8,7 @@
 
 namespace Ecjia\App\Market\Prize;
 
+use Ecjia\App\Market\Exceptions\ActivityException;
 use Ecjia\App\Market\Models\MarketActivityLogModel;
 use Ecjia\App\Market\Models\MarketActivityModel;
 use Ecjia\App\Market\Models\MarketActivityLotteryModel;
@@ -37,12 +38,20 @@ class MarketActivity
 
         $this->model = $this->getMarketActivity();
 
+        if (is_null($this->model)) {
+            throw new ActivityException('营销活动暂未开启！');
+        }
+
         $this->prize = new ActivityPrize($this->model);
     }
 
     private function getMarketActivity()
     {
-        return MarketActivityModel::where('store_id', $this->store_id)->where('wechat_id', $this->wechat_id)->where('activity_group', $this->activity_code)->first();
+        return MarketActivityModel::where('store_id', $this->store_id)
+            ->where('wechat_id', $this->wechat_id)
+            ->where('activity_group', $this->activity_code)
+            ->where('enabled', 1)
+            ->first();
     }
 
     public function getMarketActivityModel()
