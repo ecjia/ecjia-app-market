@@ -372,7 +372,13 @@ class admin extends ecjia_admin
         $this->assign('prize_type', $prize_type);
 
         $time = RC_Time::gmtime();
-        $bonus_list = RC_DB::table('bonus_type')->where('store_id', 0)->where('use_start_date', '<=', $time)->where('use_end_date', '>=', $time)->select('type_id', 'type_name')->get();
+        $bonus_list = RC_DB::table('bonus_type')
+        				->where('store_id', 0)
+        				->where('use_start_date', '<=', $time)
+        				->where('use_end_date', '>=', $time)
+        				->whereIn('send_type', array(1,2))
+        				->select('type_id', 'type_name')
+        				->get();
         $this->assign('bonus_list', $bonus_list);
 
         $this->assign('ur_here', RC_Lang::get('market::market.prize_pool'));
@@ -486,7 +492,13 @@ class admin extends ecjia_admin
         $this->assign('prize_type', $prize_type);
 
         $time = RC_Time::gmtime();
-        $bonus_list = RC_DB::table('bonus_type')->where('store_id', $_SESSION['store_id'])->where('use_start_date', '<=', $time)->where('use_end_date', '>=', $time)->select('type_id', 'type_name')->get();
+        $bonus_list = RC_DB::table('bonus_type')
+        					->where('store_id', $_SESSION['store_id'])
+        					->where('use_start_date', '<=', $time)
+        					->where('use_end_date', '>=', $time)
+        					->whereIn('send_type', array(1,2))
+        					->select('type_id', 'type_name')
+        					->get();
         $this->assign('bonus_list', $bonus_list);
         $this->assign('activity_prize', $activity_prize);
 
