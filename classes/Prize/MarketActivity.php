@@ -341,12 +341,15 @@ class MarketActivity
 
                 $this->subtractLotteryPrizeNum($prize_info);
 
-                return MarketActivityLogModel::where('id', $logid)->update(
-                    [
-                        'issue_status'  => 1,
-                        'issue_time'    => RC_Time::gmtime(),
-                    ]
-                );
+                //排除实事奖品发放
+                if ($prize_info->prize_type != PrizeType::TYPE_REAL) {
+                    return MarketActivityLogModel::where('id', $logid)->update(
+                        [
+                            'issue_status'  => 1,
+                            'issue_time'    => RC_Time::gmtime(),
+                        ]
+                    );
+                }
             }
         });
     }
