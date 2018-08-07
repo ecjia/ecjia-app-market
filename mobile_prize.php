@@ -251,7 +251,7 @@ class mobile_prize extends EcjiaMarketActivityController
     	//发奖环节
     	$res = $MarketActivity->issuePrize($activity_info['wechat_id'], $openid, $prize_info, $log_id);
     	if ($res) {
-    		return ecjia_front::$controller->showmessage('兑换成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('market/mobile_prize/prize_init', array('openid' => $openid))));
+    		return ecjia_front::$controller->showmessage('兑换成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/mobile_prize/prize_init', array('openid' => $openid))));
     	} else {
     		return ecjia_front::$controller->showmessage('兑换失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
