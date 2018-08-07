@@ -53,6 +53,8 @@
 
 namespace Ecjia\App\Market\Prize;
 
+use Ecjia\App\Market\Models\MarketActivityPrizeModel;
+use Ecjia\App\Wechat\WechatUser;
 
 class IssuePrizeStore
 {
