@@ -237,6 +237,10 @@ class MarketActivity
     {
         $types = $this->getCanWinningPrizes();
 
+        if ( empty($types)) {
+            return collect([]);
+        }
+
         $model = $this->model;
 
         $data = MarketActivityModel::with(['MarketActivityLog' => function ($query) use ($types, $model) {
