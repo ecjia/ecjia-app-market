@@ -172,6 +172,10 @@ class MarketActivity
 
             $time_limit = $time - $this->model->limit_time * 60;
 
+            if ($time_limit == $time) {
+                $time_limit = $starttime;
+            }
+
             $market_activity_lottery = $this->model->MarketActivityLottery()
                 ->where('user_id', $openid)
                 ->where('user_type', 'wechat')
