@@ -198,6 +198,8 @@ class MarketActivity
             //剩余可抽取的次数
             $prize_num = $this->model->limit_num - $has_used_count;
 
+            $prize_num = max(0, $prize_num);
+
         } else {
             $prize_num = -1; //无限次
         }
