@@ -144,7 +144,8 @@ class platform_prize extends ecjia_platform
     {
     	$this->admin_priv('market_activity_update', ecjia::MSGTYPE_JSON);
     	$id = trim($_GET['id']);
-    
+    	$type = $_GET['type'];
+    	
     	if (!empty($id)) {
     		$info = RC_DB::table('market_activity_log')->where('id', $id)->first();
     		$code = RC_DB::table('market_activity')->where('activity_id', $info['activity_id'])->pluck('activity_group');
@@ -164,7 +165,7 @@ class platform_prize extends ecjia_platform
     			RC_DB::table('market_activity_prize')->where('prize_id', $prize_info['prize_id'])->decrement('prize_number');
     		}
     		
-    		return $this->showmessage('发放奖品成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/platform_prize/init', array('code' => $code))));
+    		return $this->showmessage('发放奖品成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/platform_prize/init', array('code' => $code, 'type' => $type))));
     	} else {
     		return $this->showmessage(RC_Lang::get('market::market.wrong_parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
@@ -223,18 +224,34 @@ class platform_prize extends ecjia_platform
         		$db_activity_log->whereIn('prize_id', $prize_real_type_id);
         	}
         }
+      
+        $count = $db_activity_log->count();
+        $page = new ecjia_platform_page($count, 15, 5);
+        $res = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id - 1)->get();
+		
         //数量统计单独计算
         $db =  RC_DB::table('market_activity_log');
         if (!empty($activity_id)) {
         	$db->where('activity_id', $activity_id);
         }
         $filter['count_total']	= $db->count();
-        $filter['count_real']	= $db->whereIn('prize_id', $prize_real_type_id)->count();
-        
-        $count = $db_activity_log->count();
-        $page = new ecjia_platform_page($count, 15, 5);
-        $res = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id - 1)->get();
-		
+        if (!empty($_GET['type'])) {
+        	if (!empty($prize_real_type_id)) {
+        		$filter['count_real']	= $db->whereIn('prize_id', $prize_real_type_id)->count();
+        	} else {
+        		$filter['count_real']	= 0;
+        		$count = 0;
+        		$page = new ecjia_platform_page($count, 15, 5);
+        		$res = [];
+        	}
+        } else {
+        	if (!empty($prize_real_type_id)) {
+        		$filter['count_real']	= $db->whereIn('prize_id', $prize_real_type_id)->count();
+        	} else {
+        		$filter['count_real'] = 0;
+        	}
+        }
+       
         if (!empty($res)) {
             foreach ($res as $key => $val) {
                 $res[$key]['issue_time'] = RC_Time::local_date('Y-m-d H:i:s', $res[$key]['issue_time']);
@@ -284,7 +301,16 @@ class platform_prize extends ecjia_platform
     	$count = $db_activity_log->count();
     	$page = new ecjia_platform_page($count, 15, 5);
     	$res = $db_activity_log->where('activity_id', $activity_id)->orderBy('id', 'asc')->take(15)->skip($page->start_id - 1)->get();
-    
+    	//实物类型奖品id为空时，实物奖品记录为0
+    	if (!empty($_GET['type'])) {
+    		if (empty($prize_real_type_id))  {
+    			$filter['count_real']	= 0;
+    			$count = 0;
+    			$page = new ecjia_platform_page($count, 15, 5);
+    			$res = [];
+    		}
+    	}
+    	
     	if (!empty($res)) {
     		foreach ($res as $key => $val) {
     			$res[$key]['label_issue_status'] = $val['issue_status'] == '0' ? '未发放' : '已发放';
@@ -304,7 +330,7 @@ class platform_prize extends ecjia_platform
     			}
     		}
     	}
-    	return array('list' => $res, 'page' => $page->show(), 'desc' => $page->page_desc(), 'current_page' => $page->current_page);
+    	return array('list' => $res, 'page' => $page->show(5), 'desc' => $page->page_desc(), 'current_page' => $page->current_page);
     }
     
     

@@ -80,7 +80,7 @@
 													{if $record.issue_status eq '0'}{lang key='market::market.unreleased'}{else}{lang key='market::market.issued'}{/if}
 													{if $record.prize_type eq '2' && $record.issue_status eq '0'}
 														<div class="edit-list">
-															<a class="toggle_view" href='{url path="market/platform_prize/issue_prize" args="id={$record.id}"}' data-val="allow" data-status="1">
+															<a class="toggle_view" href='{url path="market/platform_prize/issue_prize" args="id={$record.id}{if $type}&type={$type}{/if}"}' data-val="allow" data-status="1">
 																发放奖品
 															</a>
 														</div>
