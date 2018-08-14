@@ -24,6 +24,9 @@
     padding-bottom: 1.5rem;
     padding-left: 1.5rem;
 }
+h3{
+	margin-top:0px;
+}
 </style>
 <!-- {/block} -->
 
@@ -64,18 +67,26 @@
 									<table class="table table-hide-edit">
 										<thead>
 											<tr>
-												<th class="w130">微信昵称</th>
-												<th class="w70">{lang key='market::market.prize_name'}</th>
-												<th class="w50">{lang key='market::market.assign_status'}</th>
-												<th class="w230">中奖用户信息</th>
-												<th class="w130">{lang key='market::market.assign_time'}</th>
+												<th class="w150">微信昵称</th>
+												<th class="w100">{lang key='market::market.prize_name'}</th>
+												<th class="w100">{lang key='market::market.assign_status'}</th>
+												<th class="w150">{lang key='market::market.assign_time'}</th>
 											</tr>
 										</thead>
 										<tbody>
 											<!--{foreach from=$activity_record_list.item item=record} -->
 											<tr>
 												<td>{$record.user_name}</td>
-												<td>{$record.prize_name}</td>
+												<td class="hide-edit-area">
+													{$record.prize_name}<br>
+													<div class="edit-list">
+														{if $record.prize_type eq '2'}
+															<a  href="javascript:;" data-toggle="popover" data-placement="top" data-container="body" data-original-title="中奖用户信息" data-content="{if {$record.is_issue_extend eq '1'}}收货人：{if $record.issue_extend_name}{$record.issue_extend_name}{else}未填写{/if}&nbsp;&nbsp;&nbsp;&nbsp;{if $record.issue_extend_mobile}手机号：{$record.issue_extend_mobile}{else}未填写{/if}&nbsp;&nbsp;&nbsp;&nbsp;{if $record.issue_extend_address}收货地址：{$record.issue_extend_address}{else}未填写{/if}{/if}">
+																用户信息
+															</a>
+														{/if}
+													</div>
+												</td>
 												<td  class="hide-edit-area">
 													{if $record.issue_status eq '0'}{lang key='market::market.unreleased'}{else}{lang key='market::market.issued'}{/if}
 													{if $record.prize_type eq '2' && $record.issue_status eq '0'}
@@ -86,7 +97,6 @@
 														</div>
 													{/if}
 												</td>
-												<td>{if {$record.is_issue_extend eq '1'}}收货人：{if $record.issue_extend_name}{$record.issue_extend_name}{else}未填写{/if}<br/>{if $record.issue_extend_mobile}手机号：{$record.issue_extend_mobile}{else}未填写{/if}<br/>{if $record.issue_extend_address}收货地址：{$record.issue_extend_address}{else}未填写{/if}{/if}</td>
 												<td>{$record.issue_time}</td>
 											</tr>
 											<!--  {foreachelse} -->

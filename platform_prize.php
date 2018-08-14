@@ -72,6 +72,7 @@ class platform_prize extends ecjia_platform
 
         RC_Script::enqueue_script('prize_list', RC_App::apps_url('statics/platform-js/prize_list.js', __FILE__), array(), false, true);
         RC_Script::localize_script('platform_activity', 'js_lang', RC_Lang::get('market::market.js_lang'));
+        RC_Script::enqueue_script('popover', RC_App::apps_url('statics/platform-js/popover.js', __FILE__), array(), false, true);
 
         ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('抽奖记录', RC_Uri::url('market/platform_prize/init')));
         ecjia_platform_screen::get_current_screen()->set_subject('抽奖记录');
@@ -128,7 +129,7 @@ class platform_prize extends ecjia_platform
             }
         }
         $list = $this->get_activity_record_list($info['activity_id']);
-        
+     	
         $this->assign('activity_record_list', $list);
         $this->assign('code', $activity_code);
         $this->assign('type', $type);
@@ -300,7 +301,7 @@ class platform_prize extends ecjia_platform
     	
     	$count = $db_activity_log->count();
     	$page = new ecjia_platform_page($count, 15, 5);
-    	$res = $db_activity_log->where('activity_id', $activity_id)->orderBy('id', 'asc')->take(15)->skip($page->start_id - 1)->get();
+    	$res = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id - 1)->get();
     	//实物类型奖品id为空时，实物奖品记录为0
     	if (!empty($_GET['type'])) {
     		if (empty($prize_real_type_id))  {
