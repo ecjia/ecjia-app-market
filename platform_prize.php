@@ -92,6 +92,7 @@ class platform_prize extends ecjia_platform
         $list = [];
         $code_list = [];
         $activity_code = '';
+        $type = empty($_GET['type']) ? '' : trim($_GET['type']);
 
         if (!empty($_GET['code'])) {
             $activity_code = trim($_GET['code']);
@@ -130,7 +131,9 @@ class platform_prize extends ecjia_platform
         
         $this->assign('activity_record_list', $list);
         $this->assign('code', $activity_code);
-
+        $this->assign('type', $type);
+        $this->assign('count', $list['filter']);
+        
         $this->display('prize_record.dwt');
     }
     
@@ -166,6 +169,36 @@ class platform_prize extends ecjia_platform
     		return $this->showmessage(RC_Lang::get('market::market.wrong_parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
     }
+    
+    /**
+     * 导出实物中奖用户信息
+     */
+    public function export() {
+    	$this->admin_priv('activity_record_manage', ecjia::MSGTYPE_JSON);
+    	$filename = mb_convert_encoding("实物中奖用户收货地址信息", "GBK", "UTF-8");
+    	
+    	$activity_id = intval($_GET['activity_id']);
+    	$list = $this->get_realprize_userlist($activity_id);
+    	
+    	header("Content-type: application/vnd.ms-excel; charset=utf-8");
+    	header("Content-Disposition: attachment; filename=$filename.xls");
+    
+    	$data = '奖品名'."\t".'发放状态'."\t".'微信昵称'."\t".'收货人'."\t".'手机号'."\t".'收货地址'."\t\n";
+    	
+    	if (!empty($list['list'])) {
+    		foreach ($list['list'] as $v) {
+    			$data .= $v['prize_name'] . "\t";
+    			$data .= $v['label_issue_status'] . "\t";
+    			$data .= $v['user_name'] . "\t";
+    			$data .= $v['issue_extend_name'] . "\t";
+    			$data .= $v['issue_extend_mobile'] . "\t";
+    			$data .= $v['issue_extend_address'] . "\t\n";
+    		}
+    	}
+    
+    	echo mb_convert_encoding($data."\t", "GBK", "UTF-8");
+    	exit;
+    }
 
     /**
      * 获取活动抽奖记录
@@ -178,7 +211,26 @@ class platform_prize extends ecjia_platform
         if (!empty($activity_id)) {
             $db_activity_log->where('activity_id', $activity_id);
         }
-
+	
+        $type = empty($_GET['type']) ? '' : $type;
+        $filter = [];
+        //找到实物类型奖品id
+        $prize_real_type_id = RC_DB::table('market_activity_prize')->where('prize_type', Ecjia\App\Market\Prize\PrizeType::TYPE_REAL)->where('activity_id', $activity_id)->lists('prize_id');
+        $prize_real_type_id = array_unique($prize_real_type_id);
+       
+        if (!empty($_GET['type'])) {
+        	if (!empty($prize_real_type_id)) {
+        		$db_activity_log->whereIn('prize_id', $prize_real_type_id);
+        	}
+        }
+        //数量统计单独计算
+        $db =  RC_DB::table('market_activity_log');
+        if (!empty($activity_id)) {
+        	$db->where('activity_id', $activity_id);
+        }
+        $filter['count_total']	= $db->count();
+        $filter['count_real']	= $db->whereIn('prize_id', $prize_real_type_id)->count();
+        
         $count = $db_activity_log->count();
         $page = new ecjia_platform_page($count, 15, 5);
         $res = $db_activity_log->where('activity_id', $activity_id)->orderBy('add_time', 'desc')->take(15)->skip($page->start_id - 1)->get();
@@ -188,10 +240,74 @@ class platform_prize extends ecjia_platform
                 $res[$key]['issue_time'] = RC_Time::local_date('Y-m-d H:i:s', $res[$key]['issue_time']);
                 $res[$key]['add_time'] = RC_Time::local_date('Y-m-d H:i:s', $res[$key]['add_time']);
                 $res[$key]['prize_type'] = RC_DB::table('market_activity_prize')->where('prize_id', $val['prize_id'])->pluck('prize_type');
+                if (!empty($val['issue_extend'])) {
+                	$issue_extend = unserialize($val['issue_extend']);
+                	$res[$key]['is_issue_extend'] = 1;
+                	$res[$key]['issue_extend_format'] 	= $issue_extend;
+                	$res[$key]['issue_extend_name'] 	= $issue_extend['user_name'];
+                	$res[$key]['issue_extend_mobile'] 	= $issue_extend['mobile'];
+                	$res[$key]['issue_extend_address'] 	= $issue_extend['address'];
+                } else {
+                	$res[$key]['is_issue_extend'] = 0;
+                	$res[$key]['issue_extend_format'] = [];
+                }
             }
         }
-        return array('item' => $res, 'page' => $page->show(), 'desc' => $page->page_desc(), 'current_page' => $page->current_page);
+        return array('item' => $res, 'filter' => $filter, 'page' => $page->show(5), 'desc' => $page->page_desc(), 'current_page' => $page->current_page);
     }
+
+	
+    /**
+     * 获取实物中奖用户信息
+     * @return array
+     */
+    private function get_realprize_userlist($activity_id = 0)
+    {
+    	
+    	$db_activity_log = RC_DB::table('market_activity_log');
+    
+    	if (!empty($activity_id)) {
+    		$db_activity_log->where('activity_id', $activity_id);
+    	}
+    
+    	$type = empty($_GET['type']) ? 'real_object' : $type;
+    	//找到实物类型奖品id
+    	$prize_real_type_id = RC_DB::table('market_activity_prize')->where('prize_type', Ecjia\App\Market\Prize\PrizeType::TYPE_REAL)->where('activity_id', $activity_id)->lists('prize_id');
+    	$prize_real_type_id = array_unique($prize_real_type_id);
+    	 
+    	if (!empty($_GET['type'])) {
+    		if (!empty($prize_real_type_id)) {
+    			$db_activity_log->whereIn('prize_id', $prize_real_type_id);
+    		}
+    	}
+    	
+    	$count = $db_activity_log->count();
+    	$page = new ecjia_platform_page($count, 15, 5);
+    	$res = $db_activity_log->where('activity_id', $activity_id)->orderBy('id', 'asc')->take(15)->skip($page->start_id - 1)->get();
+    
+    	if (!empty($res)) {
+    		foreach ($res as $key => $val) {
+    			$res[$key]['label_issue_status'] = $val['issue_status'] == '0' ? '未发放' : '已发放';
+    			if (!empty($val['issue_extend'])) {
+    				$issue_extend = unserialize($val['issue_extend']);
+    				$res[$key]['is_issue_extend'] = 1;
+    				$res[$key]['issue_extend_format'] 	= $issue_extend;
+    				$res[$key]['issue_extend_name'] 	= $issue_extend['user_name'];
+    				$res[$key]['issue_extend_mobile'] 	= $issue_extend['mobile'];
+    				$res[$key]['issue_extend_address'] 	= $issue_extend['address'];
+    			} else {
+    				$res[$key]['is_issue_extend'] = 0;
+    				$res[$key]['issue_extend_format'] 	= [];
+    				$res[$key]['issue_extend_name'] 	= '';
+    				$res[$key]['issue_extend_mobile'] 	= '';
+    				$res[$key]['issue_extend_address'] 	= '';
+    			}
+    		}
+    	}
+    	return array('list' => $res, 'page' => $page->show(), 'desc' => $page->page_desc(), 'current_page' => $page->current_page);
+    }
+    
+    
 }
 
 //end
