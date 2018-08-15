@@ -52,7 +52,7 @@ h3{
 				</ul>
 				<!-- {if $smarty.get.type eq 'real_object'} -->
 					<div class="pull-right" style="padding-right:20px;">
-						<a class="btn btn-primary m_l5"  href='{url path="market/platform_prize/export" args="type=real_object&activity_id={$info.activity_id}"}'><i class="ft-download"></i>导出实物中奖用户信息</a>
+						<a class="btn btn-info round btn-min-width mr-1 mb-1"  href='{url path="market/platform_prize/export" args="type=real_object&activity_id={$info.activity_id}"}'><i class="ft-download"></i>导出实物中奖用户信息</a>
 					</div>
 				<!-- {/if} -->
             </div>
@@ -100,7 +100,7 @@ h3{
 												<td>{$record.issue_time}</td>
 											</tr>
 											<!--  {foreachelse} -->
-											<tr><td class="no-records" colspan="5">{lang key='system::system.no_records'}</td></tr>
+											<tr><td class="no-records" colspan="4">{lang key='system::system.no_records'}</td></tr>
 											<!-- {/foreach} -->
 										</tbody>
 									</table>
