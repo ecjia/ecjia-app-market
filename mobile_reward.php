@@ -63,7 +63,7 @@ class mobile_reward extends ecjia_front {
 		$this->assign('mobile_signup_reward_notice', $mobile_signup_reward_notice);
 		
 	    $this->display(
-	        RC_Package::package('app::user')->loadTemplate('front/reward.dwt', true)
+	        RC_Package::package('app::market')->loadTemplate('front/reward.dwt', true)
 	    );
 	}
 	
