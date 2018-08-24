@@ -12,10 +12,10 @@
 
 <body>
 	<div class="reward-img">
-		<img width="100%" src="{RC_App::apps_url('user/statics/front/images/reward_header.png')}" />
+		<img width="100%" src="{RC_App::apps_url('market/statics/front/images/reward_header.png')}" />
 	</div>
 	<div class="reward-content">
-		<div class="reward-button" data-url="{url path='user/mobile_reward/recieve'}">
+		<div class="reward-button" data-url="{url path='market/mobile_reward/recieve'}">
 			<button type="button" class="receive_btn">我要领取</button>
 			<input type="hidden" name='token' value="{$token}" />
 		</div>
@@ -29,7 +29,7 @@
 	<div id="cover">
 	</div>
 	<div class="success-image">
-		<img src="{RC_App::apps_url('user/statics/front/images/receive-success.png')}" />
+		<img src="{RC_App::apps_url('market/statics/front/images/receive-success.png')}" />
 		<div class="close" data-url=""></div>
 		<div class="to-use" data-url=""></div>
 	</div>
