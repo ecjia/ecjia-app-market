@@ -53,7 +53,7 @@ class MarketServiceProvider extends  AppParentServiceProvider
     
     public function boot()
     {
-        $this->package('ecjia/app-market', null, dirname(__DIR__));
+        $this->package('ecjia/app-market');
     }
     
     public function register()
