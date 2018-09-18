@@ -252,14 +252,14 @@ class market_shake_module extends api_front implements api_interface {
 			}
 			
 			if (!empty($options['store_id'])) {
-				RC_Loader::load_app_func('merchant', 'merchant');
-					
+				RC_Loader::load_app_func('merchant', 'merchant');				
 				$store_info_new = array();
-				$store_info = RC_Model::model('merchant/store_franchisee_model')
-				->in(array('store_id' => $options['store_id']))
-				->where(array('status' => 1, 'identity_status' => 2, 'shop_close' => 0))
-				->order('Rand()')->find();
-				
+				$store_info = RC_DB::table('store_franchisee')
+								->whereIn('store_id', $options['store_id'])
+								->where('status', 1)->where('identity_status', 2)->where('shop_close', 0)
+								->orderBy(RC_DB::raw('Rand()'))
+								->first();
+
 				if (!empty($store_info)) {
 					$shop_logo = RC_DB::table('merchants_config')->where('store_id', $store_info['store_id'])->where('code', 'shop_logo')->pluck('value');
 					$shop_notice = RC_DB::table('merchants_config')->where('store_id', $store_info['store_id'])->where('code', 'shop_notice')->pluck('value');
