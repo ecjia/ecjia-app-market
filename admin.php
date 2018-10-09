@@ -493,7 +493,7 @@ class admin extends ecjia_admin
 
         $time = RC_Time::gmtime();
         $bonus_list = RC_DB::table('bonus_type')
-        					->where('store_id', $_SESSION['store_id'])
+        					->where('store_id', 0)
         					->where('use_start_date', '<=', $time)
         					->where('use_end_date', '>=', $time)
         					->whereIn('send_type', array(1,2))
