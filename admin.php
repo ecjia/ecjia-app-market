@@ -468,7 +468,9 @@ class admin extends ecjia_admin
             'prize_prob' => $prize_prob,
         );
         $p_id = RC_DB::table('market_activity_prize')->insertGetId($data);
-
+		
+        ecjia_admin::admin_log('活动'.$activity_info['activity_name'].'的奖品'.$prize_name, 'add', 'market_activity_prize');
+        
         return $this->showmessage(RC_Lang::get('market::market.edit_prize_pool_succss'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/admin/activity_prize_edit', array('code' => $code, 'p_id' => $p_id))));
     }
 
@@ -593,12 +595,12 @@ class admin extends ecjia_admin
         );
 
         RC_DB::table('market_activity_prize')->where('prize_id', $p_id)->update($data);
-
+        ecjia_admin::admin_log('活动'.$activity_info['activity_name'].'的奖品'.$prize_name, 'edit', 'market_activity_prize');
         return $this->showmessage(RC_Lang::get('market::market.edit_prize_pool_succss'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
     /**
-     * 活动奖品池编辑处理
+     * 活动奖品池奖品删除
      */
     public function activity_prize_remove()
     {
@@ -607,10 +609,13 @@ class admin extends ecjia_admin
         $wechat_id = 0;
         $activity_code = trim($_GET['code']);
         $p_id = intval($_GET['p_id']);
-
-        $activity_id_list = RC_DB::table('market_activity')->where('wechat_id', $wechat_id)->where('store_id', 0)->lists('activity_id');
-        RC_DB::table('market_activity_prize')->where('prize_id', $p_id)->whereIn('activity_id', $activity_id_list)->delete();
-
+        
+        $prize_info = RC_DB::table('market_activity_prize')->where('prize_id', $p_id)->first();
+        $activity_name = RC_DB::table('market_activity')->where('activity_id', $prize_info['prize_id'])->pluck('activity_name');
+        
+        RC_DB::table('market_activity_prize')->where('prize_id', $p_id)->delete();
+        $this->admin_log('活动'.$activity_name.'的奖品'.$prize_info['prize_name'], 'remove', 'prize');
+        
         return $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
