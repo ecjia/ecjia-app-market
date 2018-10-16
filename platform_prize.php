@@ -56,7 +56,7 @@ class platform_prize extends ecjia_platform
     {
         parent::__construct();
 
-        //Ecjia\App\Market\Helper::assign_adminlog_content();
+        Ecjia\App\Market\Helper::assign_adminlog_content();
 
         /* 加载全局 js/css */
         RC_Script::enqueue_script('jquery-validate');
