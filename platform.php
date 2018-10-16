@@ -179,7 +179,7 @@ class platform extends ecjia_platform
 
             RC_DB::table('market_activity')->where('activity_group', $code)->where('store_id', $_SESSION['store_id'])->where('wechat_id', $wechat_id)->update(array('enabled' => 0));
 
-            //ecjia_admin::admin_log($activity_name, 'stop', 'market_activity');
+//            ecjia_admin::admin_log($activity_name, 'stop', 'market_activity');
             return $this->showmessage(RC_Lang::get('market::market.close_success'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/platform/activity_detail', array('code' => $code))));
         } else {
             return $this->showmessage(RC_Lang::get('market::market.wrong_parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
