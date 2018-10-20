@@ -552,7 +552,7 @@ class admin extends ecjia_admin
         		Ecjia\App\Market\Prize\PrizeType::TYPE_INTEGRAL,
         		Ecjia\App\Market\Prize\PrizeType::TYPE_BALANCE
         );
-        if ($prize_type == Ecjia\App\Market\Prize\PrizeType::TYPE_REAL) {
+        if ($prize_type == Ecjia\App\Market\Prize\PrizeType::TYPE_BONUS) {
             if (empty($prize_value)) {
                 return $this->showmessage('请选择礼券奖品的红包！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
