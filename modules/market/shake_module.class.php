@@ -98,7 +98,7 @@ class market_shake_module extends api_front implements api_interface {
 				$time_limit = $time - $market_activity['limit_time']*60;
 				$db_market_activity_lottery->where('update_time', '<=', $time)->where('add_time', '>=', $time_limit);
 			}
-			$market_activity_lottery_info = $db_market_activity_lottery->where('activity_id', $market_activity['activity_id'])->where('user_id', $_SESSION['user_id'])->first();
+			$market_activity_lottery_info = $db_market_activity_lottery->where('activity_id', $market_activity['activity_id'])->where('user_id', $_SESSION['user_id'])->where('user_type', 'user')->first();
 			
 			$limit_count = $market_activity_lottery_info['lottery_num'];
 			
