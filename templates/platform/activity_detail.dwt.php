@@ -41,9 +41,9 @@
 							<!-- {if $info} -->
 							<div class="justify-content-center" style="padding-left:75px;padding-top:10px;padding-bottom:10px;">
 								<input type="hidden" name="id" value="{$activity_info.activity_id}" />
-			                   	<a class="btn btn-outline-primary data-pjax" href="{$action_edit}">{t}编辑活动{/t}</a>
-								<a class="btn btn-outline-primary data-pjax" href="{$action_prize}" style="margin:0px 10px;">{t}活动奖品池{/t}</a>
-								<a class="btn btn-outline-primary" href="{$action_record}">{t}中奖记录{/t}</a>
+			                   	<a class="btn btn-outline-primary data-pjax" href="{$action_edit}">{t domain="market"}编辑活动{/t}</a>
+								<a class="btn btn-outline-primary data-pjax" href="{$action_prize}" style="margin:0px 10px;">{t domain="market"}活动奖品池{/t}</a>
+								<a class="btn btn-outline-primary" href="{$action_record}">{t domain="market"}中奖记录{/t}</a>
 							</div>
 							<!-- {/if} -->
 						</div>
@@ -79,12 +79,12 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">{t}活动时间段：{/t}</label>
+								<label class="col-lg-2 label-control text-right">{t domain="market"}活动时间段：{/t}</label>
 								<div class="col-lg-8 controls">
 									{if $activity_info.formated_start_time neq '' && $activity_info.formated_end_time neq ''}
 										{$activity_info.formated_start_time}<pre style="display:inline;"> ~ </pre>{$activity_info.formated_end_time}
 									{else}
-										暂未设置
+                                        {t domain="market"}暂未设置{/t}
 									{/if}
 								</div>
 							</div>

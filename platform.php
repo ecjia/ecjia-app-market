@@ -366,15 +366,15 @@ class platform extends ecjia_platform
         $activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('wechat_id', $wechat_id)->where('store_id', $_SESSION['store_id'])->first();
 
         if ($prize_level === '') {
-            return $this->showmessage('请选择奖品等级！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请选择奖品等级！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if (empty($prize_name)) {
-            return $this->showmessage('请填写奖品名称！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品名称！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if ($prize_type === '') {
-            return $this->showmessage('请填写奖品类型！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品类型！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         $prize_value_final = '';
@@ -385,21 +385,21 @@ class platform extends ecjia_platform
         );
         if ($prize_type == Ecjia\App\Market\Prize\PrizeType::TYPE_BONUS) {
             if (empty($prize_value)) {
-                return $this->showmessage('请选择礼券奖品的红包！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('请选择礼券奖品的红包！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value;
         } else if (in_array($prize_type, $prize_type_arr)) {
             if (empty($prize_value_other)) {
-                return $this->showmessage('请填写奖品内容！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('请填写奖品内容！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value_other;
         }
 
         if (empty($prize_number)) {
-            return $this->showmessage('请填写奖品数量！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品数量！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if ($prize_prob <= 0) {
-            return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写获奖概率！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         //某个活动的所有奖品中奖概率不能大于100
         $current_all_prize_prob_final = 0;
@@ -411,7 +411,7 @@ class platform extends ecjia_platform
         		}
         	}
         	if ($current_all_prize_prob_final > 100 || ($current_all_prize_prob_final + $prize_prob) > 100) {
-        		return $this->showmessage('活动所有奖品获奖概率总和不可大于100', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        		return $this->showmessage(__('活动所有奖品获奖概率总和不可大于100', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         	}
         }
         $data = array(
@@ -489,15 +489,15 @@ class platform extends ecjia_platform
         $activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('wechat_id', $wechat_id)->where('store_id', $_SESSION['store_id'])->first();
 
         if ($prize_level === '') {
-            return $this->showmessage('请选择奖品等级！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请选择奖品等级！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if (empty($prize_name)) {
-            return $this->showmessage('请填写奖品名称！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品名称！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if ($prize_type === '') {
-            return $this->showmessage('请填写奖品类型！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品类型！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         $prize_value_final = '';
@@ -508,22 +508,22 @@ class platform extends ecjia_platform
         );
         if ($prize_type == Ecjia\App\Market\Prize\PrizeType::TYPE_BONUS) {
             if (empty($prize_value)) {
-                return $this->showmessage('请选择礼券奖品的红包！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('请选择礼券奖品的红包！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value;
         } else if (in_array($prize_type, $prize_type_arr)) {
             if (empty($prize_value_other)) {
-                return $this->showmessage('请填写奖品内容！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('请填写奖品内容！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value_other;
         }
 
         if (!isset($prize_number)) {
-            return $this->showmessage('请填写奖品数量！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品数量！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if ($prize_prob <= 0) {
-            return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写获奖概率！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         //某个活动的所有奖品中奖概率不能大于100
         $current_all_prize_prob_final = 0;
@@ -535,7 +535,7 @@ class platform extends ecjia_platform
         		}
         	}
         	if ($current_all_prize_prob_final > 100 || ($current_all_prize_prob_final + $prize_prob) > 100) {
-        		return $this->showmessage('活动所有奖品获奖概率总和不可大于100', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        		return $this->showmessage(__('活动所有奖品获奖概率总和不可大于100', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         	}
         }
         $data = array(

@@ -67,7 +67,7 @@ h3{
 									<table class="table table-hide-edit">
 										<thead>
 											<tr>
-												<th class="w150">微信昵称</th>
+												<th class="w150">{t domain="market"}微信昵称{/t}</th>
 												<th class="w100">{t domain="market"}奖品名称{/t}</th>
 												<th class="w100">{t domain="market"}发放状态{/t}</th>
 												<th class="w150">{t domain="market"}发放时间{/t}</th>
@@ -82,7 +82,7 @@ h3{
 													<div class="edit-list">
 														{if $record.prize_type eq '2'}
 															<a  href="javascript:;" data-toggle="popover" data-placement="top" data-container="body" data-original-title="中奖用户信息" data-content="{if {$record.is_issue_extend eq '1'}}收货人：{if $record.issue_extend_name}{$record.issue_extend_name}{else}未填写{/if}&nbsp;&nbsp;&nbsp;&nbsp;{if $record.issue_extend_mobile}手机号：{$record.issue_extend_mobile}{else}未填写{/if}&nbsp;&nbsp;&nbsp;&nbsp;{if $record.issue_extend_address}收货地址：{$record.issue_extend_address}{else}未填写{/if}{/if}">
-																用户信息
+                                                                {t domain="market"}用户信息{/t}
 															</a>
 														{/if}
 													</div>
@@ -92,7 +92,7 @@ h3{
 													{if $record.prize_type eq '2' && $record.issue_status eq '0'}
 														<div class="edit-list">
 															<a class="toggle_view" href='{url path="market/platform_prize/issue_prize" args="id={$record.id}{if $type}&type={$type}{/if}"}' data-val="allow" data-status="1">
-																发放奖品
+																{t domain="market"}发放奖品{/t}
 															</a>
 														</div>
 													{/if}
@@ -100,7 +100,7 @@ h3{
 												<td>{$record.issue_time}</td>
 											</tr>
 											<!--  {foreachelse} -->
-											<tr><td class="no-records" colspan="4">{t}没有找到任何记录{/t}</td></tr>
+											<tr><td class="no-records" colspan="4">{t domain="market"}没有找到任何记录{/t}</td></tr>
 											<!-- {/foreach} -->
 										</tbody>
 									</table>

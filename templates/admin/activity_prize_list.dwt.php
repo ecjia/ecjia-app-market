@@ -47,15 +47,15 @@
 						</div>
 
 						<div class="input">
-							<a class="data-pjax f_l p_l20" title="{t}编辑{/t}" href='{RC_Uri::url("market/admin/activity_prize_edit", "code={$code}&p_id={$prize.prize_id}")}'>
+							<a class="data-pjax f_l p_l20" title="{t domain="market"}编辑{/t}" href='{RC_Uri::url("market/admin/activity_prize_edit", "code={$code}&p_id={$prize.prize_id}")}'>
 								<i class="fontello-icon-edit"></i>
 							</a>
 							{if $prize.is_used eq 0}
-							<a class="f_l ajaxremove no-underline" data-toggle="ajaxremove" data-msg="您确定要删除该活动奖品池吗？" title="{t}删除{/t}" href='{RC_Uri::url("market/admin/activity_prize_remove", "code={$code}&p_id={$prize.prize_id}")}'>
+							<a class="f_l ajaxremove no-underline" data-toggle="ajaxremove" data-msg="您确定要删除该活动奖品池吗？" title="{t domain="market"}删除{/t}" href='{RC_Uri::url("market/admin/activity_prize_remove", "code={$code}&p_id={$prize.prize_id}")}'>
 								<i class="fontello-icon-trash"></i>
 							</a>
 							{else}
-							<span class="prize-used">使用中</span>
+							<span class="prize-used">{t domain="market"}使用中{/t}</span>
 							{/if}
 						</div>
 					</li>

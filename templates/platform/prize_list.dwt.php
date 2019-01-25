@@ -39,23 +39,23 @@
 											</div>
 											<p class="model-inner">
 												<span class="float-left">{$prize.prize_number}&nbsp;/&nbsp;{$prize.prize_prob}%</span>
-												<span class="float-right"> {if $prize.prize_type eq '0'} 未中奖 {elseif $prize.prize_type eq '1'} 礼券红包 {elseif $prize.prize_type eq '2'}
-													实物奖品 {elseif $prize.prize_type eq '3'} 送积分 {elseif $prize.prize_type eq '4'} 推荐商品 {elseif $prize.prize_type
-													eq '5'} 推荐店铺 {elseif $prize.prize_type eq '6'} 现金红包 {/if}
+												<span class="float-right"> {if $prize.prize_type eq '0'} {t domain="market"}未中奖{/t} {elseif $prize.prize_type eq '1'} {t domain="market"}礼券红包{/t} {elseif $prize.prize_type eq '2'}
+													{t domain="market"}实物奖品{/t} {elseif $prize.prize_type eq '3'} {t domain="market"}送积分{/t} {elseif $prize.prize_type eq '4'} {t domain="market"}推荐商品{/t} {elseif $prize.prize_type
+													eq '5'} {t domain="market"}推荐店铺{/t} {elseif $prize.prize_type eq '6'} {t domain="market"}现金红包{/t} {/if}
 												</span>
 											</p>
 										</div>
 									</div>
 									<div class="input">
-										<a class="data-pjax float-left p_l20" title="{t}编辑{/t}" href='{RC_Uri::url("market/platform/activity_prize_edit", "code={$code}&p_id={$prize.prize_id}")}'>
+										<a class="data-pjax float-left p_l20" title="{t domain="market"}编辑{/t}" href='{RC_Uri::url("market/platform/activity_prize_edit", "code={$code}&p_id={$prize.prize_id}")}'>
 											<i class="ft-edit"></i>
 										</a>
 										{if $prize.is_used eq 0}
-										<a class="float-left p_l10 ajaxremove no-underline" data-toggle="ajaxremove" data-msg="您确定要删除该活动奖品池吗？" title="{t}删除{/t}" href='{RC_Uri::url("market/platform/activity_prize_remove", "code={$code}&p_id={$prize.prize_id}")}'>
+										<a class="float-left p_l10 ajaxremove no-underline" data-toggle="ajaxremove" data-msg='{t domain="market"}您确定要删除该活动奖品池吗？{/t}' title="{t domain="market"}删除{/t}" href='{RC_Uri::url("market/platform/activity_prize_remove", "code={$code}&p_id={$prize.prize_id}")}'>
 											<i class="ft-trash-2"></i>
 										</a>
 										{else}
-										<span class="prize-used">使用中</span>
+										<span class="prize-used">{t domain="market"}使用中{/t}</span>
 										{/if}
 									</div>
 								</li>

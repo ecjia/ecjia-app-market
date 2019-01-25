@@ -20,7 +20,7 @@
 			{nocache}<input type="hidden" name='token' value="{$token}" />{/nocache}
 		</div>
 		<div class="reward-content-title">
-			活动规则
+			{t domain="market"}活动规则{/t}
 		</div>
 		<div class="reward-content-article">
 			{$mobile_signup_reward_notice}

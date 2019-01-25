@@ -410,15 +410,15 @@ class admin extends ecjia_admin
         $activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('wechat_id', $wechat_id)->where('store_id', 0)->first();
 
         if ($prize_level === '') {
-            return $this->showmessage('请选择奖品等级！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请选择奖品等级！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if (empty($prize_name)) {
-            return $this->showmessage('请填写奖品名称！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品名称！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if ($prize_type === '') {
-            return $this->showmessage('请填写奖品类型！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品类型！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         $prize_value_final = '';
@@ -429,21 +429,21 @@ class admin extends ecjia_admin
         );
         if ($prize_type == Ecjia\App\Market\Prize\PrizeType::TYPE_BONUS) {
             if (empty($prize_value)) {
-                return $this->showmessage('请选择礼券奖品的红包！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('请选择礼券奖品的红包！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value;
         } else if (in_array($prize_type, $prize_type_arr)) {
             if (empty($prize_value_other)) {
-                return $this->showmessage('请填写奖品内容！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('请填写奖品内容！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value_other;
         }
 
         if (empty($prize_number)) {
-            return $this->showmessage('请填写奖品数量！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品数量！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         if ($prize_prob <= 0) {
-            return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写获奖概率！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         //某个活动的所有奖品中奖概率不能大于100
         $current_all_prize_prob_final = 0;
@@ -455,7 +455,7 @@ class admin extends ecjia_admin
         		}
         	}
         	if ($current_all_prize_prob_final > 100 || ($current_all_prize_prob_final + $prize_prob) > 100) {
-        		return $this->showmessage('活动所有奖品获奖概率总和不可大于100', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        		return $this->showmessage(__('活动所有奖品获奖概率总和不可大于100', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         	}
         }
 
@@ -536,15 +536,15 @@ class admin extends ecjia_admin
         $activity_info = RC_DB::table('market_activity')->where('activity_group', $code)->where('wechat_id', $wechat_id)->where('store_id', 0)->first();
 
         if ($prize_level === '') {
-            return $this->showmessage('请选择奖品等级！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请选择奖品等级！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if (empty($prize_name)) {
-            return $this->showmessage('请填写奖品名称！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品名称！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if ($prize_type === '') {
-            return $this->showmessage('请填写奖品类型！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品类型！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         $prize_value_final = '';
@@ -555,22 +555,22 @@ class admin extends ecjia_admin
         );
         if ($prize_type == Ecjia\App\Market\Prize\PrizeType::TYPE_BONUS) {
             if (empty($prize_value)) {
-                return $this->showmessage('请选择礼券奖品的红包！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('请选择礼券奖品的红包！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value;
         } else if (in_array($prize_type, $prize_type_arr)) {
             if (empty($prize_value_other)) {
-                return $this->showmessage('请填写奖品内容！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                return $this->showmessage(__('请填写奖品内容！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $prize_value_final = $prize_value_other;
         }
 
         if (!isset($prize_number)) {
-            return $this->showmessage('请填写奖品数量！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写奖品数量！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
         if ($prize_prob <= 0) {
-            return $this->showmessage('请填写获奖概率！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage(__('请填写获奖概率！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         //某个活动的所有奖品中奖概率不能大于100
         $current_all_prize_prob_final = 0;
@@ -582,7 +582,7 @@ class admin extends ecjia_admin
         		}
         	}
         	if ($current_all_prize_prob_final > 100 || ($current_all_prize_prob_final + $prize_prob) > 100) {
-        		return $this->showmessage('活动所有奖品获奖概率总和不可大于100', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        		return $this->showmessage(__('活动所有奖品获奖概率总和不可大于100', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         	}
         }
         $data = array(
@@ -615,9 +615,9 @@ class admin extends ecjia_admin
         $activity_name = RC_DB::table('market_activity')->where('activity_id', $prize_info['prize_id'])->pluck('activity_name');
         
         RC_DB::table('market_activity_prize')->where('prize_id', $p_id)->delete();
-        $this->admin_log('活动'.$activity_name.'的奖品'.$prize_info['prize_name'], 'remove', 'prize');
-        
-        return $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+//        $this->admin_log('活动'.$activity_name.'的奖品'.$prize_info['prize_name'], 'remove', 'prize');
+        $this->admin_log(sprintf(__('活动%s的奖品%s'), $activity_name, $prize_info['prize_name']), 'remove', 'prize');
+        return $this->showmessage(__('删除成功', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
     /**
@@ -633,10 +633,10 @@ class admin extends ecjia_admin
             $code = RC_DB::table('market_activity')->where('activity_id', $info['activity_id'])->pluck('activity_group');
             $prize_info = RC_DB::table('market_activity_prize')->where('prize_id', $info['prize_id'])->first();
             if (empty($prize_info)) {
-            	return $this->showmessage('奖品信息不存在！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            	return $this->showmessage(__('奖品信息不存在！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             if ($prize_info['prize_number'] == 0) {
-            	return $this->showmessage('奖品数量不足！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            	return $this->showmessage(__('奖品数量不足！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             RC_DB::table('market_activity_log')->where('id', $id)->update(array('issue_status' => 1, 'issue_time' => RC_Time::gmtime()));
 			if ($prize_info['prize_number'] > 0) {
@@ -644,8 +644,10 @@ class admin extends ecjia_admin
 				RC_DB::table('market_activity_prize')->where('prize_id', $prize_info['prize_id'])->decrement('prize_number');
 			}
 
-            ecjia_admin::admin_log('发放奖品' . $info['prize_name'] . '给' . $info['user_name'], 'issue', 'prize');
-            return $this->showmessage('发放奖品成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/admin/activity_record', array('code' => $code))));
+//            ecjia_admin::admin_log('发放奖品' . $info['prize_name'] . '给' . $info['user_name'], 'issue', 'prize');
+            $this->admin_log(sprintf(__('发放奖品%s给%s'), $info['prize_name'], $info['user_name']), 'issue', 'prize');
+
+            return $this->showmessage(__('发放奖品成功！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/admin/activity_record', array('code' => $code))));
         } else {
             return $this->showmessage(__('错误的参数', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }

@@ -55,13 +55,13 @@
 					<label class="control-label">{t domain="market"}活动时间限制：{/t}</label>
 					<div class="controls">
 						<select name='limit_time'>
-							<option value="">请选择...</option>
+							<option value="">{t domain="market"}请选择...{/t}</option>
 							<option value="0" {if $activity_info.limit_time eq '0'}selected{/if}>0</option>
-							<option value="1" {if $activity_info.limit_time eq 1}selected{/if}>1小时</option>
-							<option value="6" {if $activity_info.limit_time eq 6}selected{/if}>6小时</option>
-							<option value="12" {if $activity_info.limit_time eq 12}selected{/if}>12小时</option>
-							<option value="24" {if $activity_info.limit_time eq 24}selected{/if}>24小时</option>
-							<option value="48" {if $activity_info.limit_time eq 48}selected{/if}>48小时</option>
+							<option value="1" {if $activity_info.limit_time eq 1}selected{/if}>{t domain="market"}1小时{/t}</option>
+							<option value="6" {if $activity_info.limit_time eq 6}selected{/if}>{t domain="market"}6小时{/t}</option>
+							<option value="12" {if $activity_info.limit_time eq 12}selected{/if}>{t domain="market"}12小时{/t}</option>
+							<option value="24" {if $activity_info.limit_time eq 24}selected{/if}>{t domain="market"}24小时{/t}</option>
+							<option value="48" {if $activity_info.limit_time eq 48}selected{/if}>{t domain="market"}48小时{/t}</option>
 						</select>	
 						<span class="help-block">{t domain="market"}单位为小时，参与次数在此时间内将被限制，0代表整个活动时间内{/t}</span>
 					</div>

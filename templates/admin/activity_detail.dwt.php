@@ -45,9 +45,9 @@
 						<!-- {if $info} -->
 							<div style="margin-left:30px;">
 								<input type="hidden" name="id" value="{$activity_info.activity_id}" />
-								<a class="btn btn-gebo data-pjax" href="{$action_edit}">{t}编辑活动{/t}</a>
-								<a class="btn btn-gebo data-pjax" href="{$action_prize}" style="margin:0px 10px;">{t}活动奖品池{/t}</a>
-								<a class="btn btn-gebo data-pjax" href="{$action_record}">{t}中奖记录{/t}</a>
+								<a class="btn btn-gebo data-pjax" href="{$action_edit}">{t domain="market"}编辑活动{/t}</a>
+								<a class="btn btn-gebo data-pjax" href="{$action_prize}" style="margin:0px 10px;">{t domain="market"}活动奖品池{/t}</a>
+								<a class="btn btn-gebo data-pjax" href="{$action_record}">{t domain="market"}中奖记录{/t}</a>
 							</div>
 						<!-- {/if} -->
 						</div>
@@ -82,7 +82,7 @@
 						</div>
 						
 						<div class="control-group formSep">
-							<label class="control-label">{t}活动时间段：{/t}</label>
+							<label class="control-label">{t domain="market"}活动时间段：{/t}</label>
 							<div class="controls l_h30">
 								{if $activity_info.formated_start_time neq '' && $activity_info.formated_end_time neq ''}
 									{$activity_info.formated_start_time} ~ {$activity_info.formated_end_time}

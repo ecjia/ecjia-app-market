@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=10,IE=11"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<head lang="zh-CN">
-		<title>填写地址</title>
+		<title>{t domain="market"}填写地址{/t}</title>
 		<link rel="stylesheet" type="text/css" href="{$front_url}/css/touch.css" />
 		<link rel="stylesheet" type="text/css" href="{$front_url}/css/style.css" />
 		<link rel="stylesheet" type="text/css" href="{$front_url}/css/models.css" />
@@ -24,11 +24,11 @@
 								<span class="activity-name">[{$prize_info.activity_name}]</span>
 								<span class="activity-name">
 									{if $prize_info.prize_type eq '2'}
-										实物奖励
+										{t domain="market"}实物奖励{/t}
 									{elseif $prize_info.prize_type eq '3'}
-										积分奖励
+										{t domain="market"}积分奖励{/t}
 									{else}
-										红包奖励
+										{t domain="market"}红包奖励{/t}
 									{/if}
 								</span>
 							</div>

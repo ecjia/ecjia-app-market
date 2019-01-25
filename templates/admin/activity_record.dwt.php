@@ -40,7 +40,7 @@
 						{if $record.prize_type eq '2' && $record.issue_status eq '0'}
 							<div class="edit-list">
 								<a class="toggle_view" href='{url path="market/admin/issue_prize" args="id={$record.id}"}' data-val="allow" data-status="1">
-									发放奖品
+									{t domain="market"}发放奖品{/t}
 								</a>
 							</div>
 						{/if}
@@ -50,7 +50,7 @@
 					<td>{$record.add_time}</td>
 				</tr>
 				<!-- {foreachelse} -->
-				<tr><td class="no-records" colspan="6">{t}没有找到任何记录{/t}</td></tr>
+				<tr><td class="no-records" colspan="6">{t domain="market"}没有找到任何记录{/t}</td></tr>
 				<!-- {/foreach} -->
 			</tbody>
 		</table>
