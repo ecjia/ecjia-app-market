@@ -89,7 +89,7 @@
 								<div class="col-lg-8 controls">
 									<input class="time input-xlarge form-control" name="start_time" type="text" value="{$activity_info.start_time}" />
 								</div>
-								<span class="input-must">{t}<span class="require-field" style="color:#FF0000,">*</span>{/t}</span>
+								<span class="input-must"><span class="require-field" style="color:#FF0000,">*</span></span>
 							</div>
 							
 							<div class="form-group row">
@@ -97,7 +97,7 @@
 								<div class="col-lg-8 controls">
 									<input class="time input-xlarge form-control" name="end_time" type="text" value="{$activity_info.end_time}"/>
 								</div>
-								<span class="input-must">{t}<span class="require-field" style="color:#FF0000,">*</span>{/t}</span>
+								<span class="input-must"><span class="require-field" style="color:#FF0000,">*</span></span>
 							</div>
 							
 							<div class="form-group row">

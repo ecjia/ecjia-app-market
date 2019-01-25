@@ -71,14 +71,14 @@
 					<label class="control-label">{t domain="market"}开始时间：{/t}</label>
 					<div class="controls">
 						<input class="time" name="start_time" type="text" value="{$activity_info.start_time}" />
-						<span class="input-must">{t}<span class="require-field" style="color:#FF0000,">*</span>{/t}</span>
+						<span class="input-must"><span class="require-field" style="color:#FF0000,">*</span></span>
 					</div>
 				</div>
 				<div class="control-group formSep">
 					<label class="control-label">{t domain="market"}结束时间：{/t}</label>
 					<div class="controls">
 						<input class="time" name="end_time" type="text" value="{$activity_info.end_time}"/>
-						<span class="input-must">{t}<span class="require-field" style="color:#FF0000,">*</span>{/t}</span>
+						<span class="input-must"><span class="require-field" style="color:#FF0000,">*</span></span>
 					</div>
 				</div>
 				<div class="control-group formSep" >
