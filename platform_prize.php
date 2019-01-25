@@ -71,7 +71,8 @@ class platform_prize extends ecjia_platform
         RC_Style::enqueue_style('prize', RC_App::apps_url('statics/platform-css/prize.css', __FILE__));
 
         RC_Script::enqueue_script('prize_list', RC_App::apps_url('statics/platform-js/prize_list.js', __FILE__), array(), false, true);
-        RC_Script::localize_script('platform_activity', 'js_lang', RC_Lang::get('market::market.js_lang'));
+        RC_Script::localize_script('platform_activity', 'js_lang', config('app-market::js_lang.market_platform_page'));
+
         RC_Script::enqueue_script('popover', RC_App::apps_url('statics/platform-js/popover.js', __FILE__), array(), false, true);
 
         ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('抽奖记录', RC_Uri::url('market/platform_prize/init')));
@@ -111,7 +112,7 @@ class platform_prize extends ecjia_platform
         ecjia_platform_screen::get_current_screen()->remove_last_nav_here();
         ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('抽奖记录'));
         ecjia_platform_screen::get_current_screen()->add_option('current_code', $activity_code);
-        $this->assign('action_link', array('href' => RC_Uri::url('market/platform/activity_detail', array('code' => $activity_code)), 'text' => RC_Lang::get('market::market.back_activity_info')));
+        $this->assign('action_link', array('href' => RC_Uri::url('market/platform/activity_detail', array('code' => $activity_code)), 'text' => __('返回活动详情', 'market')));
 
         if (!empty($activity_code)) {
             $factory = new Ecjia\App\Market\Factory();
@@ -170,7 +171,7 @@ class platform_prize extends ecjia_platform
     		
     		return $this->showmessage('发放奖品成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('market/platform_prize/init', array('code' => $code, 'type' => $type))));
     	} else {
-    		return $this->showmessage(RC_Lang::get('market::market.wrong_parameter'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    		return $this->showmessage(__('错误的参数', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
     }
     

@@ -63,7 +63,7 @@
 					<hr>
 					<fieldset>
 						<div class="control-group formSep">
-		                    <label class="control-label">{lang key='market::market.join_platform'}</label>
+		                    <label class="control-label">{t domain="market"}活动参与平台：{/t}</label>
 		                    <div class="controls l_h30">
 			                    <span>{$activity_info.activity_object}</span>
 		                    </div>
@@ -94,7 +94,7 @@
 						</div>
 						
 						<div class="control-group" >
-							<label class="control-label">{lang key='market::market.label_rule_desc'}</label>
+							<label class="control-label">{t domain="market"}规则描述：{/t}</label>
 							<div class="controls l_h30">
 								{$activity_info.activity_desc}
 							</div>

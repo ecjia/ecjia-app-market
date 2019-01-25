@@ -68,9 +68,9 @@ h3{
 										<thead>
 											<tr>
 												<th class="w150">微信昵称</th>
-												<th class="w100">{lang key='market::market.prize_name'}</th>
-												<th class="w100">{lang key='market::market.assign_status'}</th>
-												<th class="w150">{lang key='market::market.assign_time'}</th>
+												<th class="w100">{t domain="market"}奖品名称{/t}</th>
+												<th class="w100">{t domain="market"}发放状态{/t}</th>
+												<th class="w150">{t domain="market"}发放时间{/t}</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -88,7 +88,7 @@ h3{
 													</div>
 												</td>
 												<td  class="hide-edit-area">
-													{if $record.issue_status eq '0'}{lang key='market::market.unreleased'}{else}{lang key='market::market.issued'}{/if}
+													{if $record.issue_status eq '0'}{t domain="market"}未发放{/t}{else}{t domain="market"}已发放{/t}{/if}
 													{if $record.prize_type eq '2' && $record.issue_status eq '0'}
 														<div class="edit-list">
 															<a class="toggle_view" href='{url path="market/platform_prize/issue_prize" args="id={$record.id}{if $type}&type={$type}{/if}"}' data-val="allow" data-status="1">
@@ -100,7 +100,7 @@ h3{
 												<td>{$record.issue_time}</td>
 											</tr>
 											<!--  {foreachelse} -->
-											<tr><td class="no-records" colspan="4">{lang key='system::system.no_records'}</td></tr>
+											<tr><td class="no-records" colspan="4">{t}没有找到任何记录{/t}</td></tr>
 											<!-- {/foreach} -->
 										</tbody>
 									</table>

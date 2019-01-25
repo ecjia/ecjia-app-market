@@ -62,7 +62,7 @@
 					<label class="control-label">礼券奖品内容：</label>
 					<div class="controls">
 						<select name="prize_value" class="w350">
-							<option value="">{lang key='market::market.please_select'}</option>
+							<option value="">{t domain="market"}请选择{/t}</option>
 							<!-- {foreach from=$bonus_list item=bonus } -->
 								<option value="{$bonus.type_id}" {if $activity_prize.prize_value eq $bonus.type_id}selected{/if}>{$bonus.type_name}</option>
 							<!-- {/foreach} -->

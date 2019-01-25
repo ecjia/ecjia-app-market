@@ -61,7 +61,7 @@
 						<div class="form-body">
 							<h4 class="card-title" style="padding-top:13px;">活动信息<hr></h4>
 							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">{lang key='market::market.join_platform'}</label>
+								<label class="col-lg-2 label-control text-right">{t domain="market"}活动参与平台：{/t}</label>
 								<div class="col-lg-8 controls">
 				                    <span>{$activity_info.activity_object}</span>
 								</div>
