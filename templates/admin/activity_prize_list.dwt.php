@@ -39,7 +39,7 @@
 									<span class="f_l">{$prize.prize_number}&nbsp;/&nbsp;{$prize.prize_prob}%</span>
 									<span class="f_r">
 										{if $prize.prize_type eq '0'} {t domain="market"}未中奖{/f} {elseif $prize.prize_type eq '1'} {t domain="market"}礼券红包{/f} {elseif $prize.prize_type eq '2'} {t domain="market"}实物奖品{/f} {elseif $prize.prize_type
-										eq '3'} {t domain="market"}送积分{/f} {elseif $prize.prize_type eq '4'} {t domain="market"}推荐商品{/f} {elseif $prize.prize_type eq '5'} 推荐店铺 {elseif $prize.prize_type
+										eq '3'} {t domain="market"}送积分{/f} {elseif $prize.prize_type eq '4'} {t domain="market"}推荐商品{/f} {elseif $prize.prize_type eq '5'} {t domain="market"}推荐店铺{/t} {elseif $prize.prize_type
 										eq '6'} {t domain="market"}现金红包{/f} {/if}
 									</span>
 								</p>
