@@ -81,7 +81,7 @@ h3{
 													{$record.prize_name}<br>
 													<div class="edit-list">
 														{if $record.prize_type eq '2'}
-															<a  href="javascript:;" data-toggle="popover" data-placement="top" data-container="body" data-original-title='{t domain="market"}中奖用户信息{/t}' data-content='{if {$record.is_issue_extend eq '1'}}{t domain="market"}收货人{/t}：{if $record.issue_extend_name}{$record.issue_extend_name}{else}{t domain="market"}未填写{/t}{/if}&nbsp;&nbsp;&nbsp;&nbsp;{if $record.issue_extend_mobile}{t domain="market"}手机号：{/t}{$record.issue_extend_mobile}{else}{t domain="market"}未填写{/t}{/if}&nbsp;&nbsp;&nbsp;&nbsp;{if $record.issue_extend_address}{t domain="market"}收货地址：{/t}{$record.issue_extend_address}{else}{t domain="market"}未填写{/t}{/if}{/if}'>
+															<a  href="javascript:;" data-toggle="popover" data-placement="top" data-container="body" data-original-title='{t domain="market"}中奖用户信息{/t}' data-content='{if {$record.is_issue_extend eq '1'}}{t domain="market"}收货人：{/t}{if $record.issue_extend_name}{$record.issue_extend_name}{else}{t domain="market"}未填写{/t}{/if}&nbsp;&nbsp;&nbsp;&nbsp;{if $record.issue_extend_mobile}{t domain="market"}手机号：{/t}{$record.issue_extend_mobile}{else}{t domain="market"}未填写{/t}{/if}&nbsp;&nbsp;&nbsp;&nbsp;{if $record.issue_extend_address}{t domain="market"}收货地址：{/t}{$record.issue_extend_address}{else}{t domain="market"}未填写{/t}{/if}{/if}'>
                                                                 {t domain="market"}用户信息{/t}
 															</a>
 														{/if}

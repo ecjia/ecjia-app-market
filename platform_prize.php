@@ -110,7 +110,7 @@ class platform_prize extends ecjia_platform
         }
 
         ecjia_platform_screen::get_current_screen()->remove_last_nav_here();
-        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here('抽奖记录'));
+        ecjia_platform_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('抽奖记录', 'market'));
         ecjia_platform_screen::get_current_screen()->add_option('current_code', $activity_code);
         $this->assign('action_link', array('href' => RC_Uri::url('market/platform/activity_detail', array('code' => $activity_code)), 'text' => __('返回活动详情', 'market')));
 
