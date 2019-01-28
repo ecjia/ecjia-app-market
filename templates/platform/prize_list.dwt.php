@@ -30,9 +30,9 @@
 										<div class="prize_level prize_level_{$prize.prize_level}">
 											<div class="model-title ware_name">
 												<span>
-													{if $prize.prize_level eq '0'} [特等奖] {elseif $prize.prize_level eq '1'} [一等奖] {elseif $prize.prize_level eq '2'} [二等奖] {elseif
-													$prize.prize_level eq '3'} [三等奖] {elseif $prize.prize_level eq '4'} [四等奖] {elseif $prize.prize_level eq '5'}
-													[五等奖] {/if} {$prize.prize_name}
+													{if $prize.prize_level eq '0'} [{t domain="market"}特等奖{/t}] {elseif $prize.prize_level eq '1'} [{t domain="market"}一等奖{/t}] {elseif $prize.prize_level eq '2'} [{t domain="market"}二等奖{/t}] {elseif
+													$prize.prize_level eq '3'} [{t domain="market"}三等奖{/t}] {elseif $prize.prize_level eq '4'} [{t domain="market"}四等奖{/t}] {elseif $prize.prize_level eq '5'}
+													[{t domain="market"}五等奖{/t}] {/if} {$prize.prize_name}
 												</span>
 												<br>
 												<span>{$prize.prize_value_label}</span>
@@ -51,7 +51,7 @@
 											<i class="ft-edit"></i>
 										</a>
 										{if $prize.is_used eq 0}
-										<a class="float-left p_l10 ajaxremove no-underline" data-toggle="ajaxremove" data-msg='{t domain="market"}您确定要删除该活动奖品池吗？{/t}' title="{t domain="market"}删除{/t}" href='{RC_Uri::url("market/platform/activity_prize_remove", "code={$code}&p_id={$prize.prize_id}")}'>
+										<a class="float-left p_l10 ajaxremove no-underline" data-toggle="ajaxremove" data-msg='{t domain="market"}您确定要删除该活动奖品池吗？{/t}' title='{t domain="market"}删除{/t}' href='{RC_Uri::url("market/platform/activity_prize_remove", "code={$code}&p_id={$prize.prize_id}")}'>
 											<i class="ft-trash-2"></i>
 										</a>
 										{else}

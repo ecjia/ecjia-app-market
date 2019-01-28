@@ -38,14 +38,14 @@
 										{if $prize.issue_status eq '1'}
 											<span class="issue_status">{t domain="market"}已发放{/t}</span>
 										{else}
-											<a href='{url path="market/mobile_prize/user_info" args="log_id={$prize.id}"}' class="btn btn-prize">{if $prize.has_filled eq '1'}查看地址{else}填写地址{/if}</a>
+											<a href='{url path="market/mobile_prize/user_info" args="log_id={$prize.id}"}' class="btn btn-prize">{if $prize.has_filled eq '1'}{t domain="market"}查看地址{/t}{else}{t domain="market"}填写地址{/t}{/if}</a>
 										{/if}
 										
 									{else}
 										{if $prize.issue_status eq '1'}
 											<span class="issue_status">{t domain="market"}已兑换{/t}</span>
 										{else}
-											<a href='{url path="market/mobile_prize/issue_prize" args="log_id={$prize.id}&activity_id={$prize.activity_id}&openid={$openid}"}' class="btn btn-prize">去兑换</a>
+											<a href='{url path="market/mobile_prize/issue_prize" args="log_id={$prize.id}&activity_id={$prize.activity_id}&openid={$openid}"}' class="btn btn-prize">{t domain="market"}去兑换{/t}</a>
 										{/if}
 										
 									{/if}

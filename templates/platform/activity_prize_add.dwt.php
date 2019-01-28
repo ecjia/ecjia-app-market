@@ -29,19 +29,19 @@
 								<div class="col-lg-8 controls">
 									<select name="prize_level" class=" select2 form-control">
 										<option value="">{t domain="market"}请选择...{/t}</option>
-										<option value="0" {if $activity_prize.prize_level eq '0'}selected{/if}>特等奖</option>
-										<option value="1" {if $activity_prize.prize_level eq 1}selected{/if}>一等奖</option>
-										<option value="2" {if $activity_prize.prize_level eq 2}selected{/if}>二等奖</option>
-										<option value="3" {if $activity_prize.prize_level eq 3}selected{/if}>三等奖</option>
-										<option value="4" {if $activity_prize.prize_level eq 4}selected{/if}>四等奖</option>
-										<option value="5" {if $activity_prize.prize_level eq 5}selected{/if}>五等奖</option>
+										<option value="0" {if $activity_prize.prize_level eq '0'}selected{/if}>{t domain="market"}特等奖{/t}</option>
+										<option value="1" {if $activity_prize.prize_level eq 1}selected{/if}>{t domain="market"}一等奖{/t}</option>
+										<option value="2" {if $activity_prize.prize_level eq 2}selected{/if}>{t domain="market"}二等奖{/t}</option>
+										<option value="3" {if $activity_prize.prize_level eq 3}selected{/if}>{t domain="market"}三等奖{/t}</option>
+										<option value="4" {if $activity_prize.prize_level eq 4}selected{/if}>{t domain="market"}四等奖{/t}</option>
+										<option value="5" {if $activity_prize.prize_level eq 5}selected{/if}>{t domain="market"}五等奖{/t}</option>
 									</select>
 								</div>
 								<span class="input-must">*</span>
 							</div>
 
 							<div class="form-group row">
-								<label class="col-lg-2 label-control text-right">奖品名称:</label>
+								<label class="col-lg-2 label-control text-right">{t domain="market"}奖品名称:{/t}</label>
 								<div class="col-lg-8 controls">
 									<input class="input-xlarge form-control" name="prize_name" type="text" value="{$activity_prize.prize_name}" maxlength="30"
 									/>
