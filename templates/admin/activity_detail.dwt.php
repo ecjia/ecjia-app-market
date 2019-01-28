@@ -53,12 +53,12 @@
 						</div>
 					</div>
 					<div class="func-intrduction">
-						<p class="m_b15 m_t15 title-size">功能介绍</p>
+						<p class="m_b15 m_t15 title-size">{t domain="market"}功能介绍{/t}</p>
 						<p class="intrduction">{$activity_detail.description}</p>
 					</div>
 				<!-- {if $info} -->
 					<div class="func-intrduction">
-						<p class="m_b10  title-size">活动信息</p>
+						<p class="m_b10  title-size">{t domain="market"}活动信息{/t}</p>
 					</div>
 					<hr>
 					<fieldset>
@@ -69,14 +69,14 @@
 		                    </div>
 		                </div>
 						<div class="control-group formSep">
-							<label class="control-label">活动限制：</label>
+							<label class="control-label">{t domain="market"}活动限制：{/t}</label>
 							<div class="controls l_h30">
 								{if $activity_info.limit_num eq '0'}
-									在整个活动时间段可参与<span style="font-weight: bold;margin-left:5px;margin-right:5px;">无数次</span>
+									{t domain="market"}在整个活动时间段可参与{/t}<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{t domain="market"}无数次{/t}</span>
 								{elseif $activity_info.limit_num gt '0' && $activity_info.limit_time eq '0'}
-									在整个活动时间段可参与<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_num}次</span>
+                                    {t domain="market"}在整个活动时间段可参与{/t}<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_num}次</span>
 								{elseif $activity_info.limit_num gt '0' && $activity_info.limit_time gt '0'}
-									在整个活动时间段每隔<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_time}小时</span>可参与<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_num}次</span>
+                                    {t domain="market"}在整个活动时间段每隔{/t}<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_time}{t domain="market"}小时{/t}</span>{t domain="market"}可参与{/t}<span style="font-weight: bold;margin-left:5px;margin-right:5px;">{$activity_info.limit_num}次</span>
 								{/if}
 							</div>
 						</div>
@@ -87,7 +87,7 @@
 								{if $activity_info.formated_start_time neq '' && $activity_info.formated_end_time neq ''}
 									{$activity_info.formated_start_time} ~ {$activity_info.formated_end_time}
 								{else}
-									暂未设置
+                                    {t domain="market"}暂未设置{/t}
 								{/if}
 								
 							</div>
