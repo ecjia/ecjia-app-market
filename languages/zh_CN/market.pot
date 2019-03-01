@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ecjia App market 1.27.4\n"
 "Report-Msgid-Bugs-To: https://make.ecjia.com/polyglots/\n"
-"POT-Creation-Date: 2019-02-21 03:56:36+00:00\n"
+"POT-Creation-Date: 2019-03-01 01:45:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -121,7 +121,7 @@ msgstr ""
 msgid "修改活动奖品池成功"
 msgstr ""
 
-#: admin.php:619
+#: admin.php:619 platform.php:426 platform.php:551
 msgid "活动%s的奖品%s"
 msgstr ""
 
@@ -213,6 +213,22 @@ msgid ""
 "知名度、美誉度和影响力，促进产品销售的一种营销方式。"
 msgstr ""
 
+#: mobile_prize.php:100 mobile_prize.php:170
+msgid "微信大转盘"
+msgstr ""
+
+#: mobile_prize.php:102 mobile_prize.php:172
+msgid "微信刮刮乐"
+msgstr ""
+
+#: mobile_prize.php:104 mobile_prize.php:174
+msgid "微信砸金蛋"
+msgstr ""
+
+#: mobile_prize.php:106 mobile_prize.php:176
+msgid "手机摇一摇"
+msgstr ""
+
 #: mobile_prize.php:196 mobile_prize.php:237
 msgid "抽奖信息不存在！"
 msgstr ""
@@ -279,6 +295,38 @@ msgstr ""
 
 #: modules/market/shake_module.class.php:77
 msgid "参数无效"
+msgstr ""
+
+#: platform_prize.php:192
+msgid "奖品名"
+msgstr ""
+
+#: platform_prize.php:192
+msgid "发放状态"
+msgstr ""
+
+#: platform_prize.php:192
+msgid "微信昵称"
+msgstr ""
+
+#: platform_prize.php:192
+msgid "收货人"
+msgstr ""
+
+#: platform_prize.php:192
+msgid "手机号"
+msgstr ""
+
+#: platform_prize.php:192
+msgid "收货地址"
+msgstr ""
+
+#: platform_prize.php:321
+msgid "未发放"
+msgstr ""
+
+#: platform_prize.php:321
+msgid "已发放"
 msgstr ""
 
 #: content/apps/market/templates/platform/activity_edit.dwt.php:14
@@ -487,12 +535,6 @@ msgstr ""
 msgid "奖品名称"
 msgstr ""
 
-#: content/apps/market/templates/platform/activity_record.dwt.php:27
-#: content/apps/market/templates/platform/prize_record.dwt.php:72
-#: content/apps/market/templates/admin/activity_record.dwt.php:27
-msgid "发放状态"
-msgstr ""
-
 #: content/apps/market/templates/platform/activity_record.dwt.php:28
 #: content/apps/market/templates/admin/activity_record.dwt.php:28
 msgid "来源"
@@ -507,19 +549,6 @@ msgstr ""
 #: content/apps/market/templates/platform/activity_record.dwt.php:30
 #: content/apps/market/templates/admin/activity_record.dwt.php:30
 msgid "抽奖时间"
-msgstr ""
-
-#: content/apps/market/templates/platform/activity_record.dwt.php:39
-#: content/apps/market/templates/platform/prize_record.dwt.php:91
-#: content/apps/market/templates/admin/activity_record.dwt.php:39
-msgid "未发放"
-msgstr ""
-
-#: content/apps/market/templates/platform/activity_record.dwt.php:39
-#: content/apps/market/templates/platform/prize_record.dwt.php:91
-#: content/apps/market/templates/admin/activity_record.dwt.php:39
-#: content/apps/market/templates/front/prize_list.dwt.php:39
-msgid "已发放"
 msgstr ""
 
 #: content/apps/market/templates/platform/activity_record.dwt.php:46
@@ -539,10 +568,6 @@ msgstr ""
 
 #: content/apps/market/templates/platform/prize_record.dwt.php:55
 msgid "导出实物中奖用户信息"
-msgstr ""
-
-#: content/apps/market/templates/platform/prize_record.dwt.php:70
-msgid "微信昵称"
 msgstr ""
 
 #: content/apps/market/templates/platform/prize_record.dwt.php:84
@@ -769,24 +794,12 @@ msgstr ""
 msgid "红包奖励"
 msgstr ""
 
-#: content/apps/market/templates/front/fill_user_info.dwt.php:49
-msgid "收货人"
-msgstr ""
-
 #: content/apps/market/templates/front/fill_user_info.dwt.php:52
 msgid "请输入收货人姓名"
 msgstr ""
 
-#: content/apps/market/templates/front/fill_user_info.dwt.php:55
-msgid "手机号"
-msgstr ""
-
 #: content/apps/market/templates/front/fill_user_info.dwt.php:58
 msgid "请输入收货人手机号"
-msgstr ""
-
-#: content/apps/market/templates/front/fill_user_info.dwt.php:61
-msgid "收货地址"
 msgstr ""
 
 #: content/apps/market/templates/front/fill_user_info.dwt.php:64
