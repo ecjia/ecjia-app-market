@@ -42,11 +42,8 @@ class StoreMarketActivityClear extends StoreCleanAbstract
     {
         $text = __('店铺内的公众平台营销活动全部删除', 'market');
         return <<<HTML
-
-<span class="controls-info w300">$text</span>
-
+<span class="controls-info w300">{$text}</span>
 HTML;
-
     }
 
     /**
