@@ -40,7 +40,7 @@ class StoreMarketActivityClear extends StoreCleanAbstract
      */
     public function handlePrintData()
     {
-        $text = __('店铺内的公众平台营销活动全部删除', 'adsense');
+        $text = __('店铺内的公众平台营销活动全部删除', 'market');
         return <<<HTML
 
 <span class="controls-info w300">$text</span>
@@ -94,7 +94,7 @@ HTML;
 
         $store_info = RC_Api::api('store', 'store_info', array('store_id' => $this->store_id));
 
-        $merchants_name = !empty($store_info) ? sprintf(__('店铺名是%s', 'adsense'), $store_info['merchants_name']) : sprintf(__('店铺ID是%s', 'adsense'), $this->store_id);
+        $merchants_name = !empty($store_info) ? sprintf(__('店铺名是%s', 'market'), $store_info['merchants_name']) : sprintf(__('店铺ID是%s', 'market'), $this->store_id);
 
         ecjia_admin::admin_log($merchants_name, 'clean', 'store_market_activity');
     }
