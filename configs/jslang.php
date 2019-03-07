@@ -54,16 +54,16 @@ defined('IN_ECJIA') or exit('No permission resources.');
 return array(
     //营销活动
     'market_page' =>array(
-        'activity_name'		=> __('请输入活动名称', 'market'),
-        'start_time'	        => __('请输入活动开始时间', 'market'),
-        'end_time'	            => __('请输入活动结束时间', 'market'),
-        'prize_level'   => __('请选择奖品等级', 'market'),
-        'prize_name'			    => __('请填写奖品名称', 'market'),
-        'prize_type'			    => __('请选择奖品类型', 'market'),
-        'prize_value'			    => __('请选择礼券奖品的红包', 'market'),
-        'prize_value_other'			    => __('请填写奖品内容', 'market'),
-        'prize_number'			    => __('请填写奖品数量', 'market'),
-        'prize_prob'			    => __('请填写获奖概率', 'market'),
+        'market_activity_name'		=> __('请输入活动名称', 'market'),
+        'market_start_time'	        => __('请输入活动开始时间', 'market'),
+        'market_end_time'	            => __('请输入活动结束时间', 'market'),
+        'market_prize_level'   => __('请选择奖品等级', 'market'),
+        'market_prize_name'			    => __('请填写奖品名称', 'market'),
+        'market_prize_type'			    => __('请选择奖品类型', 'market'),
+        'market_prize_value'			    => __('请选择礼券奖品的红包', 'market'),
+        'market_prize_value_other'			    => __('请填写奖品内容', 'market'),
+        'market_prize_number'			    => __('请填写奖品数量', 'market'),
+        'market_prize_prob'			    => __('请填写获奖概率', 'market'),
 
         'winning_physical_prize'			    => __('填写中奖的实物奖品，如iPhone X或iPad Pro 2', 'market'),
         'number_of_points_consumed'			    => __('填写中奖后发放的消费积分数量', 'market'),

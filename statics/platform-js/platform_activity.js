@@ -66,35 +66,35 @@
 				},
 				messages: {
 					'activity_name': {
-						required: js_lang.activity_name
+						required: js_lang.market_activity_name
 					},
 					'start_time': {
-						required: js_lang.start_time
+						required: js_lang.market_start_time
 					},
 					'end_time': {
-						required: js_lang.end_time
+						required: js_lang.market_end_time
 					},
 
 					'prize_level': {
-						required: js_lang.prize_level
+						required: js_lang.market_prize_level
 					},
 					'prize_name': {
-						required: js_lang.prize_name
+						required: js_lang.market_prize_name
 					},
 					'prize_type': {
-						required: js_lang.prize_type
+						required: js_lang.market_prize_type
 					},
 					'prize_value': {
-						required: js_lang.prize_value
+						required: js_lang.market_prize_value
 					},
 					'prize_value_other': {
-						required: js_lang.prize_value_other
+						required: js_lang.market_prize_value_other
 					},
 					'prize_number': {
-						required: js_lang.prize_number
+						required: js_lang.market_prize_number
 					},
 					'prize_prob': {
-						required: js_lang.prize_prob
+						required: js_lang.market_prize_prob
 					},
 				},
 				submitHandler: function () {
@@ -144,7 +144,7 @@
 					$('.prize_value_bonus').removeClass('display-dn').find('select').select2();
 					$('.prize_value_other').addClass('display-dn');
 				}
-				//2实物奖品 3积分奖品 6现金红包 手动填写 
+				//2实物奖品 3积分奖品 6现金红包 手动填写
 				if (val == 2 || val == 3 || val == 6) {
 					$('.prize_value_other').find('.help-block').remove();
 					$('.prize_value_other').find('input').val('');
