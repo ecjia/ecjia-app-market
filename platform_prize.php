@@ -158,9 +158,9 @@ class platform_prize extends ecjia_platform
     			return $this->showmessage(__('奖品信息不存在！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     		}
     		
-    		if ($prize_info['prize_number'] == 0) {
-    			return $this->showmessage(__('奖品数量不足！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-    		}
+//    		if ($prize_info['prize_number'] == 0) {
+//    			return $this->showmessage(__('奖品数量不足！', 'market'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+//    		}
     		
     		RC_DB::table('market_activity_log')->where('id', $id)->update(array('issue_status' => 1, 'issue_time' => RC_Time::gmtime()));
 //    		if ($prize_info['prize_number'] > 0) {
